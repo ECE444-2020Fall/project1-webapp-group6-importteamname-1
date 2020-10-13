@@ -1,4 +1,4 @@
-﻿## Getting Started
+﻿## How to run the code locally
 
 In the root directory of the project...
 
