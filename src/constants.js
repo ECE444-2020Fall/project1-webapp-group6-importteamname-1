@@ -1,5 +1,7 @@
 ﻿const CONSTANTS = {};
 
+CONSTANTS.APP_NAME = "ChefCoPilot";
+
 CONSTANTS.ERROR_MESSAGE = {};
 
 CONSTANTS.ERROR_MESSAGE.LIST_DELETE = "Request to delete list item failed:";

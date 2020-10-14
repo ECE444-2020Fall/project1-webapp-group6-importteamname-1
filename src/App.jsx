@@ -4,17 +4,17 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 
-import Add_Recipes from "./components/Add_Recipes/Add_Recipes";
+import AddRecipes from "./components/AddRecipes/AddRecipes";
 
-import Recipe_Search_Results from "./components/Recipe_Search_Results/Recipe_Search_Results";
+import RecipeSearchResults from "./components/RecipeSearchResults/RecipeSearchResults";
 
-import Recipe_Detail from "./components/Recipe_Detail/Recipe_Detail";
+import RecipeDetail from "./components/RecipeDetail/RecipeDetail";
 
-import Favourite_Recipes from "./components/Favourite_Recipes/Favourite_Recipes";
+import FavouriteRecipes from "./components/FavouriteRecipes/FavouriteRecipes";
 
-import Track_Calories from "./components/Track_Calories/Track_Calories";
+import CalorieTracker from "./components/CalorieTracker/CalorieTracker";
 
-import Recipe_Cart from "./components/Recipe_Cart/Recipe_Cart";
+import RecipeCart from "./components/RecipeCart/RecipeCart";
 
 //TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
@@ -22,12 +22,12 @@ const App = () => {
       <React.Fragment>
         <NavBar />
         <Switch>
-          <Route exact path = "/" component = { Add_Recipes } />
-          <Route path = "/Recipe_Search_Results" component = { Recipe_Search_Results } />
-          <Route path = "/Recipe_Detail" component = { Recipe_Detail } />
-          <Route path = "/Favourite_Recipes" component = { Favourite_Recipes } />
-          <Route path = "/Track_Calories" component = { Track_Calories } />
-          <Route path = "/Recipe_Cart" component = { Recipe_Cart } />
+          <Route exact path = "/" component = { AddRecipes } />
+          <Route path = "/RecipeSearchResults" component = { RecipeSearchResults } />
+          <Route path = "/RecipeDetail" component = { RecipeDetail } />
+          <Route path = "/FavouriteRecipes" component = { FavouriteRecipes } />
+          <Route path = "/CalorieTracker" component = { CalorieTracker } />
+          <Route path = "/RecipeCart" component = { RecipeCart } />
         </Switch>
         <Footer />
       </React.Fragment>
