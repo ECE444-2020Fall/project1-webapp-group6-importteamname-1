@@ -6,20 +6,59 @@ from os.path import exists, join
 
 from constants import CONSTANTS
 from sample_data import sample_data
+from app import create_app
+
+from app import db
+from app.models import User
+
+app = create_app()
 
 
-app = Flask(__name__, static_folder='build')
+# EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
+@app.route('/api/add_user/<string:name>/<string:password>')
+def add_new_user(name, password):
+    new_user = User(name, password)
+    db.session.add(new_user)
+    db.session.commit()
+    return ""
 
-# MasterDetail Page Endpoint
+# EXAMPLE OF HOW TO REMOVE ENTRIES TO DB  <PART OF YANISA's DB SETUP>
+@app.route('/api/remove_user/<string:name>/<string:password>')
+def remove_user(name, password):
+    user = User.query.filter(
+        User.username == name and User.password == password
+    )
+    if user: 
+        db.session.delete(user[0])
+        db.session.commit()
+    return ""
+
+# EXAMPLE OF HOW TO QUERY ENTRIES IN DB  <PART OF YANISA's DB SETUP>
+@app.route('/api/show_users')
+def print_db():
+    all_users = User.query.all() # get all users
+    users_named_tim = User.query.filter(     # filter by attribute
+        User.username == "tim" and User.password == "fei"
+    )
+    user_by_primary_key = User.query.get( # get user by primary key
+        User.user_id == "PRIMARY_KEY_VALUE" 
+    )
+    res = {}
+    for user in all_users:
+        res[user.username] = user.password
+    return jsonify(res)
+
+# MasterDetail Page Endpoint  <PART OF SKELETON APP>
 @app.route(CONSTANTS['ENDPOINT']['MASTER_DETAIL'])
 def get_master_detail():
     return jsonify(sample_data['text_assets'])
 
-# List Endpoints
+# List Endpoints   <PART OF SKELETON APP>
 @app.route(CONSTANTS['ENDPOINT']['LIST'])
 def get_list():
     return jsonify(sample_data['list_text_assets']['list_items'])
 
+#  <PART OF SKELETON APP>
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods = ['POST'])
 def add_list_item():
     data = request.get_json()
@@ -28,6 +67,7 @@ def add_list_item():
     json_response = jsonify(list_item)
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
+#  <PART OF SKELETON APP>
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<string:id>', methods=['DELETE'])
 def delete_list_item(id):
     list_items_to_remove = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['id'] == id]
@@ -56,3 +96,5 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     app.run(port=CONSTANTS['PORT'])
+    db.create_all()
+    print("creating all db")
