@@ -1,2 +1,5 @@
-sqlalchemy
+SQLAlchemy==1.3.20
+Flask-SQLAlchemy==2.4.4
+Flask-Migrate==2.5.3
 flask==1.1.2
+PyMySQL==0.10.1

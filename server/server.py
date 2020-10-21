@@ -27,7 +27,7 @@ def add_new_user(name, password):
 def remove_user(name, password):
     user = User.query.filter(
         User.username == name and User.password == password
-    )
+    ).first()
     if user: 
         db.session.delete(user[0])
         db.session.commit()
@@ -40,9 +40,9 @@ def print_db():
     users_named_tim = User.query.filter(     # filter by attribute
         User.username == "tim" and User.password == "fei"
     )
-    user_by_primary_key = User.query.get( # get user by primary key
-        User.user_id == "PRIMARY_KEY_VALUE" 
-    )
+    # user_by_primary_key = User.query.get( # get user by primary key
+    #     User.user_id == "PRIMARY_KEY_VALUE" 
+    # )
     res = {}
     for user in all_users:
         res[user.username] = user.password
