@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, make_response, send_from_directory
+from flask import Flask, jsonify, make_response, send_from_directory, session
 import uuid
 from flask import request
 import os
@@ -6,13 +6,11 @@ from os.path import exists, join
 
 from constants import CONSTANTS
 from sample_data import sample_data
-from app import create_app
 
-from app import db
-from app.models import User
+from app import db, app
+from app.models import *
 
-app = create_app()
-
+app.secret_key = "TESTKEY"
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/add_user/<string:name>/<string:password>')
@@ -20,6 +18,8 @@ def add_new_user(name, password):
     new_user = User(name, password)
     db.session.add(new_user)
     db.session.commit()
+    session["user_id"] = new_user.user_id
+    print(session)
     return ""
 
 # EXAMPLE OF HOW TO REMOVE ENTRIES TO DB  <PART OF YANISA's DB SETUP>
@@ -32,6 +32,18 @@ def remove_user(name, password):
         db.session.delete(user[0])
         db.session.commit()
     return ""
+
+# EXAMPLE OF HOW TO ADD ITEM WITH FOREIGN KEY <PART OF YANISA's DB SETUP>
+@app.route('/api/add_item/<string:item>')
+def add_new_item(item):
+    if session["user_id"]:
+        user = User.query.get(session["user_id"])        
+        new_item = ShoppingList(user.user_id, item)
+        db.session.add(new_item)
+        db.session.commit()
+        return "item added"
+    return "no user id "
+
 
 # EXAMPLE OF HOW TO QUERY ENTRIES IN DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/show_users')

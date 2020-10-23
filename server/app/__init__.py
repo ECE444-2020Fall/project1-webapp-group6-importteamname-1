@@ -17,7 +17,8 @@ def create_app():
     db.init_app(application)          #<- This will get called in our models.py file
     migrate.init_app(application, db) #<- Migration directory
 
-    return(application)
+    return application
 
+app = create_app()
 # ~ Import database schemas ~ # 
 from app import models
