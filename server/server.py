@@ -7,10 +7,23 @@ from os.path import exists, join
 from constants import CONSTANTS
 from sample_data import sample_data
 
-from app import db, app
+from app import db, app, inventory_manager
 from app.models import *
 
 app.secret_key = "TESTKEY"
+
+@app.route('/api/add_item_to_shopping_list/<string:item>')
+def add_item_to_shopping_list(item):
+    return inventory_manager.add_item(item, ShoppingList)
+
+@app.route('/api/remove_item_from_shopping_list/<string:item>')
+def remove_item_from_shopping_list(item):
+    return inventory_manager.remove_item(item, ShoppingList)
+
+@app.route('/api/show_shopping_list')
+def show_shopping_list():
+    return inventory_manager.get_all_user_items(ShoppingList)
+
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/add_user/<string:name>/<string:password>')

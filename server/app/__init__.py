@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from utils.inventory_manager import InventoryManager
 
 # ~ Databases ~ #
 db = SQLAlchemy()   #<-Initialize database object
 migrate = Migrate() #<-Initialize migration object
+inventory_manager = InventoryManager(db)
 
 def create_app():
     """Construct core application"""

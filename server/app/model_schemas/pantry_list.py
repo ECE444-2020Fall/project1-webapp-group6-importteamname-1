@@ -19,3 +19,6 @@ class PantryList(db.Model):
     def __init__(self, user_id, ingredient_name):
         self.user_id = user_id
         self.ingredient_name = ingredient_name
+
+    def get_item_name(self):
+        return self.ingredient_name

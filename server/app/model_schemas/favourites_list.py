@@ -19,3 +19,6 @@ class FavouritesList(db.Model):
     def __init__(self, user_id, recipe_id):
         self.user_id = user_id
         self.recipe_id = recipe_id
+
+    def get_item_name(self):
+        return self.recipe_id
