@@ -34,6 +34,9 @@ const NavBar = () => {
           <Link className="nav-item nav-link active" to="RecipeCart">
             Recipe Cart
           </Link>
+          <Link className="nav-item nav-link active" to="Login">
+            Login
+          </Link>
         </div>
       </nav>
     </React.Fragment>
