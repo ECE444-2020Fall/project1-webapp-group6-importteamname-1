@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 import ShallowRenderer from 'react-test-renderer/shallow';
 configure({ adapter: new Adapter() });
 
+// This unit test is written by Tim Fei
 describe('FavouriteRecipes', () => {
     it("renders FavouriteRecipes without crashing", () => {
         const FavouriteRecipesPage = shallow(<FavouriteRecipes />);
