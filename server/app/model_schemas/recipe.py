@@ -59,9 +59,8 @@ class Recipe(db.Model):
     )
 
     def __init__(
-        self, recipe_id, recipe_name, cuisine, instructions, 
+        self, recipe_name, cuisine, instructions, 
         time_to_cook_in_minutes, servings, calories, protein, carbs, fat):
-        self.recipe_id = recipe_id
         self.recipe_name = recipe_name
         self.cuisine = cuisine
         self. instructions = instructions
