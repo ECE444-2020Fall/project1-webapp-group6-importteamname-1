@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouriteRecipes renders FavouriteRecipes without crashing 1`] = `ShallowWrapper {}`;
+
+exports[`FavouriteRecipes renders NavBar without crashing 1`] = `ShallowWrapper {}`;
