@@ -71,8 +71,3 @@ class Recipe(db.Model):
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
-
-
-
-
-

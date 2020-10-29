@@ -12,15 +12,16 @@ from app.models import *
 
 app.secret_key = "TESTKEY"
 
-@app.route('/api/add_item_to_shopping_list/<string:item>')
-def add_item_to_shopping_list(item):
+@app.route('/api/add_item_to_shopping_list', methods=['POST'])
+def add_item_to_shopping_list():
+    item = request.get_json()["item"]
     return inventory_manager.add_item(item, ShoppingList)
 
-@app.route('/api/remove_item_from_shopping_list/<string:item>')
+@app.route('/api/remove_item_from_shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
     return inventory_manager.remove_item(item, ShoppingList)
 
-@app.route('/api/show_shopping_list')
+@app.route('/api/shopping_list')
 def show_shopping_list():
     return inventory_manager.get_all_user_items(ShoppingList)
 
