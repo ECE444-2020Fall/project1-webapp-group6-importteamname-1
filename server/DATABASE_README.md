@@ -19,6 +19,8 @@ During initialization we create an SQLAlchemy object and our migrations object. 
 
 ## Setup
 
+You will need to set an env variable FLASK_APP="server/server.py"
+
 Initialize database (I've already done this for us ):  `flask db init`   
 
 Create a migration: `flask db migrate -m "message specifying what you changed"`

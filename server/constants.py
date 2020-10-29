@@ -4,8 +4,10 @@ from http import HTTPStatus
 CONSTANTS = {
     'PORT': os.environ.get('PORT', 3001),
     'HTTP_STATUS': {
-        '404_NOT_FOUND': HTTPStatus.NOT_FOUND,
+        '200_OK': HTTPStatus.OK,
         '201_CREATED': HTTPStatus.CREATED,
+        '400_BAD_REQUEST': HTTPStatus.BAD_REQUEST,
+        '404_NOT_FOUND': HTTPStatus.NOT_FOUND,
         '500_INTERNAL_SERVER_ERROR': HTTPStatus.INTERNAL_SERVER_ERROR
     },
     'ENDPOINT': {
