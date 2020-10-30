@@ -9,10 +9,16 @@ def client():
     app.config["TESTING"] = True
     return app.test_client()
 
-def test_show_users(client):   
+def test_show_users(client): 
+    '''
+    This unit test is written by Tim Fei
+    '''
     result = client.get('/api/show_users')
     assert(result.status_code == 200)
     
 def test_show_users_with_wrong_url(client):   
+    '''
+    This unit test is written by Tim Fei
+    '''
     result = client.get('/api/show_users_')
     assert(result.status_code == 404)
