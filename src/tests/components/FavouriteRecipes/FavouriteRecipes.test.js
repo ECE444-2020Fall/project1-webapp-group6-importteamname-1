@@ -1,5 +1,5 @@
 import React from 'react';
-import FavouriteRecipes from './FavouriteRecipes';
+import FavouriteRecipes from '../../../components/FavouriteRecipes/FavouriteRecipes';
 
 import { configure, render } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
