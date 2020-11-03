@@ -1,20 +1,20 @@
 ﻿import React from "react";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
+import NavBar from "./pages/NavBar";
+import Footer from "./pages/Footer";
 
-import AddRecipes from "./components/AddRecipes/AddRecipes";
+import AddRecipes from "./pages/AddRecipes/AddRecipes";
 
-import RecipeSearchResults from "./components/RecipeSearchResults/RecipeSearchResults";
+import RecipeSearchResults from "./pages/RecipeSearchResults/RecipeSearchResults";
 
-import RecipeDetail from "./components/RecipeDetail/RecipeDetail";
+import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 
-import FavouriteRecipes from "./components/FavouriteRecipes/FavouriteRecipes";
+import FavouriteRecipes from "./pages/FavouriteRecipes/FavouriteRecipes";
 
-import CalorieTracker from "./components/CalorieTracker/CalorieTracker";
+import CalorieTracker from "./pages/CalorieTracker/CalorieTracker";
 
-import RecipeCart from "./components/RecipeCart/RecipeCart";
+import RecipeCart from "./pages/RecipeCart/RecipeCart";
 
 //TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
