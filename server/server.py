@@ -13,8 +13,14 @@ from app.models import *
 app.secret_key = "TESTKEY"
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
-@app.route('/api/add_user/<string:name>/<string:password>')
+@app.route('/api/add_user/<string:name>/<string:password>', methods=['POST'])
 def add_new_user(name, password):
+    user = User.query.filter(
+        User.username == name and User.password == password
+    ).first()
+    if user:
+        return "User already exists"
+
     new_user = User(name, password)
     db.session.add(new_user)
     db.session.commit()
@@ -32,6 +38,17 @@ def remove_user(name, password):
         db.session.delete(user[0])
         db.session.commit()
     return ""
+
+@app.route('/api/login/<string:name>/<string:password>', methods=['POST'])
+def login_user(name, password):
+    user = User.query.filter(
+        User.username == name and User.password == password
+    ).first()
+    if user:
+        session["user_id"] = user.user_id
+        return ""
+    return "User not found"
+    
 
 # EXAMPLE OF HOW TO ADD ITEM WITH FOREIGN KEY <PART OF YANISA's DB SETUP>
 @app.route('/api/add_item/<string:item>')
