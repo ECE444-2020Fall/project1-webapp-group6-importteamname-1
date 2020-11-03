@@ -1,6 +1,6 @@
 ﻿## How to run the code locally
 
-In the root directory of the project...
+In the root directory of the project
 
 1. Install node modules `yarn install` or `npm install`.
 2. Install Python dependencies `yarn install-requirements` or `npm install requirements`
