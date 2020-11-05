@@ -71,6 +71,9 @@ const NavBar = () => {
           <Link className="nav-item nav-link active" to="CalorieTracker">
             Calorie Tracker
           </Link>
+          <Link className="nav-item nav-link active" to="ShoppingList">
+            Shopping List
+          </Link>
           <Link className="nav-item nav-link active" to="RecipeCart">
             Recipe Cart
           </Link>

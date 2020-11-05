@@ -3,6 +3,7 @@ import uuid
 from flask import request
 import os
 from os.path import exists, join
+from flask_cors import CORS
 
 from constants import CONSTANTS
 from sample_data import sample_data
@@ -10,7 +11,29 @@ from sample_data import sample_data
 from app import db, app, inventory_manager
 from app.models import *
 
+CORS(app)
 app.secret_key = "TESTKEY"
+
+# SHOW RECIPES CURRENTLY IN THE DB <Tim's setup for recipe scraper>
+@app.route('/api/show_recipes')
+def show_recipes():
+    recipes = Recipe.query.all() # get all recipes
+    recipe_list = []
+
+    for recipe in recipes:
+        recipe_info_object = {}
+        recipe_info_object["recipe_name"] = recipe.recipe_name
+        recipe_info_object["cuisine"] = recipe.cuisine
+        recipe_info_object["instructions"] = recipe.instructions
+        recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
+        recipe_info_object["servings"] = recipe.servings
+        recipe_info_object["calories"] = recipe.calories
+        recipe_info_object["protein"] = recipe.protein
+        recipe_info_object["carbs"] = recipe.carbs
+        recipe_info_object["fat"] = recipe.fat
+        recipe_list.append(recipe_info_object)
+    return jsonify(recipe_list)
+
 
 @app.route('/api/add_item_to_shopping_list', methods=['POST'])
 def add_item_to_shopping_list():

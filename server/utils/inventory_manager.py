@@ -15,7 +15,7 @@ class InventoryManager():
             return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
         
         user_id = session['user_id']
-
+        
         if model.query.get((user_id, item)):      # item already in list
             json_response = jsonify({
                 'error': f'item already in {model.__tablename__}'
@@ -64,9 +64,8 @@ class InventoryManager():
 
         user_id = session['user_id']
         user_items = model.query.filter(model.user_id == user_id)
-        
         user_items_map = {}
-        user_items_map[str(user_id)] = [item.get_item_name() for item in user_items]
+        user_items_map["items"] = [item.get_item_name() for item in user_items]
         json_response = jsonify(user_items_map)
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
 
