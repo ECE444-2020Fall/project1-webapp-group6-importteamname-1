@@ -1,0 +1,2 @@
+server: node server/server.py
+client: node src/index.js
