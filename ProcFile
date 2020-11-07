@@ -1,2 +1,1 @@
-server: node server/server.py
-client: node src/index.js
+server: gunicorn server/server.py:app
