@@ -22,7 +22,7 @@
     "concurrently": "5.2.0"
   },
   "scripts": {
-    "start": " (yarn install || npm install) && (yarn install-requirements || npm install-requirements ) && concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
+    "start": " npm install && npm install-requirements && concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
     "start-backend": "python3 server/server.py || python server/server.py || py -3 server/server.py",
     "install-requirements": "pip install -r server/requirements.txt",
     "start-frontend": "react-scripts start",
