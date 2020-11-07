@@ -22,7 +22,7 @@
   "devDependencies": {
   },
   "scripts": {
-    "start": "npm install && npm run start-frontend",
+    "start": "npm install && npm run start-backend",
     "start-backend": "python3 server/server.py || python server/server.py || py -3 server/server.py",
     "install-requirements": "pip install -r requirements.txt",
     "start-frontend": "react-scripts start",
