@@ -20,7 +20,6 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "concurrently": "5.2.0"
   },
   "scripts": {
     "start": "npm install && npm install-requirements && concurrently \"npm run start-frontend\" \"npm run start-backend\"",
