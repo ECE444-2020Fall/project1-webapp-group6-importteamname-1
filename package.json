@@ -23,7 +23,7 @@
     "concurrently": "5.2.0"
   },
   "scripts": {
-    "start": "npm install && install-requirements && concurrently \"npm run start-frontend\" \"npm run start-backend\"",
+    "start": "npm install && concurrently \"npm run start-frontend\" \"npm run start-backend\"",
     "start-backend": "python3 server/server.py || python server/server.py || py -3 server/server.py",
     "install-requirements": "pip install -r server/requirements.txt",
     "start-frontend": "react-scripts start",
