@@ -4,6 +4,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PropTypes from 'prop-types';
+
 
 const DeletableListItem = ({ item, removeItem }) => {
   return (
@@ -17,6 +19,11 @@ const DeletableListItem = ({ item, removeItem }) => {
     </ListItem>
   )
 }
+
+DeletableListItem.propTypes = {
+  item: PropTypes.string,
+  removeItem: PropTypes.func
+};
 
 export { DeletableListItem };
 

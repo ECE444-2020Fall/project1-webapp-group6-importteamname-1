@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ListWithDeletableItems } from '../../components/ListWithDeletableItems'
 import { AddItemTextField } from '../../components/AddItemTextField'
 import { PageTitle } from '../../components/PageTitle'
+import PropTypes from 'prop-types';
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,5 +36,13 @@ const ListContainer = ({
     </main>
   )
 }
+
+ListContainer.propTypes = {
+  pageTitle: PropTypes.any,
+  newItem: PropTypes.any,
+  setNewItem: PropTypes.func,
+  shoppingItems: PropTypes.any,
+  addShoppingListItem: PropTypes.func
+};
 
 export { ListContainer };

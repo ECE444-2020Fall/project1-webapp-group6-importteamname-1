@@ -8,31 +8,32 @@ from flask_cors import CORS
 from constants import CONSTANTS
 from sample_data import sample_data
 
-from app import db, app, inventory_manager
+from app import db, app, inventory_manager, recipe_personalization_manager
 from app.models import *
 
 CORS(app)
 app.secret_key = "TESTKEY"
 
-# SHOW RECIPES CURRENTLY IN THE DB <Tim's setup for recipe scraper>
-@app.route('/api/show_recipes')
-def show_recipes():
-    recipes = Recipe.query.all() # get all recipes
-    recipe_list = []
+@app.route('/api/add_or_update_user_notes', methods=['POST'])
+def add_or_update_user_notes():
+    recipe_id = request.get_json()["recipe_id"]
+    feedback = request.get_json()["feedback"]
+    return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserNotes)
 
-    for recipe in recipes:
-        recipe_info_object = {}
-        recipe_info_object["recipe_name"] = recipe.recipe_name
-        recipe_info_object["cuisine"] = recipe.cuisine
-        recipe_info_object["instructions"] = recipe.instructions
-        recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
-        recipe_info_object["servings"] = recipe.servings
-        recipe_info_object["calories"] = recipe.calories
-        recipe_info_object["protein"] = recipe.protein
-        recipe_info_object["carbs"] = recipe.carbs
-        recipe_info_object["fat"] = recipe.fat
-        recipe_list.append(recipe_info_object)
-    return jsonify(recipe_list)
+@app.route('/api/user_notes')
+def show_user_notes():
+    return recipe_personalization_manager.get_all_user_feedbacks(UserNotes)
+
+
+@app.route('/api/add_or_update_user_rating', methods=['POST'])
+def add_or_update_user_rating():
+    recipe_id = request.get_json()["recipe_id"]
+    feedback = request.get_json()["feedback"]
+    return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserRating)
+
+@app.route('/api/user_ratings')
+def show_user_ratings():
+    return recipe_personalization_manager.get_all_user_feedbacks(UserRating)
 
 
 @app.route('/api/add_item_to_shopping_list', methods=['POST'])
@@ -48,6 +49,38 @@ def remove_item_from_shopping_list(item):
 def show_shopping_list():
     return inventory_manager.get_all_user_items(ShoppingList)
 
+@app.route('/api/add_recipe_to_favourites_list', methods=['POST'])
+def add_recipe_to_favs_list():
+    recipe_id = request.get_json()["item"]
+    return inventory_manager.add_item(recipe_id, FavouritesList)
+
+@app.route('/api/remove_recipe_from_favourites_list/<string:recipe_id>', methods=['DELETE'])
+def remove_recipe_from_favs_list(recipe_id):
+    return inventory_manager.remove_item(recipe_id, FavouritesList)
+
+@app.route('/api/favourites_list')
+def show_favs_list():
+    return inventory_manager.get_all_user_items(FavouritesList)
+
+@app.route('/api/show_recipes')
+def show_recipes():
+    recipes = Recipe.query.all() # get all recipes
+    recipe_list = []
+
+    for recipe in recipes:
+        recipe_info_object = {}
+        recipe_info_object["recipe_id"] = recipe.recipe_id
+        recipe_info_object["recipe_name"] = recipe.recipe_name
+        recipe_info_object["cuisine"] = recipe.cuisine
+        recipe_info_object["instructions"] = recipe.instructions
+        recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
+        recipe_info_object["servings"] = recipe.servings
+        recipe_info_object["calories"] = recipe.calories
+        recipe_info_object["protein"] = recipe.protein
+        recipe_info_object["carbs"] = recipe.carbs
+        recipe_info_object["fat"] = recipe.fat
+        recipe_list.append(recipe_info_object)
+    return jsonify(recipe_list)
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/add_user/<string:name>/<string:password>')

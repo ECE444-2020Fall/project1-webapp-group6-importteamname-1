@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
+import PropTypes from 'prop-types';
+
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -27,5 +29,9 @@ const ListWithDeletableItems = ({ shoppingItems }) => {
     </Grid>
   );
 }
+
+ListWithDeletableItems.propTypes = {
+  shoppingItems: PropTypes.any
+};
 
 export { ListWithDeletableItems };

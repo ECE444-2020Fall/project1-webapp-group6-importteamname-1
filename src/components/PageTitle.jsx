@@ -1,5 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
 
 const useStyles = makeStyles(() => ({
 	title: {
@@ -19,5 +21,9 @@ const PageTitle = ({ titleName }) => {
 		</div>
 	);
 }
+
+PageTitle.propTypes = {
+  titleName: PropTypes.string
+};
 
 export { PageTitle };
