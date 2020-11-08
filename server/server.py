@@ -8,7 +8,7 @@ from flask_cors import CORS
 from constants import CONSTANTS
 from sample_data import sample_data
 
-from app import db, app, inventory_manager, recipe_personalization_manager
+from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller
 from app.models import *
 
 CORS(app)
@@ -62,25 +62,27 @@ def remove_recipe_from_favs_list(recipe_id):
 def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
 
-@app.route('/api/show_recipes')
-def show_recipes():
-    recipes = Recipe.query.all() # get all recipes
-    recipe_list = []
+##################################################################
+# ADD RECIPE TO DB BASED ON URL PARAMETERS <Tim's setup for recipe scraper>
+@app.route('/api/add_recipe/<string:recipe_name>/<string:cuisine>/<string:instructions>/<int:time_to_cook_in_minutes>/<int:servings>/<int:calories>/<int:protein>/<int:carbs>/<int:fat>')
+def add_recipe(recipe_name, cuisine, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat):
+    recipe = Recipe(recipe_name, cuisine, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
+    db.session.add(recipe)
+    db.session.commit()
+    return ""
 
-    for recipe in recipes:
-        recipe_info_object = {}
-        recipe_info_object["recipe_id"] = recipe.recipe_id
-        recipe_info_object["recipe_name"] = recipe.recipe_name
-        recipe_info_object["cuisine"] = recipe.cuisine
-        recipe_info_object["instructions"] = recipe.instructions
-        recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
-        recipe_info_object["servings"] = recipe.servings
-        recipe_info_object["calories"] = recipe.calories
-        recipe_info_object["protein"] = recipe.protein
-        recipe_info_object["carbs"] = recipe.carbs
-        recipe_info_object["fat"] = recipe.fat
-        recipe_list.append(recipe_info_object)
-    return jsonify(recipe_list)
+# ADD HARD-CODED RECIPE TO DB <Tim's setup for recipe scraper>
+@app.route('/api/add_recipe_hardcode')
+def add_recipe_hardcode():
+    recipe = Recipe(123, "recipe_name", "image", "cuisine", "instructions", 10, 1, 1, 1, 1, 1)
+    db.session.add(recipe)
+    db.session.commit()
+    return ""
+
+@app.route('/api/get_recipes')
+def show_recipes():
+    return recipe_controller.get_all_recipes(Recipe)
+##################################################################
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/add_user/<string:name>/<string:password>')
