@@ -5,12 +5,14 @@ import Detail from "./Detail";
 import MasterList from "./MasterList";
 import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
+import { useParams } from "react-router-dom";
 
 const RecipeDetail = () => {
   const [sampleOrders, setSampleOrders] = useState([]);
   const [currentSampleOrder, setCurrentSampleOrder] = useState({});
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
   const sidebarStyle = classnames("col-2","p-0","border-right", styles.sidebar);
+  let { recipe_id } =  useParams();
 
   const getSampleOrders = () => {
     let promiseSampleOrders = fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
@@ -42,6 +44,7 @@ const RecipeDetail = () => {
 
   return (
     <main id="mainContent">
+      <h1> Showing recipe detail for recipe {recipe_id}</h1>
       <div className="container-fluid">
         <div className="row">
           <div className={sidebarStyle}>
