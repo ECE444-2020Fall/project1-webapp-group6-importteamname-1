@@ -73,7 +73,6 @@ class InventoryManager():
         user_items = model.query.filter(model.user_id == user_id)
         user_items_map = {}
         user_items_map["items"] = [item.get_item_name() for item in user_items]
-        print(user_items_map)
         json_response = jsonify(user_items_map)
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
 
