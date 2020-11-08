@@ -11,7 +11,7 @@ class InventoryManager():
         if 'user_id' not in session:
             user_id = "5b908304-86f0-4d71-8867-9536e2c616f4"
             if model.query.get((user_id, item)):      # item already in list
-                print('error': f'item already in {model.__tablename__}')
+                print(f'item already in {model.__tablename__}')
             else:
                 print('added item')
 
