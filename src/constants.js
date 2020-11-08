@@ -17,7 +17,7 @@ CONSTANTS.ENDPOINT = {};
 CONSTANTS.ENDPOINT.LIST = '/api/list';
 
 CONSTANTS.ENDPOINT.MASTERDETAIL = '/api/masterdetail';
-CONSTANTS.ENDPOINT.REMOVE_SHOPPING_LIST_ITEM = '/api/remove_item_from_shopping_list';
-CONSTANTS.ENDPOINT.ADD_SHOPPING_LIST_ITEM = '/api/add_item_to_shopping_list';
-CONSTANTS.ENDPOINT.GET_SHOPPING_LIST = '/api/shopping_list';
+CONSTANTS.ENDPOINT.REMOVE_SHOPPING_LIST_ITEM = 'https://chefcopilotbackend.herokuapp.com/api/remove_item_from_shopping_list';
+CONSTANTS.ENDPOINT.ADD_SHOPPING_LIST_ITEM = 'https://chefcopilotbackend.herokuapp.com/api/add_item_to_shopping_list';
+CONSTANTS.ENDPOINT.GET_SHOPPING_LIST = 'https://chefcopilotbackend.herokuapp.com/api/shopping_list';
 export default CONSTANTS;
