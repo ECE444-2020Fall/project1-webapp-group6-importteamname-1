@@ -13,25 +13,22 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
-    "react-scripts": "^4.0.0"
+    "react-scripts": "^4.0.0",
+    "concurrently": "5.2.0"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "devDependencies": {
-    "concurrently": "5.2.0"
-  },
   "scripts": {
-    "start": "concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
+    "start": "react-scripts start",
     "start-backend": "python3 server/server.py || python server/server.py || py -3 server/server.py",
-    "install-requirements": "pip install -r server/requirements.txt",
+    "install-requirements": "pip install -r requirements.txt",
     "start-frontend": "react-scripts start",
     "build": "node ./buildScript",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/**/*.jsx"
   },
-  "proxy": "http://localhost:3001",
   "browserslist": [
     ">0.2%",
     "not dead",

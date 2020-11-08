@@ -25,3 +25,9 @@ class UserNotes(db.Model):
         self.user_id = user_id
         self.recipe_id = recipe_id
         self.user_notes = user_notes
+
+    def update_feedback(self, feedback):
+        self.user_notes = feedback
+
+    def get_feedback(self):
+        return self.user_notes

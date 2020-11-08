@@ -2,8 +2,8 @@ import React from 'react';
 import { DeletableListItem } from '../components/DeletableListItem'
 
 function generateList(items, removeItem) {
-  return items.map((item) =>
-    <DeletableListItem item={item} removeItem={removeItem} />
+  return items.map(item =>
+    <DeletableListItem key={item} item={item} removeItem={removeItem} />
   );
 }
 
@@ -14,7 +14,7 @@ const removeItem = (item, endpoint) => {
     if (!response.ok) {
       throw Error(response.statusText);
     }
-    return response
+    return
   })
 }
 
@@ -32,7 +32,7 @@ const addItem = (newItem, endpoint) => {
     if (response.status === 500) {
       throw Error(response.statusText);
     }
-    return response
+    return 
   })
 }
 

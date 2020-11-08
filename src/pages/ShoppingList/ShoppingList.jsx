@@ -10,13 +10,13 @@ const ShoppingList = () => {
 
   const removeShoppingListItem = (item) => {
     removeItem(item, CONSTANTS.ENDPOINT.REMOVE_SHOPPING_LIST_ITEM)
-      .then((res) => setRefreshList(true))
+      .then(() => setRefreshList(true))
   }
 
   const addShoppingListItem = () => {
     if (newItem) {
       addItem(newItem, CONSTANTS.ENDPOINT.ADD_SHOPPING_LIST_ITEM)
-        .then((res) => {
+        .then(() => {
           setRefreshList(true)
           setNewItem('')
         })
@@ -30,7 +30,7 @@ const ShoppingList = () => {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        return response.text()
+        return response.text();
       }).then(body => JSON.parse(body).items)
       .then(res => setShoppingItems(generateList(res, removeShoppingListItem)));
   }

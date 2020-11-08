@@ -1,7 +1,9 @@
 ﻿import React from 'react';
+
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './pages/NavBar';
+
 import Footer from './pages/Footer';
 
 import AddRecipes from './pages/AddRecipes/AddRecipes';

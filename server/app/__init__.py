@@ -2,10 +2,12 @@ from flask import Flask, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from utils.inventory_manager import InventoryManager
+from utils.recipe_personalization_manager import RecipePersonalizationManager
 # ~ Databases ~ #
 db = SQLAlchemy()   #<-Initialize database object
 migrate = Migrate() #<-Initialize migration object
 inventory_manager = InventoryManager(db)
+recipe_personalization_manager = RecipePersonalizationManager(db)
 
 def create_app():
     """Construct core application"""

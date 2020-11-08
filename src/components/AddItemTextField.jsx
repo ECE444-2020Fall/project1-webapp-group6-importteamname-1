@@ -1,8 +1,10 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 
 
 const AddItemTextField = ({ newItem, setNewItem, addShoppingListItem }) => {
+
   return (
     <TextField
       id='shopping'
@@ -19,5 +21,11 @@ const AddItemTextField = ({ newItem, setNewItem, addShoppingListItem }) => {
       variant='outlined' />
   )
 }
+
+AddItemTextField.propTypes = {
+  newItem: PropTypes.any,
+  setNewItem: PropTypes.func,
+  addShoppingListItem: PropTypes.func
+};
 
 export { AddItemTextField };
