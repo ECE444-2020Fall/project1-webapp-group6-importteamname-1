@@ -19,8 +19,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "devDependencies": {
-  },
   "scripts": {
     "start": "react-scripts start",
     "start-backend": "python3 server/server.py || python server/server.py || py -3 server/server.py",
