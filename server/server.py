@@ -47,6 +47,7 @@ def remove_item_from_shopping_list(item):
 
 @app.route('/api/shopping_list')
 def show_shopping_list():
+    print("Here")
     return inventory_manager.get_all_user_items(ShoppingList)
 
 @app.route('/api/add_recipe_to_favourites_list', methods=['POST'])

@@ -57,15 +57,16 @@ class InventoryManager():
 
     def get_all_user_items(self, model):     # get all items in model belonging to user 
         if 'user_id' not in session:                                # user not logged in 
+            print("AAA")
             json_response = jsonify({
                 'error': 'user_id not in session, log in again'
             })
             return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-
         user_id = session['user_id']
         user_items = model.query.filter(model.user_id == user_id)
         user_items_map = {}
         user_items_map["items"] = [item.get_item_name() for item in user_items]
+        print(user_items_map)
         json_response = jsonify(user_items_map)
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
 
