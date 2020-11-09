@@ -64,10 +64,3 @@ class RecipeController():
         })
 
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
-
-
-    def get_recipe_by_query(self, model):
-        """
-        This will be used by the recipe search results page
-        """
-
