@@ -23,6 +23,7 @@ CONSTANTS = {
         'MAX_CUISINE_LEN': 50,
         'MAX_INSTRUCTION_LEN': 500,
         'MAX_MEASUREMENT_UNIT_LEN': 50,
-        'MAX_IMAGE_URL_LEN': 100
+        'MAX_IMAGE_URL_LEN': 100,
+        'MAX_NUTRITION_STRING_LEN': 20
     }
 }

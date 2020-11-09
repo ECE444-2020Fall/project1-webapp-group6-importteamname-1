@@ -48,17 +48,17 @@ class Recipe(db.Model):
     )
 
     protein = db.Column(
-        db.Float,
+        db.String(CONSTANTS['DB_SCHEMA']['MAX_NUTRITION_STRING_LEN']),
         nullable=False
     )
 
     carbs = db.Column(
-        db.Float,
+        db.String(CONSTANTS['DB_SCHEMA']['MAX_NUTRITION_STRING_LEN']),
         nullable=False
     )
 
     fat = db.Column(
-        db.Float,
+        db.String(CONSTANTS['DB_SCHEMA']['MAX_NUTRITION_STRING_LEN']),
         nullable=False
     )
 

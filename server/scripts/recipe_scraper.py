@@ -12,7 +12,7 @@ def get_recipes_from_spoonacular_api(spoonacular_api_key):
     spoonacular_api_recipes_endpoint = "https://api.spoonacular.com/recipes/random"
     params_for_recipes_endpoint = {
         'apiKey' : spoonacular_api_key,
-        'number' : 2
+        'number' : 5
     }
     spoonacular_recipes_response = requests.get(spoonacular_api_recipes_endpoint, params=params_for_recipes_endpoint)
     return spoonacular_recipes_response.json()
@@ -65,12 +65,13 @@ def process_spoonacular_recipes(spoonacular_recipes_json, spoonacular_api_key):
         carbs = recipe_nutrition_json["carbs"]
         fat = recipe_nutrition_json["fat"]
         protein = recipe_nutrition_json["protein"]
+   
+        response_json = populate_chef_copilot_database(recipe_id, recipe_name, recipe_image, cuisines, time_to_cook_in_minutes,
+                                                        servings, instructions, calories, carbs, fat, protein)
+    return 
 
-    # Call this to populate Amazon RDS
-    # populate_chef_copilot_database(recipe_id, recipe_name, cuisines, time_to_cook_in_minutes,
-    #                                                  servings, instructions, calories, carbs, fat, protein)
 
-def populate_chef_copilot_database(recipe_id, recipe_name, cuisines, time_to_cook_in_minutes,
+def populate_chef_copilot_database(recipe_id, recipe_name, recipe_image, cuisines, time_to_cook_in_minutes,
                                                      servings, instructions, calories, carbs, fat, protein):
     """
     Populate the Chef Co-Pilot app's Amazon RDS database with recipes.
@@ -90,18 +91,30 @@ def populate_chef_copilot_database(recipe_id, recipe_name, cuisines, time_to_coo
         A HTTP status code of the request to server.py's endpoint.
     """
    # Modify this part after refactoring server.py endpoints 
-    chef_copilot_server_endpoint = "http://localhost:3001/api/add_recipe/{}/{}/{}/{}/{}/{}/{}/{}/{}".format(
-        recipe_name, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
-    chef_copilot_server_response = requests.get(chef_copilot_server_endpoint)
+    chef_copilot_server_endpoint = "http://localhost:3001/api/recipes/add"
+    request_body = {
+        "recipe_id": recipe_id,
+        "recipe_name": recipe_name,
+        "recipe_image": recipe_image,
+        "cuisines": "111",
+        "instructions": "111",
+        "time_to_cook_in_minutes": time_to_cook_in_minutes,
+        "servings": servings,
+        "calories": calories,
+        "protein": protein,
+        "carbs": carbs,
+        "fat": fat
+    }
+    request_headers = {
+        'Content-type': 'application/json'
+    }
+    
+    chef_copilot_server_response = requests.post(chef_copilot_server_endpoint, json=request_body, headers=request_headers)
+    
+    return chef_copilot_server_response.json()
 
 
 spoonacular_api_key = "e568b1c9b8374dbe9ce768f1f5a94d08"
 spoonacular_recipes_json = get_recipes_from_spoonacular_api(spoonacular_api_key)
-process_spoonacular_recipes(spoonacular_recipes_json, spoonacular_api_key)
-
-'''
-TODO
-1) Move spoonacular endpoint + server.py endpoint url to CONSTANTS folder
-2) Move spoonacular API key to CONSTANTS folder
-
-'''
+populate_db_response = process_spoonacular_recipes(spoonacular_recipes_json, spoonacular_api_key)
+print(populate_db_response)

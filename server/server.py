@@ -20,6 +20,7 @@ def add_or_update_user_notes():
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserNotes)
 
+
 @app.route('/api/user_notes')
 def show_user_notes():
     return recipe_personalization_manager.get_all_user_feedbacks(UserNotes)
@@ -31,6 +32,7 @@ def add_or_update_user_rating():
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserRating)
 
+
 @app.route('/api/user_ratings')
 def show_user_ratings():
     return recipe_personalization_manager.get_all_user_feedbacks(UserRating)
@@ -41,51 +43,59 @@ def add_item_to_shopping_list():
     item = request.get_json()["item"]
     return inventory_manager.add_item(item, ShoppingList)
 
+
 @app.route('/api/remove_item_from_shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
     return inventory_manager.remove_item(item, ShoppingList)
 
+
 @app.route('/api/shopping_list')
 def show_shopping_list():
     return inventory_manager.get_all_user_items(ShoppingList)
+
 
 @app.route('/api/add_recipe_to_favourites_list', methods=['POST'])
 def add_recipe_to_favs_list():
     recipe_id = request.get_json()["item"]
     return inventory_manager.add_item(recipe_id, FavouritesList)
 
+
 @app.route('/api/remove_recipe_from_favourites_list/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_from_favs_list(recipe_id):
     return inventory_manager.remove_item(recipe_id, FavouritesList)
+
+
+@app.route('/api/delete_all_user_notes', methods=['DELETE'])
+def delete_all_user_notes():
+    db.session.query(UserNotes).delete()
+    db.session.commit()
+    json_response = jsonify({
+        'Success': 'Deleted all rows in the UserNotes table',
+    })
+
+    return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
+
 
 @app.route('/api/favourites_list')
 def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
 
-##################################################################
 
 @app.route('/api/recipes/add', methods=['POST'])
 def add_recipe():
-    return recipe_controller.add_recipe(Recipe, request)
+    request_json = request.get_json()
+    return recipe_controller.add_recipe(Recipe, request_json)
+
 
 @app.route('/api/recipes', methods=['GET'])
 def get_all_recipes():
     return recipe_controller.get_all_recipes(Recipe)
 
+
 @app.route('/api/recipes', methods=['DELETE'])
 def remove_all_recipes():
     return recipe_controller.delete_all_recipes(Recipe)
 
-# ADD HARD-CODED RECIPE TO DB <Tim's setup for recipe scraper>
-@app.route('/api/add_recipe_hardcode')
-def add_recipe_hardcode():
-    recipe = Recipe(123, "recipe_name", "image", "cuisine", "instructions", 10, 1, 1, 1, 1, 1)
-    db.session.add(recipe)
-    db.session.commit()
-    return ""
-
-
-##################################################################
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/add_user/<string:name>/<string:password>')
