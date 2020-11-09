@@ -9,7 +9,6 @@ class Recipe(db.Model):
     recipe_id = db.Column(
         db.Integer, 
         primary_key=True, 
-        default=uuid.uuid4, 
         nullable=False
     )
 

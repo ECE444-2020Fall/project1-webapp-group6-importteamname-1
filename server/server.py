@@ -63,13 +63,11 @@ def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
 
 ##################################################################
+
 # ADD RECIPE TO DB BASED ON URL PARAMETERS <Tim's setup for recipe scraper>
-@app.route('/api/add_recipe/<string:recipe_name>/<string:cuisine>/<string:instructions>/<int:time_to_cook_in_minutes>/<int:servings>/<int:calories>/<int:protein>/<int:carbs>/<int:fat>')
-def add_recipe(recipe_name, cuisine, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat):
-    recipe = Recipe(recipe_name, cuisine, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
-    db.session.add(recipe)
-    db.session.commit()
-    return ""
+@app.route('/api/add_recipe', methods=['POST'])
+def add_recipe():
+    return recipe_controller.add_recipe(Recipe, request)
 
 # ADD HARD-CODED RECIPE TO DB <Tim's setup for recipe scraper>
 @app.route('/api/add_recipe_hardcode')
@@ -82,6 +80,8 @@ def add_recipe_hardcode():
 @app.route('/api/get_recipes')
 def show_recipes():
     return recipe_controller.get_all_recipes(Recipe)
+
+
 ##################################################################
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
