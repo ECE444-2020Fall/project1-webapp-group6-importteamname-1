@@ -50,7 +50,7 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
     for recipe in range(len(spoonacular_recipes_json["recipes"])):
         spoonacular_recipe_id = spoonacular_recipes_json["recipes"][recipe]["id"]
         recipe_name = spoonacular_recipes_json["recipes"][recipe]["title"]
-        recipe_image = spoonacular_recipes_json["recipes"][recipe]["image"]
+        image_url = spoonacular_recipes_json["recipes"][recipe]["image"]
         cuisines = spoonacular_recipes_json["recipes"][recipe]["cuisines"][:]
         time_to_cook_in_minutes = spoonacular_recipes_json["recipes"][recipe]["readyInMinutes"]
         servings = spoonacular_recipes_json["recipes"][recipe]["servings"]
@@ -68,12 +68,12 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         fat = recipe_nutrition_json["fat"]
         protein = recipe_nutrition_json["protein"]
    
-        populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, recipe_image, cuisines, time_to_cook_in_minutes,
+        populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
                                                         servings, instructions, calories, carbs, fat, protein)
     return 
 
 
-def populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, recipe_image, cuisines, time_to_cook_in_minutes,
+def populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
                                                      servings, instructions, calories, carbs, fat, protein):
     """
     Populate the Chef Co-Pilot app's Amazon RDS database with recipes.
@@ -96,7 +96,7 @@ def populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, recipe_im
     request_body = {
         "spoonacular_recipe_id": spoonacular_recipe_id,
         "recipe_name": recipe_name,
-        "recipe_image": recipe_image,
+        "image_url": image_url,
         "cuisines": str(cuisines),
         "instructions": str(instructions),
         "time_to_cook_in_minutes": time_to_cook_in_minutes,

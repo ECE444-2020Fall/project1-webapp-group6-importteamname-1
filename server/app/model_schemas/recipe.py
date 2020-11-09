@@ -31,7 +31,7 @@ class Recipe(db.Model):
         nullable=False
     )
 
-    recipe_image = db.Column(
+    image_url = db.Column(
         db.String(CONSTANTS['DB_SCHEMA']['MAX_IMAGE_URL_LEN']),
         nullable=False
     )
@@ -77,11 +77,11 @@ class Recipe(db.Model):
     )
 
     def __init__(
-        self, spoonacular_recipe_id, recipe_name, recipe_image, cuisine, instructions, time_to_cook_in_minutes, 
+        self, spoonacular_recipe_id, recipe_name, image_url, cuisine, instructions, time_to_cook_in_minutes, 
                                                                         servings, calories, protein, carbs, fat):
         self.spoonacular_recipe_id = spoonacular_recipe_id 
         self.recipe_name = recipe_name
-        self.recipe_image = recipe_image 
+        self.image_url = image_url 
         self.cuisine = cuisine 
         self.instructions = instructions 
         self.time_to_cook_in_minutes = time_to_cook_in_minutes

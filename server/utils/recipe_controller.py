@@ -10,7 +10,7 @@ class RecipeController():
     def add_recipe(self, model, request_json):
         spoonacular_recipe_id = request_json["spoonacular_recipe_id"]
         recipe_name = request_json["recipe_name"]
-        recipe_image = request_json["recipe_image"]
+        image_url = request_json["image_url"]
         cuisines = request_json["cuisines"]
         instructions = request_json["instructions"]
         time_to_cook_in_minutes = request_json["time_to_cook_in_minutes"]
@@ -20,7 +20,7 @@ class RecipeController():
         carbs = request_json["carbs"]
         fat = request_json["fat"]
 
-        recipe = model(spoonacular_recipe_id, recipe_name, recipe_image, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
+        recipe = model(spoonacular_recipe_id, recipe_name, image_url, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
         self.db.session.add(recipe)
         self.db.session.commit()
         
@@ -41,7 +41,7 @@ class RecipeController():
             recipe_info_object["recipe_id"] = recipe.recipe_id
             recipe_info_object["spoonacular_recipe_id"] = recipe.spoonacular_recipe_id
             recipe_info_object["recipe_name"] = recipe.recipe_name
-            recipe_info_object["recipe_image"] = recipe.recipe_image
+            recipe_info_object["image_url"] = recipe.image_url
             recipe_info_object["cuisine"] = recipe.cuisine
             recipe_info_object["instructions"] = recipe.instructions
             recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
