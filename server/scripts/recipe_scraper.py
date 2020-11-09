@@ -1,3 +1,6 @@
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from constants import CONSTANTS
 import requests
 
@@ -63,7 +66,9 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         
         recipe_nutrition_json = get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, spoonacular_recipe_id)
 
-        calories = recipe_nutrition_json["calories"]       
+        calories = recipe_nutrition_json["calories"]
+        # Spoonacular API returns the following values in string format -> e.g. "20g".
+        # We need to drop the "g" and convert the value to float      
         carbs = recipe_nutrition_json["carbs"]
         fat = recipe_nutrition_json["fat"]
         protein = recipe_nutrition_json["protein"]
@@ -98,7 +103,7 @@ def populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, image_url
         "recipe_name": recipe_name,
         "image_url": image_url,
         "cuisines": str(cuisines),
-        "instructions": str(instructions),
+        "instructions": str(instructions), # might be limiting the length of 'instructions'
         "time_to_cook_in_minutes": time_to_cook_in_minutes,
         "servings": servings,
         "calories": calories,
@@ -109,6 +114,18 @@ def populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, image_url
     request_headers = {
         'Content-type': 'application/json'
     }
+
+    print(spoonacular_recipe_id)
+    print(recipe_name)
+    print(image_url)
+    print(cuisines)
+    print(instructions)
+    print(time_to_cook_in_minutes)
+    print(servings)
+    print(calories)
+    print(protein)
+    print(carbs)
+    print(fat)
 
     chef_copilot_server_response = requests.post(chef_copilot_server_endpoint, json=request_body, headers=request_headers)
     

@@ -8,6 +8,7 @@ class RecipeController():
         self.db = db 
 
     def add_recipe(self, model, request_json):
+        # Move lines 12-22 to server.py
         spoonacular_recipe_id = request_json["spoonacular_recipe_id"]
         recipe_name = request_json["recipe_name"]
         image_url = request_json["image_url"]
@@ -63,5 +64,6 @@ class RecipeController():
         json_response = jsonify({
             'success': 'Deleted all rows in the Recipe table',
             'number_of_recipes_deleted': num_recipes
+        })
 
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
