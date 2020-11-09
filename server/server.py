@@ -65,17 +65,6 @@ def remove_recipe_from_favs_list(recipe_id):
     return inventory_manager.remove_item(recipe_id, FavouritesList)
 
 
-@app.route('/api/delete_all_user_notes', methods=['DELETE'])
-def delete_all_user_notes():
-    db.session.query(UserNotes).delete()
-    db.session.commit()
-    json_response = jsonify({
-        'Success': 'Deleted all rows in the UserNotes table',
-    })
-
-    return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
-
-
 @app.route('/api/favourites_list')
 def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
