@@ -97,7 +97,7 @@ def populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, image_url
     Returns:
         A HTTP status code of the request to server.py's endpoint.
     """
-    chef_copilot_server_endpoint = "http://localhost:3001/api/recipes/add"
+    chef_copilot_server_endpoint = CONSTANTS["CHEF_COPILOT"]["LOCAL_HOST_BASE_URL"] + CONSTANTS["CHEF_COPILOT"]["ADD_RECIPES"]
     request_body = {
         "spoonacular_recipe_id": spoonacular_recipe_id,
         "recipe_name": recipe_name,

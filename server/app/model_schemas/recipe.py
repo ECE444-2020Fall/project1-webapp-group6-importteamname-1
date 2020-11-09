@@ -42,7 +42,7 @@ class Recipe(db.Model):
     )
 
     instructions = db.Column( 
-        db.String(CONSTANTS['DB_SCHEMA']['MAX_INSTRUCTION_LEN']),
+        db.Text(),
         nullable=False
     )
 
