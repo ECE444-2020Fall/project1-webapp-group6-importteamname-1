@@ -64,10 +64,17 @@ def show_favs_list():
 
 ##################################################################
 
-# ADD RECIPE TO DB BASED ON URL PARAMETERS <Tim's setup for recipe scraper>
-@app.route('/api/add_recipe', methods=['POST'])
+@app.route('/api/recipes/add', methods=['POST'])
 def add_recipe():
     return recipe_controller.add_recipe(Recipe, request)
+
+@app.route('/api/recipes', methods=['GET'])
+def get_all_recipes():
+    return recipe_controller.get_all_recipes(Recipe)
+
+@app.route('/api/recipes', methods=['DELETE'])
+def remove_all_recipes():
+    return recipe_controller.delete_all_recipes(Recipe)
 
 # ADD HARD-CODED RECIPE TO DB <Tim's setup for recipe scraper>
 @app.route('/api/add_recipe_hardcode')
@@ -76,10 +83,6 @@ def add_recipe_hardcode():
     db.session.add(recipe)
     db.session.commit()
     return ""
-
-@app.route('/api/get_recipes')
-def show_recipes():
-    return recipe_controller.get_all_recipes(Recipe)
 
 
 ##################################################################
