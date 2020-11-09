@@ -1,3 +1,4 @@
+from constants import CONSTANTS
 import requests
 
 def get_recipes_from_spoonacular_api(spoonacular_api_key):
@@ -9,7 +10,7 @@ def get_recipes_from_spoonacular_api(spoonacular_api_key):
     Returns:
         A JSON object containing recipes and their associated details.
     """
-    spoonacular_api_recipes_endpoint = "https://api.spoonacular.com/recipes/random"
+    spoonacular_api_recipes_endpoint = CONSTANTS["SPOONACULAR_API"]["RECIPE_ENDPOINT"]
     params_for_recipes_endpoint = {
         'apiKey' : spoonacular_api_key,
         'number' : 1
@@ -28,7 +29,7 @@ def get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, spoonacular_r
     Returns:
         A JSON object containing nutrition info of a specific recipe.
     """
-    spoonacular_api_recipe_nutrition_endpoint = "https://api.spoonacular.com/recipes/{}/nutritionWidget.json".format(spoonacular_recipe_id)
+    spoonacular_api_recipe_nutrition_endpoint = CONSTANTS["SPOONACULAR_API"]["RECIPE_NUTRITION_ENDPOINT"].format(spoonacular_recipe_id)
     params_for_recipe_nutrition_endpoint = {
         'apiKey' : spoonacular_api_key,
     }
@@ -36,7 +37,7 @@ def get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, spoonacular_r
     return recipe_nutrition_response.json()
      
 
-def process_spoonacular_recipes(spoonacular_recipes_json, spoonacular_api_key):
+def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
     """
     Parse the recipes from Spoonacular API and extract fields that are needed for the Chef Co-Pilot App.
 
@@ -114,7 +115,7 @@ def populate_chef_copilot_database(spoonacular_recipe_id, recipe_name, recipe_im
     return chef_copilot_server_response.json()
 
 
-spoonacular_api_key = "e568b1c9b8374dbe9ce768f1f5a94d08"
+spoonacular_api_key = CONSTANTS["SPOONACULAR_API"]["API_KEY"]
 spoonacular_recipes_json = get_recipes_from_spoonacular_api(spoonacular_api_key)
-populate_db_response = process_spoonacular_recipes(spoonacular_recipes_json, spoonacular_api_key)
+populate_db_response = process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json)
 print(populate_db_response)

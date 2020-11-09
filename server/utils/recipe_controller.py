@@ -34,8 +34,7 @@ class RecipeController():
 
     def get_all_recipes(self, model):
         recipes = model.query.all() 
-        recipe_map = {}
-        recipe_map["recipes"] = []
+        recipe_map = {"recipes": []}
 
         for recipe in recipes:
             recipe_info_object = {}
