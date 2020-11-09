@@ -17,9 +17,10 @@ CONSTANTS = {
     'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot',
     'SPOONACULAR_API': {
         'API_KEY': "e568b1c9b8374dbe9ce768f1f5a94d08",
-        'RECIPE_ENDPOINT': "https://api.spoonacular.com/recipes/random",
-        'RECIPE_NUTRITION_ENDPOINT': "https://api.spoonacular.com/recipes/{}/nutritionWidget.json",
-        'INGREDIENT_ENDPOINT': "https://api.spoonacular.com/recipes/{}/ingredientWidget.json",
+        'BASE_URL': "https://api.spoonacular.com/recipes"
+        'RANDOM_RECIPES_ENDPOINT': "/random",
+        'RECIPE_NUTRITION_ENDPOINT': "/{}/nutritionWidget.json",
+        'RECIPE_INGREDIENTS_ENDPOINT': "/{}/ingredientWidget.json",
     },
     'DB_SCHEMA': {
         'MAX_USERNAME_LEN': 120,

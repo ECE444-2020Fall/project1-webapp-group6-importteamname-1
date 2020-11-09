@@ -13,7 +13,7 @@ def get_recipes_from_spoonacular_api(spoonacular_api_key):
     Returns:
         A JSON object containing recipes and their associated details.
     """
-    spoonacular_api_recipes_endpoint = CONSTANTS["SPOONACULAR_API"]["RECIPE_ENDPOINT"]
+    spoonacular_api_recipes_endpoint = CONSTANTS["SPOONACULAR_API"]["BASE_URL"] + CONSTANTS["SPOONACULAR_API"]["RANDOM_RECIPES_ENDPOINT"]
     params_for_recipes_endpoint = {
         'apiKey' : spoonacular_api_key,
         'number' : 1
@@ -32,7 +32,7 @@ def get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, spoonacular_r
     Returns:
         A JSON object containing nutrition info of a specific recipe.
     """
-    spoonacular_api_recipe_nutrition_endpoint = CONSTANTS["SPOONACULAR_API"]["RECIPE_NUTRITION_ENDPOINT"].format(spoonacular_recipe_id)
+    spoonacular_api_recipe_nutrition_endpoint = CONSTANTS["SPOONACULAR_API"]["BASE_URL"] + CONSTANTS["SPOONACULAR_API"]["RECIPE_NUTRITION_ENDPOINT"].format(spoonacular_recipe_id)
     params_for_recipe_nutrition_endpoint = {
         'apiKey' : spoonacular_api_key,
     }
