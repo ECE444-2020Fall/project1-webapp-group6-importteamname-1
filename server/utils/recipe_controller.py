@@ -56,11 +56,12 @@ class RecipeController():
 
 
     def delete_all_recipes(self, model):
+        num_recipes = self.db.session.query(model).count()
         self.db.session.query(model).delete()
         self.db.session.commit()
         
         json_response = jsonify({
-            'Success': 'Deleted all rows in the Recipe table',
-        })
+            'success': 'Deleted all rows in the Recipe table',
+            'number_of_recipes_deleted': num_recipes
 
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
