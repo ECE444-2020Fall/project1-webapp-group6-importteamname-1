@@ -30,7 +30,7 @@ const ShoppingList = () => {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        return response.text()
+        return response.text();
       }).then(body => JSON.parse(body).items)
       .then(res => setShoppingItems(generateList(res, removeShoppingListItem)));
   }
