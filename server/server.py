@@ -69,7 +69,6 @@ def remove_recipe_from_favs_list(recipe_id):
 def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
 
-##########
 
 @app.route('/api/ingredients/add', methods=['POST'])
 def add_ingredient():
@@ -81,7 +80,6 @@ def add_ingredient():
 def get_all_ingredients():
     return ingredient_controller.get_all_ingredients(RecipeIngredient)
 
-##########
 
 @app.route('/api/recipes/add', methods=['POST'])
 def add_recipe():

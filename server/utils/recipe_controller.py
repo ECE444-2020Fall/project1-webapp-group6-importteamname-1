@@ -38,18 +38,20 @@ class RecipeController():
         recipe_map = {"recipes": []}
 
         for recipe in recipes:
-            recipe_info_object = {}
-            recipe_info_object["recipe_id"] = int.from_bytes(recipe.recipe_id, byteorder='little')
-            recipe_info_object["recipe_name"] = recipe.recipe_name
-            recipe_info_object["image_url"] = recipe.image_url
-            recipe_info_object["cuisine"] = recipe.cuisine
-            recipe_info_object["instructions"] = recipe.instructions
-            recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
-            recipe_info_object["servings"] = recipe.servings
-            recipe_info_object["calories"] = recipe.calories
-            recipe_info_object["protein"] = recipe.protein
-            recipe_info_object["carbs"] = recipe.carbs
-            recipe_info_object["fat"] = recipe.fat
+            recipe_info_object = {
+                "recipe_id": int.from_bytes(recipe.recipe_id, byteorder='little'),
+                "recipe_name": recipe.recipe_name,
+                "image_url": recipe.image_url,
+                "cuisine": recipe.cuisine,
+                "instructions": recipe.instructions,
+                "time_to_cook_in_minutes": recipe.time_to_cook_in_minutes,
+                "servings": recipe.servings,
+                "calories": recipe.calories,
+                "protein": recipe.protein,
+                "carbs": recipe.carbs,
+                "fat": recipe.fat
+            }
+
             recipe_map["recipes"].append(recipe_info_object)
 
         return make_response(jsonify(recipe_map), CONSTANTS['HTTP_STATUS']['200_OK'])
