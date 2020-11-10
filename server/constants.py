@@ -15,13 +15,27 @@ CONSTANTS = {
         'LIST': '/api/list',
     },
     'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot',
+    'CHEF_COPILOT': {
+        'LOCAL_HOST_BASE_URL': "http://localhost:3001/api",
+        'ADD_RECIPE': "/recipes/add",
+        'ADD_INGREDIENT': "/ingredients/add"
+    },
+    'SPOONACULAR_API': {
+        'API_KEY': 'e568b1c9b8374dbe9ce768f1f5a94d08',
+        'BASE_URL': 'https://api.spoonacular.com/recipes',
+        'RANDOM_RECIPES_ENDPOINT': '/random',
+        'RECIPE_NUTRITION_ENDPOINT': '/{}/nutritionWidget.json',
+        'RECIPE_INGREDIENTS_ENDPOINT': '/{}/ingredientWidget.json',
+    },
     'DB_SCHEMA': {
         'MAX_USERNAME_LEN': 120,
         'MAX_PASSWORD_LEN': 100,
         'MAX_INGREDIENT_NAME_LEN': 100,
         'MAX_RECIPE_NAME_LEN': 100,
         'MAX_CUISINE_LEN': 50,
-        'MAX_INSTRUCTION_LEN': 500,
-        'MAX_MEASUREMENT_UNIT_LEN': 50
+        'MAX_INSTRUCTION_LEN': 5000000,
+        'MAX_MEASUREMENT_UNIT_LEN': 50,
+        'MAX_IMAGE_URL_LEN': 100,
+        'MAX_NUTRITION_STRING_LEN': 20
     }
 }
