@@ -1,6 +1,8 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from app import db, app, recipe_controller, ingredient_controller
+from app.models import *
 from constants import CONSTANTS
 import requests
 
@@ -71,19 +73,18 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         recipe_id = recipe["id"]
         recipe_name = recipe["title"]
         image_url = recipe["image"]
-        cuisines = recipe["cuisines"][:]
+        cuisines = str(recipe["cuisines"][:])
         time_to_cook_in_minutes = recipe["readyInMinutes"]
         servings = recipe["servings"]
                 
         instructions_steps = recipe["analyzedInstructions"][0]["steps"]
-        instructions = [instruction["step"] for instruction in instructions_steps]
+        instructions = str([instruction["step"] for instruction in instructions_steps])
         
         recipe_nutrition_json = get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, recipe_id)
-
-        calories = recipe_nutrition_json["calories"]  
-        carbs = recipe_nutrition_json["carbs"]
-        fat = recipe_nutrition_json["fat"]
-        protein = recipe_nutrition_json["protein"]
+        calories = float(recipe_nutrition_json["calories"])  
+        carbs = float(recipe_nutrition_json["carbs"][:-1])
+        fat = float(recipe_nutrition_json["fat"][:-1])
+        protein = float(recipe_nutrition_json["protein"][:-1])
    
         populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
                                                         servings, instructions, calories, carbs, fat, protein)
@@ -130,27 +131,9 @@ def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_
         fat: Amount of fat contained in the recipe
         protein: Amount of protein contained in the recipe 
     Returns:
-        A HTTP status code of the request to server.py's endpoint.
+        None.
     """
-    chef_copilot_server_endpoint = CONSTANTS["CHEF_COPILOT"]["LOCAL_HOST_BASE_URL"] + CONSTANTS["CHEF_COPILOT"]["ADD_RECIPE"]
-    request_body = {
-        "recipe_id": recipe_id,
-        "recipe_name": recipe_name,
-        "image_url": image_url,
-        "cuisines": str(cuisines),
-        "instructions": str(instructions), # might be limiting the length of 'instructions'
-        "time_to_cook_in_minutes": time_to_cook_in_minutes,
-        "servings": servings,
-        "calories": calories,
-        "protein": protein,
-        "carbs": carbs,
-        "fat": fat
-    }
-    request_headers = {
-        'Content-type': 'application/json'
-    }
-
-    chef_copilot_server_response = requests.post(chef_copilot_server_endpoint, json=request_body, headers=request_headers)
+    recipe_controller.add_recipe(Recipe, recipe_id.to_bytes(10, 'little'), recipe_name, image_url, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
     print("Inserted: recipe_id: {}, recipe_name: {}".format(recipe_id, recipe_name))
    
 
@@ -166,21 +149,13 @@ def populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_me
     Returns:
         A HTTP status code of the request to server.py's endpoint.
     """
-    chef_copilot_server_endpoint = CONSTANTS["CHEF_COPILOT"]["LOCAL_HOST_BASE_URL"] + CONSTANTS["CHEF_COPILOT"]["ADD_INGREDIENT"]
-    request_body = {
-        "recipe_id": recipe_id,
-        "ingredient_name": ingredient_name,
-        "amount": amount,
-        "unit_of_measurement": unit_of_measurement,
-    }
-    request_headers = {
-        'Content-type': 'application/json'
-    }
-
-    chef_copilot_server_response = requests.post(chef_copilot_server_endpoint, json=request_body, headers=request_headers)
+    
+    ingredient_controller.add_ingredient(RecipeIngredient, recipe_id.to_bytes(10, 'little'), ingredient_name, amount, unit_of_measurement)
+  
     print("Inserted: recipe_id: {}, ingredient_name: {}".format(recipe_id, ingredient_name))
 
 
-spoonacular_api_key = CONSTANTS["SPOONACULAR_API"]["API_KEY"]
-spoonacular_recipes_json = get_recipes_from_spoonacular_api(spoonacular_api_key)
-populate_db_response = process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json)
+with app.app_context():
+    spoonacular_api_key = CONSTANTS["SPOONACULAR_API"]["API_KEY"]
+    spoonacular_recipes_json = get_recipes_from_spoonacular_api(spoonacular_api_key)
+    populate_db_response = process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json)
