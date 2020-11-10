@@ -81,10 +81,21 @@ def get_all_ingredients():
     return ingredient_controller.get_all_ingredients(RecipeIngredient)
 
 
-@app.route('/api/recipes/add', methods=['POST'])
-def add_recipe():
-    request_json = request.get_json()
-    return recipe_controller.add_recipe(Recipe, request_json)
+@app.route('/api/recipes/add', methods=['POST']) ###############
+def add_recipe(): 
+    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    recipe_name = request.get_json()["recipe_name"]
+    image_url = request.get_json()["image_url"]
+    cuisines = request.get_json()["cuisines"]
+    instructions = request.get_json()["instructions"]
+    time_to_cook_in_minutes = request.get_json()["time_to_cook_in_minutes"]
+    servings = request.get_json()["servings"]
+    calories = request.get_json()["calories"]
+    protein =request.get_json()["protein"]
+    carbs = request.get_json()["carbs"]
+    fat = request.get_json()["fat"]
+    return recipe_controller.add_recipe(Recipe, recipe_id, recipe_name, image_url, cuisines, instructions, 
+                                                time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
 
 
 @app.route('/api/recipes', methods=['GET'])

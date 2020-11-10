@@ -7,21 +7,10 @@ class RecipeController():
     def __init__(self, db):
         self.db = db 
 
-    def add_recipe(self, model, request_json):
-        # Move lines 12-22 to server.py
-        recipe_id = (request_json["recipe_id"]).to_bytes(10, 'little')
-        recipe_name = request_json["recipe_name"]
-        image_url = request_json["image_url"]
-        cuisines = request_json["cuisines"]
-        instructions = request_json["instructions"]
-        time_to_cook_in_minutes = request_json["time_to_cook_in_minutes"]
-        servings = request_json["servings"]
-        calories = request_json["calories"]
-        protein =request_json["protein"]
-        carbs = request_json["carbs"]
-        fat = request_json["fat"]
-
-        recipe = model(recipe_id, recipe_name, image_url, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
+    def add_recipe(self, model, recipe_id, recipe_name, image_url, cuisines, instructions, 
+                                                time_to_cook_in_minutes, servings, calories, protein, carbs, fat):
+        recipe = model(recipe_id, recipe_name, image_url, cuisines, instructions, 
+                                                time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
         self.db.session.add(recipe)
         self.db.session.commit()
         

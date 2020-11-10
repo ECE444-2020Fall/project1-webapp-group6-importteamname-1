@@ -67,19 +67,16 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
     Returns:
         None
     """
-    for recipe in range(len(spoonacular_recipes_json["recipes"])):
-        recipe_id = spoonacular_recipes_json["recipes"][recipe]["id"]
-        recipe_name = spoonacular_recipes_json["recipes"][recipe]["title"]
-        image_url = spoonacular_recipes_json["recipes"][recipe]["image"]
-        cuisines = spoonacular_recipes_json["recipes"][recipe]["cuisines"][:]
-        time_to_cook_in_minutes = spoonacular_recipes_json["recipes"][recipe]["readyInMinutes"]
-        servings = spoonacular_recipes_json["recipes"][recipe]["servings"]
-        
-        instructions = []
-        instructions_steps = spoonacular_recipes_json["recipes"][recipe]["analyzedInstructions"][0]["steps"]
-        
-        for entry in range (len(instructions_steps)):
-            instructions.append(instructions_steps[entry]["step"])
+    for recipe in spoonacular_recipes_json["recipes"]:
+        recipe_id = recipe["id"]
+        recipe_name = recipe["title"]
+        image_url = recipe["image"]
+        cuisines = recipe["cuisines"][:]
+        time_to_cook_in_minutes = recipe["readyInMinutes"]
+        servings = recipe["servings"]
+                
+        instructions_steps = recipe["analyzedInstructions"][0]["steps"]
+        instructions = [instruction["step"] for instruction in instructions_step]
         
         recipe_nutrition_json = get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, recipe_id)
 
