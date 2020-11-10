@@ -16,7 +16,7 @@ def get_recipes_from_spoonacular_api(spoonacular_api_key):
     spoonacular_api_recipes_endpoint = CONSTANTS["SPOONACULAR_API"]["BASE_URL"] + CONSTANTS["SPOONACULAR_API"]["RANDOM_RECIPES_ENDPOINT"]
     params_for_recipes_endpoint = {
         'apiKey' : spoonacular_api_key,
-        'number' : 1
+        'number' : 10
     }
     spoonacular_recipes_response = requests.get(spoonacular_api_recipes_endpoint, params=params_for_recipes_endpoint)
     return spoonacular_recipes_response.json()
@@ -83,16 +83,27 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         
         recipe_nutrition_json = get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, recipe_id)
 
-        calories = recipe_nutrition_json["calories"]
-        # Spoonacular API returns the following values in string format -> e.g. "20g".
-        # We need to drop the "g" and convert the value to float      
+        calories = recipe_nutrition_json["calories"]  
         carbs = recipe_nutrition_json["carbs"]
         fat = recipe_nutrition_json["fat"]
         protein = recipe_nutrition_json["protein"]
    
         populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
                                                         servings, instructions, calories, carbs, fat, protein)
+        
+        process_recipe_ingredients(spoonacular_api_key, recipe_id)
     return 
+
+
+def process_recipe_ingredients(spoonacular_api_key, recipe_id):
+    spoonacular_recipe_ingredients_json = get_ingredients_from_spoonacular_api_using_recipe_id(spoonacular_api_key, recipe_id)
+
+    for ingredient in spoonacular_recipe_ingredients_json["ingredients"]:
+        ingredient_name = ingredient["name"]
+        amount = ingredient["amount"]["metric"]["value"]
+        unit_of_measurement = ingredient["amount"]["metric"]["unit"]
+
+        populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_measurement)
 
 
 def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
@@ -114,7 +125,7 @@ def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_
     Returns:
         A HTTP status code of the request to server.py's endpoint.
     """
-    chef_copilot_server_endpoint = CONSTANTS["CHEF_COPILOT"]["LOCAL_HOST_BASE_URL"] + CONSTANTS["CHEF_COPILOT"]["ADD_RECIPES"]
+    chef_copilot_server_endpoint = CONSTANTS["CHEF_COPILOT"]["LOCAL_HOST_BASE_URL"] + CONSTANTS["CHEF_COPILOT"]["ADD_RECIPE"]
     request_body = {
         "recipe_id": recipe_id,
         "recipe_name": recipe_name,
@@ -133,8 +144,8 @@ def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_
     }
 
     chef_copilot_server_response = requests.post(chef_copilot_server_endpoint, json=request_body, headers=request_headers)
-    
-    return chef_copilot_server_response.json()
+    print("Inserted: recipe_id: {}, recipe_name: {}".format(recipe_id, recipe_name))
+   
 
 def populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_measurement):
     """
@@ -160,11 +171,9 @@ def populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_me
     }
 
     chef_copilot_server_response = requests.post(chef_copilot_server_endpoint, json=request_body, headers=request_headers)
-    
-    return chef_copilot_server_response.json()
+    print("Inserted: recipe_id: {}, ingredient_name: {}".format(recipe_id, ingredient_name))
 
 
 spoonacular_api_key = CONSTANTS["SPOONACULAR_API"]["API_KEY"]
 spoonacular_recipes_json = get_recipes_from_spoonacular_api(spoonacular_api_key)
 populate_db_response = process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json)
-print(populate_db_response)
