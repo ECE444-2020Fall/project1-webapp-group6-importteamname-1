@@ -9,7 +9,7 @@ class RecipeController():
 
     def add_recipe(self, model, request_json):
         # Move lines 12-22 to server.py
-        spoonacular_recipe_id = request_json["spoonacular_recipe_id"]
+        recipe_id = request_json["recipe_id"]
         recipe_name = request_json["recipe_name"]
         image_url = request_json["image_url"]
         cuisines = request_json["cuisines"]
@@ -21,12 +21,12 @@ class RecipeController():
         carbs = request_json["carbs"]
         fat = request_json["fat"]
 
-        recipe = model(spoonacular_recipe_id, recipe_name, image_url, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
+        recipe = model(recipe_id, recipe_name, image_url, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
         self.db.session.add(recipe)
         self.db.session.commit()
         
         json_response = jsonify({
-            'spoonacular_recipe_id': spoonacular_recipe_id,
+            'recipe_id': recipe_id,
             'recipe_name': recipe_name
         })
 
@@ -39,8 +39,7 @@ class RecipeController():
 
         for recipe in recipes:
             recipe_info_object = {}
-            recipe_info_object["recipe_id"] = recipe.recipe_id
-            recipe_info_object["spoonacular_recipe_id"] = recipe.spoonacular_recipe_id
+            recipe_info_object["recipe_id"] = str(recipe.recipe_id)
             recipe_info_object["recipe_name"] = recipe.recipe_name
             recipe_info_object["image_url"] = recipe.image_url
             recipe_info_object["cuisine"] = recipe.cuisine

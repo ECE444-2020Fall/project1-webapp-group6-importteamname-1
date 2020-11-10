@@ -6,23 +6,9 @@ from sqlalchemy_utils import UUIDType
 class Recipe(db.Model):
     __tablename__ = 'recipe'
     
-    '''
-    This recipe_id is used WITHIN our Chef Co-Pilot app. We cannot use the spoonacular_recipe_id as
-    recipe_id because recipe_id needs to be of type UUID.
-    '''
     recipe_id = db.Column(
-        UUIDType(), 
-        primary_key=True, 
-        default=uuid.uuid4, 
-        nullable=False
-    )
-
-    '''
-    This is the recipe's ID on Spoonacular API's website. We include it here
-    to prevent the scraper from populating our DB with repeated recipes from Spoonacular.
-    '''
-    spoonacular_recipe_id = db.Column(
         db.Integer,
+        primary_key=True, 
         nullable=False
     )
 
@@ -77,9 +63,9 @@ class Recipe(db.Model):
     )
 
     def __init__(
-        self, spoonacular_recipe_id, recipe_name, image_url, cuisine, instructions, time_to_cook_in_minutes, 
+        self, recipe_id, recipe_name, image_url, cuisine, instructions, time_to_cook_in_minutes, 
                                                                         servings, calories, protein, carbs, fat):
-        self.spoonacular_recipe_id = spoonacular_recipe_id 
+        self.recipe_id = recipe_id 
         self.recipe_name = recipe_name
         self.image_url = image_url 
         self.cuisine = cuisine 
