@@ -11,7 +11,7 @@ class UserNotes(db.Model):
         primary_key=True
     )
     recipe_id = db.Column(
-        UUIDType(), 
+        db.Integer,
         db.ForeignKey('recipe.recipe_id'),
         nullable=False,
         primary_key=True

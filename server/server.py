@@ -8,7 +8,7 @@ from flask_cors import CORS
 from constants import CONSTANTS
 from sample_data import sample_data
 
-from app import db, app, inventory_manager, recipe_personalization_manager
+from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller, ingredient_controller
 from app.models import *
 
 CORS(app)
@@ -19,6 +19,7 @@ def add_or_update_user_notes():
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserNotes)
+
 
 @app.route('/api/user_notes')
 def show_user_notes():
@@ -31,6 +32,7 @@ def add_or_update_user_rating():
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserRating)
 
+
 @app.route('/api/user_ratings')
 def show_user_ratings():
     return recipe_personalization_manager.get_all_user_feedbacks(UserRating)
@@ -41,46 +43,78 @@ def add_item_to_shopping_list():
     item = request.get_json()["item"]
     return inventory_manager.add_item(item, ShoppingList)
 
+
 @app.route('/api/remove_item_from_shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
     return inventory_manager.remove_item(item, ShoppingList)
 
+
 @app.route('/api/shopping_list')
 def show_shopping_list():
     return inventory_manager.get_all_user_items(ShoppingList)
+
 
 @app.route('/api/add_recipe_to_favourites_list', methods=['POST'])
 def add_recipe_to_favs_list():
     recipe_id = request.get_json()["item"]
     return inventory_manager.add_item(recipe_id, FavouritesList)
 
+
 @app.route('/api/remove_recipe_from_favourites_list/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_from_favs_list(recipe_id):
     return inventory_manager.remove_item(recipe_id, FavouritesList)
+
 
 @app.route('/api/favourites_list')
 def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
 
-@app.route('/api/show_recipes')
-def show_recipes():
-    recipes = Recipe.query.all() # get all recipes
-    recipe_list = []
 
-    for recipe in recipes:
-        recipe_info_object = {}
-        recipe_info_object["recipe_id"] = recipe.recipe_id
-        recipe_info_object["recipe_name"] = recipe.recipe_name
-        recipe_info_object["cuisine"] = recipe.cuisine
-        recipe_info_object["instructions"] = recipe.instructions
-        recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
-        recipe_info_object["servings"] = recipe.servings
-        recipe_info_object["calories"] = recipe.calories
-        recipe_info_object["protein"] = recipe.protein
-        recipe_info_object["carbs"] = recipe.carbs
-        recipe_info_object["fat"] = recipe.fat
-        recipe_list.append(recipe_info_object)
-    return jsonify(recipe_list)
+@app.route('/api/ingredients/add', methods=['POST']) 
+def add_ingredient():
+    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    ingredient_name = request.get_json()["ingredient_name"]
+    amount = request.get_json()["amount"]
+    unit_of_measurement = request.get_json()["unit_of_measurement"]
+    return ingredient_controller.add_ingredient(RecipeIngredient, recipe_id, ingredient_name, amount, unit_of_measurement)
+
+
+@app.route('/api/ingredients', methods=['GET'])
+def get_all_ingredients():
+    return ingredient_controller.get_all_ingredients(RecipeIngredient)
+
+
+@app.route('/api/ingredients', methods=['DELETE'])
+def remove_all_ingredients():
+    return ingredient_controller.delete_all_ingredients(RecipeIngredient)
+
+
+@app.route('/api/recipes/add', methods=['POST']) 
+def add_recipe(): 
+    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    recipe_name = request.get_json()["recipe_name"]
+    image_url = request.get_json()["image_url"]
+    cuisines = request.get_json()["cuisines"]
+    instructions = request.get_json()["instructions"]
+    time_to_cook_in_minutes = request.get_json()["time_to_cook_in_minutes"]
+    servings = request.get_json()["servings"]
+    calories = request.get_json()["calories"]
+    protein =request.get_json()["protein"]
+    carbs = request.get_json()["carbs"]
+    fat = request.get_json()["fat"]
+    return recipe_controller.add_recipe(Recipe, recipe_id, recipe_name, image_url, cuisines, instructions, 
+                                                   time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
+
+
+@app.route('/api/recipes', methods=['GET'])
+def get_all_recipes():
+    return recipe_controller.get_all_recipes(Recipe)
+
+
+@app.route('/api/recipes', methods=['DELETE'])
+def remove_all_recipes():
+    return recipe_controller.delete_all_recipes(Recipe)
+
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/add_user/<string:name>/<string:password>')
