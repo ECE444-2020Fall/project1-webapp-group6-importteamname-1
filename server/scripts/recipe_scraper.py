@@ -96,6 +96,15 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
 
 
 def process_recipe_ingredients(spoonacular_api_key, recipe_id):
+    """
+    Parse a recipe's ingredients from Spoonacular API and extract fields that are needed for the Chef Co-Pilot App.
+
+    Args:
+        spoonacular_api_key: API key used for accessing the Spoonacular API.
+        recipe_id: ID of a recipe. We're processing ingredients for this recipe.
+    Returns:
+        None
+    """
     spoonacular_recipe_ingredients_json = get_ingredients_from_spoonacular_api_using_recipe_id(spoonacular_api_key, recipe_id)
 
     for ingredient in spoonacular_recipe_ingredients_json["ingredients"]:
@@ -105,6 +114,7 @@ def process_recipe_ingredients(spoonacular_api_key, recipe_id):
 
         populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_measurement)
 
+    return
 
 def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
                                                      servings, instructions, calories, carbs, fat, protein):
