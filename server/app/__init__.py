@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from utils.inventory_manager import InventoryManager
 from utils.recipe_personalization_manager import RecipePersonalizationManager
 from utils.recipe_controller import RecipeController
+from utils.ingredient_controller import IngredientController
 
 # ~ Databases ~ #
 db = SQLAlchemy()   #<-Initialize database object
@@ -11,6 +12,7 @@ migrate = Migrate() #<-Initialize migration object
 inventory_manager = InventoryManager(db)
 recipe_personalization_manager = RecipePersonalizationManager(db)
 recipe_controller = RecipeController(db)
+ingredient_controller = IngredientController(db)
 
 def create_app():
     """Construct core application"""

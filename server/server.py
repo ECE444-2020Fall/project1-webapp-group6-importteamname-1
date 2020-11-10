@@ -8,7 +8,7 @@ from flask_cors import CORS
 from constants import CONSTANTS
 from sample_data import sample_data
 
-from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller
+from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller, ingredient_controller
 from app.models import *
 
 CORS(app)
@@ -69,6 +69,19 @@ def remove_recipe_from_favs_list(recipe_id):
 def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
 
+##########
+
+@app.route('/api/ingredients/add', methods=['POST'])
+def add_ingredient():
+    request_json = request.get_json()
+    return ingredient_controller.add_ingredient(RecipeIngredient, request_json)
+
+
+@app.route('/api/ingredients', methods=['GET'])
+def get_all_ingredients():
+    return ingredient_controller.get_all_ingredients(RecipeIngredient)
+
+##########
 
 @app.route('/api/recipes/add', methods=['POST'])
 def add_recipe():
