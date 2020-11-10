@@ -25,11 +25,12 @@ class IngredientController():
         ingredient_map = {"ingredients": []}
 
         for ingredient in ingredients:
-            ingredient_object = {}
-            ingredient_object["recipe_id"] = int.from_bytes(ingredient.recipe_id, byteorder='little')
-            ingredient_object["ingredient_name"] = ingredient.ingredient_name
-            ingredient_object["amount"] = ingredient.amount
-            ingredient_object["unit_of_measurement"] = ingredient.unit_of_measurement
+            ingredient_object = {
+                "recipe_id": int.from_bytes(ingredient.recipe_id, byteorder='little'),
+                "ingredient_name": ingredient.ingredient_name,
+                "amount": ingredient.amount,
+                "unit_of_measurement": ingredient.unit_of_measurement
+            }
 
             ingredient_map["ingredients"].append(ingredient_object)
 
