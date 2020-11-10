@@ -17,7 +17,8 @@ CONSTANTS = {
     'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot',
     'CHEF_COPILOT': {
         'LOCAL_HOST_BASE_URL': "http://localhost:3001/api",
-        'ADD_RECIPES': "/recipes/add"
+        'ADD_RECIPE': "/recipes/add",
+        'ADD_INGREDIENT': "/ingredients/add"
     },
     'SPOONACULAR_API': {
         'API_KEY': 'e568b1c9b8374dbe9ce768f1f5a94d08',

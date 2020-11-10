@@ -20,7 +20,24 @@ def get_recipes_from_spoonacular_api(spoonacular_api_key):
     }
     spoonacular_recipes_response = requests.get(spoonacular_api_recipes_endpoint, params=params_for_recipes_endpoint)
     return spoonacular_recipes_response.json()
-     
+
+
+def get_ingredients_from_spoonacular_api_using_recipe_id(spoonacular_api_key, recipe_id):
+    """
+    Get a list of recipes from the Spoonacular API.
+
+    Args:
+        spoonacular_api_key: API key used for accessing the Spoonacular API.
+    Returns:
+        A JSON object containing recipes and their associated details.
+    """
+    spoonacular_api_ingredients_endpoint = CONSTANTS["SPOONACULAR_API"]["BASE_URL"] + CONSTANTS["SPOONACULAR_API"]["RECIPE_INGREDIENTS_ENDPOINT"].format(recipe_id)
+    params_for_ingredients_endpoint = {
+        'apiKey' : spoonacular_api_key,
+    }
+    spoonacular_ingredients_response = requests.get(spoonacular_api_ingredients_endpoint, params=params_for_ingredients_endpoint)
+    return spoonacular_ingredients_response.json()
+
 
 def get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, recipe_id):
     """
@@ -81,7 +98,7 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
 def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
                                                      servings, instructions, calories, carbs, fat, protein):
     """
-    Populate the Chef Co-Pilot app's Amazon RDS database with recipes.
+    Populate the Chef Co-Pilot app's recipes database with recipes.
 
     Args:
         recipe_id: The id of the recipe on Spoonacular API's website.
@@ -110,6 +127,33 @@ def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_
         "protein": protein,
         "carbs": carbs,
         "fat": fat
+    }
+    request_headers = {
+        'Content-type': 'application/json'
+    }
+
+    chef_copilot_server_response = requests.post(chef_copilot_server_endpoint, json=request_body, headers=request_headers)
+    
+    return chef_copilot_server_response.json()
+
+def populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_measurement):
+    """
+    Populate the Chef Co-Pilot app's ingredients database with ingredients.
+
+    Args:
+        recipe_id: The id of the recipe on Spoonacular API's website.
+        ingredient_name: Name of the ingredient
+        amount: quantity of the ingredient
+        unit_of_measurement: unit of measurement of the ingredient
+    Returns:
+        A HTTP status code of the request to server.py's endpoint.
+    """
+    chef_copilot_server_endpoint = CONSTANTS["CHEF_COPILOT"]["LOCAL_HOST_BASE_URL"] + CONSTANTS["CHEF_COPILOT"]["ADD_INGREDIENT"]
+    request_body = {
+        "recipe_id": recipe_id,
+        "ingredient_name": ingredient_name,
+        "amount": amount,
+        "unit_of_measurement": unit_of_measurement,
     }
     request_headers = {
         'Content-type': 'application/json'
