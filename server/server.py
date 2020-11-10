@@ -84,6 +84,11 @@ def get_all_ingredients():
     return ingredient_controller.get_all_ingredients(RecipeIngredient)
 
 
+@app.route('/api/ingredients', methods=['DELETE'])
+def remove_all_ingredients():
+    return ingredient_controller.delete_all_ingredients(RecipeIngredient)
+
+
 @app.route('/api/recipes/add', methods=['POST']) 
 def add_recipe(): 
     recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')

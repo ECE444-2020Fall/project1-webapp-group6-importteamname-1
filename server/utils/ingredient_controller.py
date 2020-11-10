@@ -34,3 +34,16 @@ class IngredientController():
             ingredient_map["ingredients"].append(ingredient_object)
 
         return make_response(jsonify(ingredient_map), CONSTANTS['HTTP_STATUS']['200_OK'])
+
+
+    def delete_all_ingredients(self, model):
+        num_ingredients = self.db.session.query(model).count()
+        self.db.session.query(model).delete()
+        self.db.session.commit()
+        
+        json_response = jsonify({
+            'success': 'Deleted all rows in the RecipeIngredient table',
+            'number_of_ingredients_deleted': num_ingredients
+        })
+
+        return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
