@@ -62,6 +62,9 @@ const Login = () => {
         if(!validateEqualPass(pass, pass2)){
             setPassError("Passwords Must Match")
         }
+        else if(passError == "Passwords Must Match"){
+            setPassError("")
+        }
     }
 
     const handlePass2Change = (val) => {
@@ -92,13 +95,19 @@ const Login = () => {
             //return 
         }
         //const req = CONSTANTS.ENDPOINT.REGISTER + String(user) + "/" + String(pass);
-        const req = "/api/add_user/" + String(user) + "/" + String(pass);
-        console.log(req)
-        fetch(req, {method: "POST"}).then( Response => {
+        const req = CONSTANTS.ENDPOINT.REGISTER;
+        fetch(req, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify({
+                'name': user,
+                'password': pass
+            })
+        }).then( Response => {
             return Response.json;
-        })
-        .then(users => {
-            console.log(users);
         })
         
         //Write validation for users
@@ -128,18 +137,23 @@ const Login = () => {
 
 
     const handleLogin = (evt) => {
-        
         //Write validation for users
         if (validateUser(userL) && validatePass(passL)) {
             //handle 
             //const req = CONSTANTS.ENDPOINT.LOGIN + String(userL) + "/" + String(passL);
-            const req = "/api/login/" + String(userL) + "/" + String(passL);
-            console.log(req)
-            fetch(req, {method: "POST"}).then( Response => {
+            const req = CONSTANTS.ENDPOINT.LOGIN;
+            fetch(req, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'post',
+                body: JSON.stringify({
+                    'name': userL,
+                    'password': passL
+                })
+            }).then( Response => {
                 return Response.json;
-            })
-            .then(users => {
-                console.log(users);
             })
         } else {
             setPassL("")

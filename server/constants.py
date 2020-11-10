@@ -11,8 +11,9 @@ CONSTANTS = {
     'ENDPOINT': {
         'MASTER_DETAIL': '/api/masterdetail',
         'LIST': '/api/list',
-        'REGISTER': '/api/add_user/'
-        'LOGIN': '/api/login/'
+        'REGISTER': '/api/add_user',
+        'LOGIN': '/api/login',
+        'GET_USER': '/api/login/get_user'
     },
     'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot',
     'DB_SCHEMA': {

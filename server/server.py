@@ -13,8 +13,11 @@ from app.models import *
 app.secret_key = "TESTKEY"
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
-@app.route('/api/add_user/<string:name>/<string:password>', methods=['POST'])
-def add_new_user(name, password):
+#@app.route('/api/add_user/<string:name>/<string:password>', methods=['POST'])
+@app.route(CONSTANTS['ENDPOINT']['REGISTER'], methods=['POST'])
+def add_new_user():
+    name =  request.get_json()["name"]
+    password = request.get_json()["password"]
     user = User.query.filter(
         User.username == name and User.password == password
     ).first()
@@ -39,8 +42,26 @@ def remove_user(name, password):
         db.session.commit()
     return ""
 
-@app.route('/api/login/<string:name>/<string:password>', methods=['POST'])
-def login_user(name, password):
+@app.route('/api/get_user', methods=['GET'])
+def get_user():
+    if 'user_id' not in session:
+        return jsonify({'error': 'user_id not found'})
+    user = User.query.filter(
+        User.user_id == session.get('user_id')
+    ).first()
+    res = {}
+    res['username'] = user.username
+    res['user_id'] = user.user_id
+    if user:
+        return jsonify(res)
+    return jsonify({'error': 'sessions user not in database'})
+
+
+
+@app.route(CONSTANTS['ENDPOINT']['LOGIN'], methods=['POST'])
+def login_user():
+    name =  request.get_json()["name"]
+    password = request.get_json()["password"]
     user = User.query.filter(
         User.username == name and User.password == password
     ).first()
