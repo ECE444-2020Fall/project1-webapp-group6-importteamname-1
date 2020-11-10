@@ -70,10 +70,13 @@ def show_favs_list():
     return inventory_manager.get_all_user_items(FavouritesList)
 
 
-@app.route('/api/ingredients/add', methods=['POST'])
+@app.route('/api/ingredients/add', methods=['POST']) 
 def add_ingredient():
-    request_json = request.get_json()
-    return ingredient_controller.add_ingredient(RecipeIngredient, request_json)
+    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    ingredient_name = request.get_json()["ingredient_name"]
+    amount = request.get_json()["amount"]
+    unit_of_measurement = request.get_json()["unit_of_measurement"]
+    return ingredient_controller.add_ingredient(RecipeIngredient, recipe_id, ingredient_name, amount, unit_of_measurement)
 
 
 @app.route('/api/ingredients', methods=['GET'])
@@ -81,7 +84,7 @@ def get_all_ingredients():
     return ingredient_controller.get_all_ingredients(RecipeIngredient)
 
 
-@app.route('/api/recipes/add', methods=['POST']) ###############
+@app.route('/api/recipes/add', methods=['POST']) 
 def add_recipe(): 
     recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
     recipe_name = request.get_json()["recipe_name"]
@@ -95,7 +98,7 @@ def add_recipe():
     carbs = request.get_json()["carbs"]
     fat = request.get_json()["fat"]
     return recipe_controller.add_recipe(Recipe, recipe_id, recipe_name, image_url, cuisines, instructions, 
-                                                time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
+                                                   time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
 
 
 @app.route('/api/recipes', methods=['GET'])

@@ -7,12 +7,7 @@ class IngredientController():
     def __init__(self, db):
         self.db = db 
 
-    def add_ingredient(self, model, request_json):
-        recipe_id = (request_json["recipe_id"]).to_bytes(10, 'little')
-        ingredient_name = request_json["ingredient_name"]
-        amount = request_json["amount"]
-        unit_of_measurement = request_json["unit_of_measurement"]
-
+    def add_ingredient(self, model, recipe_id, ingredient_name, amount, unit_of_measurement):
         ingredient = model(recipe_id, ingredient_name, amount, unit_of_measurement)
         self.db.session.add(ingredient)
         self.db.session.commit()
