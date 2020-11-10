@@ -16,7 +16,7 @@ def get_recipes_from_spoonacular_api(spoonacular_api_key):
     spoonacular_api_recipes_endpoint = CONSTANTS["SPOONACULAR_API"]["BASE_URL"] + CONSTANTS["SPOONACULAR_API"]["RANDOM_RECIPES_ENDPOINT"]
     params_for_recipes_endpoint = {
         'apiKey' : spoonacular_api_key,
-        'number' : 10
+        'number' : 1
     }
     spoonacular_recipes_response = requests.get(spoonacular_api_recipes_endpoint, params=params_for_recipes_endpoint)
     return spoonacular_recipes_response.json()
@@ -76,7 +76,7 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         servings = recipe["servings"]
                 
         instructions_steps = recipe["analyzedInstructions"][0]["steps"]
-        instructions = [instruction["step"] for instruction in instructions_step]
+        instructions = [instruction["step"] for instruction in instructions_steps]
         
         recipe_nutrition_json = get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, recipe_id)
 
