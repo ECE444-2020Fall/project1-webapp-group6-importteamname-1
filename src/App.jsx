@@ -4,8 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './pages/NavBar';
 
-import Footer from './pages/Footer';
-
 import AddRecipes from './pages/AddRecipes/AddRecipes';
 
 import RecipeSearchResults from './pages/RecipeSearchResults/RecipeSearchResults';
@@ -34,7 +32,7 @@ const App = () => {
         <Route path='/CalorieTracker' component={CalorieTracker} />
         <Route path='/RecipeCart' component={RecipeCart} />
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </React.Fragment>
   );
 }

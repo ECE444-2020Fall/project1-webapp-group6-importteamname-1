@@ -1,117 +1,40 @@
-﻿import React, { useState } from "react";
-import ListItem from "./ListItem";
-import Form from "./Form";
-import WarningMessage from "../WarningMessage";
-import CONSTANTS from "../../constants";
+﻿import React, { useState, useEffect } from 'react';
+import RecipeCard from "../../components/RecipeCard";
+import axios from 'axios';
 
 const RecipeSearchResults = () => {
-  const [items, setItems] = useState([]);
-  const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
+  const [data, setData] = useState({ recipes: [] });
 
-  const getItems = () => {
-    let promiseList = fetch(CONSTANTS.ENDPOINT.LIST)
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-    return promiseList;
-  }
-
-  const deleteItem = (item) => {
-    fetch(`${CONSTANTS.ENDPOINT.LIST}/${item.id}`, { method: "DELETE" })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(result => {
-        setItems(items.filter(item => item.id !== result.id));
-      })
-      .catch(error => {
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
-        });
-      });
-  }
-
-  const addItem = (textField) => {
-    // Warning Pop Up if the user submits an empty message
-    if (!textField) {
-      setWarningMessage({
-        warningMessageOpen: true,
-        warningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
-      });
-      return;
-    }
-
-    fetch(CONSTANTS.ENDPOINT.LIST, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: textField
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(itemAdded =>{
-        setItems([itemAdded, ...items]);
-      })
-      .catch(error =>
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
-        })
+  useEffect(async () => {
+    const fetchData = async () => {
+      const recipeSearchResult = await axios(
+        'http://localhost:3001/api/recipes',
       );
-  };
-
-  const closeWarningMessage = () => {
-    setWarningMessage({
-      warningMessageOpen: false,
-      warningMessageText: ""
-    });
-  };
-
-  React.useEffect(() => {
-    getItems()
-      .then(list => {setItems(list)})
-      .catch(error =>
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
-        })
-      );
+ 
+      setData(recipeSearchResult.data);
+    };
+ 
+    fetchData();
   }, []);
 
   return (
     <main id="mainContent" className="container">
       <div className="row justify-content-center py-5">
-        <h3>Recipe_Search_Results</h3>
+        <h3>Recipe Search Results</h3>
       </div>
-      <div className="row">
-        <div className="col-12 p-0">
-          <Form addItem={addItem}/>
-        </div>
-        {items.map(listItem => (
-          <ListItem
-            key={listItem.id}
-            item={listItem}
-            deleteItem={deleteItem}
-          />
+        {data.recipes.map(recipe => (
+           <RecipeCard key={recipe.recipe_id}
+                       recipeId={recipe.recipe_id} 
+                       recipeName={recipe.recipe_name}
+                       imageUrl={recipe.image_url}
+                       timeToCookInMinutes={recipe.time_to_cook_in_minutes}
+                       servings={recipe.servings}
+                       calories={recipe.calories}
+                       protein={recipe.protein}
+                       carbs={recipe.carbs}
+                       fat={recipe.fat}
+            />
         ))}
-        <WarningMessage
-          open={warningMessage.warningMessageOpen}
-          text={warningMessage.warningMessageText}
-          onWarningClose={closeWarningMessage}
-        />
-      </div>
     </main>
   );
 }
