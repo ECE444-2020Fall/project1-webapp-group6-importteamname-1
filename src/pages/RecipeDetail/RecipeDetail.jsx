@@ -70,7 +70,16 @@ const RecipeDetail = () => {
 
   return (
     <div className={classes.root}>
-        <Grid container spacing={7} className={classes.grid} direction="row">         
+        <Grid container spacing={7} className={classes.grid} direction="row">  
+          <Grid item xs={3} md={3} direction="column">
+            <Paper className={classes.ingredientsPaper}>
+               <Ingredients />
+            </Paper>
+            <Paper className={classes.nutritionFactsPaper}>
+              <NutritionFacts />
+            </Paper>
+          </Grid>  
+
           <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
             <Paper className={classes.recipePhotoPaper}>
               <p> Recipe ID {recipe_id} </p>
@@ -94,15 +103,7 @@ const RecipeDetail = () => {
               </Button>
             </Paper>
           </Grid>
-     
-          <Grid item xs={3} md={3} direction="column">
-            <Paper className={classes.ingredientsPaper}>
-               <Ingredients />
-            </Paper>
-            <Paper className={classes.nutritionFactsPaper}>
-              <NutritionFacts />
-            </Paper>
-          </Grid>  
+    
         </Grid>
     </div>
   );
