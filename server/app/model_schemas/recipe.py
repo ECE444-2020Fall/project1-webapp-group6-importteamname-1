@@ -7,7 +7,7 @@ class Recipe(db.Model):
     __tablename__ = 'recipe'
     
     recipe_id = db.Column(
-        db.Integer,
+        UUIDType(), 
         primary_key=True, 
         nullable=False
     )
@@ -76,3 +76,4 @@ class Recipe(db.Model):
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
+
