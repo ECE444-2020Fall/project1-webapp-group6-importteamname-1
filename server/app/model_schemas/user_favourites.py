@@ -7,16 +7,15 @@ from .user import User
 class UserFavourites(db.Model):
     __tablename__ = 'user_favourites'
     user_id = db.Column(
-        'user_id',
         UUIDType(), 
         db.ForeignKey('user.user_id'),
         nullable=False,
         primary_key=True
     )
+    
     recipe_id = db.Column(
-        'recipe_id',
-        db.Integer,
-        # db.ForeignKey('recipe.recipe_id'),
+        UUIDType(), 
+        db.ForeignKey('recipe.recipe_id'),
         primary_key=True,
         nullable=False
     )

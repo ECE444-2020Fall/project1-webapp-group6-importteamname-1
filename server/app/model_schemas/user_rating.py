@@ -11,8 +11,8 @@ class UserRating(db.Model):
         primary_key=True
     )
     recipe_id = db.Column(
-        db.Integer,
-        # db.ForeignKey('recipe.recipe_id'),
+        UUIDType(), 
+        db.ForeignKey('recipe.recipe_id'),
         nullable=False,
         primary_key=True
     )

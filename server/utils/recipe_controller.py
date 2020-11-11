@@ -15,7 +15,7 @@ class RecipeController():
         self.db.session.commit()
         
         json_response = jsonify({
-            'recipe_id': int.from_bytes(recipe_id, byteorder='little'),
+            'recipe_id': recipe_id,
             'recipe_name': recipe_name
         })
 
@@ -28,7 +28,7 @@ class RecipeController():
 
         for recipe in recipes:
             recipe_info_object = {
-                "recipe_id": int.from_bytes(recipe.recipe_id, byteorder='little'),
+                "recipe_id": recipe.recipe_id,
                 "recipe_name": recipe.recipe_name,
                 "image_url": recipe.image_url,
                 "cuisine": recipe.cuisine,

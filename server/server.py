@@ -16,10 +16,19 @@ from app.models import *
 CORS(app)
 app.secret_key = "TESTKEY"
 
+@app.route('/api/drop')
+def drop_db():
+    UserRating.query.delete()
+    UserNotes.query.delete()
+    RecipeIngredient.query.delete()
+    RecipeCart.query.delete()
+    Recipe.query.delete()
+    db.session.commit()
+    return "dropped table"
+
 @app.route('/api/add_or_update_user_notes', methods=['POST'])
 def add_or_update_user_notes():
     recipe_id = request.get_json()["recipe_id"]
-    recipe_id = int(recipe_id).to_bytes(16, 'little')
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserNotes)
 
@@ -69,7 +78,7 @@ def get_recipe_cart_item():
     recipe_id = request.get_json()["item"]
     return inventory_manager.add_item(recipe_id, RecipeCart)
 
-@app.route('/api/recipe_cart/<int:recipe_id>', methods=['DELETE'])
+@app.route('/api/recipe_cart/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_cart_item(recipe_id):
     return inventory_manager.remove_item(recipe_id, RecipeCart)
 
@@ -83,8 +92,7 @@ def add_recipe_to_favs_list(recipe_id):
 
 @app.route('/api/favourites_list', methods=['POST'])
 def get_recipe_favs_list():
-    recipe_id = int(request.get_json()["item"])
-    # recipe_id = int(recipe_id).to_bytes(16, 'little')
+    recipe_id = request.get_json()["item"]
     return inventory_manager.add_item(recipe_id, UserFavourites)
 
 
@@ -100,7 +108,7 @@ def show_favs_list():
 
 @app.route('/api/ingredients/add', methods=['POST']) 
 def add_ingredient():
-    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    recipe_id = request.get_json()["recipe_id"]
     ingredient_name = request.get_json()["ingredient_name"]
     amount = request.get_json()["amount"]
     unit_of_measurement = request.get_json()["unit_of_measurement"]
@@ -119,7 +127,7 @@ def remove_all_ingredients():
 
 @app.route('/api/recipes/add', methods=['POST']) 
 def add_recipe(): 
-    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    recipe_id = uuid.uuid4()
     recipe_name = request.get_json()["recipe_name"]
     image_url = request.get_json()["image_url"]
     cuisines = request.get_json()["cuisines"]
