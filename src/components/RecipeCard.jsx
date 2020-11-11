@@ -40,6 +40,9 @@ const RecipeCard = (props) => {
               <img src={props.imageUrl} alt="" style={imgStyle}></img>
               <p> Recipe ID: {props.recipeId} </p>
               <p> Recipe Name: {props.recipeName} </p>
+              <p> Time to Cook: {props.timeToCookInMinutes} </p>
+              <p> Calories: {props.calories} </p>
+              <p> Servings: {props.servings} </p>
             </Paper>
           </Grid>
         </Grid>

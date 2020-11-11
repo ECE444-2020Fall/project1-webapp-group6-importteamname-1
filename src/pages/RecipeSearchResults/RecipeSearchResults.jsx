@@ -32,8 +32,7 @@ const RecipeSearchResults = () => {
                         calories={recipe.calories}
                         protein={recipe.protein}
                         carbs={recipe.carbs}
-                        fat={recipe.fat}
-              />
+                        fat={recipe.fat} />
             </Link>
         ))}
     </main>

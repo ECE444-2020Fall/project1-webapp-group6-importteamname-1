@@ -9,22 +9,23 @@ import FavouriteRecipes from './pages/FavouriteRecipes/FavouriteRecipes';
 import ShoppingList from './pages/ShoppingList/ShoppingList';
 import CalorieTracker from './pages/CalorieTracker/CalorieTracker';
 import RecipeCart from './pages/RecipeCart/RecipeCart';
+import ScrollIntoView from './components/ScrollIntoView';
 
-//TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
   return (
     <React.Fragment>
-      <NavBar />
-      <Switch>
-        <Route exact path='/' component={AddIngredients} />
-        <Route exact path='/favourite-recipes' component={FavouriteRecipes} />
-        <Route exact path='/shopping-list' component={ShoppingList} />
-        <Route exact path='/calorie-tracker' component={CalorieTracker} />
-        <Route exact path='/recipe-cart' component={RecipeCart} />
-        <Route exact path='/recipe-search-results/:recipe_id' component={RecipeDetail} />
-        <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
-      </Switch>
-      {/* <Footer /> */}
+      <ScrollIntoView>
+        <NavBar />
+        <Switch>
+          <Route exact path='/' component={AddIngredients} />
+          <Route exact path='/favourite-recipes' component={FavouriteRecipes} />
+          <Route exact path='/shopping-list' component={ShoppingList} />
+          <Route exact path='/calorie-tracker' component={CalorieTracker} />
+          <Route exact path='/recipe-cart' component={RecipeCart} />
+          <Route exact path='/recipe-search-results/:recipe_id' component={RecipeDetail} />
+          <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
+        </Switch>
+        </ScrollIntoView>
     </React.Fragment>
   );
 }
