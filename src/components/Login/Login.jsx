@@ -172,11 +172,11 @@ const Login = () => {
                 </h2>
                 <form onSubmit= { handleLogin }>
                     <p> User: </p>
-                    <input type="text" name="user" onChange={ handleUserChangeL } />
+                    <input type="text" onChange={ handleUserChangeL } />
                     
                     {userErrorL.length > 0 && <span id="error">&nbsp;{userErrorL}</span>}
                     <p> Password: </p>
-                    <input type="text" name="Password" onChange={ handlePassChangeL } />
+                    <input type="text" onChange={ handlePassChangeL } />
                     {passErrorL.length > 0 && <span id="error">&nbsp;{passErrorL}</span>}
                     <br/>
                     <p/>
@@ -191,15 +191,15 @@ const Login = () => {
                 </h2>
                 <form onSubmit= { handleRegister }>
                     <p> User: </p>
-                    <input type="text" name="user" onChange={ handleUserChange } />
+                    <input type="text" onChange={ handleUserChange } />
                     
                     {userError.length > 0 && <span id="error">&nbsp;{userError}</span>}
                     <p> Password: </p>
-                    <input type="text" name="Password" onChange={ handlePassChange } />
+                    <input type="text" onChange={ handlePassChange } />
                     {passError.length > 0 && <span id="error">&nbsp;{passError}</span>}
                     <br/>
                     <p> Confirm Password:</p>
-                    <input type="text" name="ConfirmPassword" onChange={ handlePass2Change } />
+                    <input type="text" onChange={ handlePass2Change } />
                     {passError.length > 0 && <span id="error">&nbsp;{passError}</span>}
                     <br/>
                     

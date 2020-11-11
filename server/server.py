@@ -3,6 +3,7 @@ import uuid
 from flask import request
 import os
 from os.path import exists, join
+from flask_cors import CORS
 
 from constants import CONSTANTS
 from sample_data import sample_data
@@ -10,16 +11,19 @@ from sample_data import sample_data
 from app import db, app
 from app.models import *
 
+
+CORS(app)
 app.secret_key = "TESTKEY"
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 #@app.route('/api/add_user/<string:name>/<string:password>', methods=['POST'])
 @app.route(CONSTANTS['ENDPOINT']['REGISTER'], methods=['POST'])
 def add_new_user():
-    name =  request.get_json()["name"]
-    password = request.get_json()["password"]
+    body = request.get_json()
+    name =  body["name"]
+    password = body["password"]
     user = User.query.filter(
-        User.username == name and User.password == password
+        User.username == name, User.password == password
     ).first()
     if user:
         return "User already exists"
@@ -60,14 +64,19 @@ def get_user():
 
 @app.route(CONSTANTS['ENDPOINT']['LOGIN'], methods=['POST'])
 def login_user():
-    name =  request.get_json()["name"]
-    password = request.get_json()["password"]
+    body = request.get_json()
+    name =  body["name"]
+    password = body["password"]
     user = User.query.filter(
         User.username == name and User.password == password
     ).first()
     if user:
         session["user_id"] = user.user_id
-        return ""
+        print("found user")
+        print(session)
+        print()
+        return "Found User"
+    print("User not found")
     return "User not found"
     
 
