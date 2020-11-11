@@ -3,6 +3,19 @@ from constants import CONSTANTS
 from collections import defaultdict
 import sqlalchemy
 
+def get_user_id():
+    if 'user_id' not in session:
+        print("user id not in session")
+        user_id = "9890648f-c400-4c98-9796-e1afbc7774db"
+        # json_response = jsonify({ 
+        #     'error': 'user_id not in session, log in again'
+        # })
+        # return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
+    else:
+        print("user id in session")
+        user_id = session['user_id']
+    return user_id
+
 
 class RecipePersonalizationManager():
 
@@ -10,17 +23,7 @@ class RecipePersonalizationManager():
         self.db = db 
 
     def get_user_feedback(self, recipe_id, model):
-        print("SESS",session)
-        # session["test"] = 4
-        if 'user_id' not in session:
-            user_id = "ebbe4421-c37b-4bd1-ac39-2337b1535206"
-            # json_response = jsonify({ 
-            #     'error': 'user_id not in session, log in again'
-            # })
-            # print("USER ERROR")
-            # return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-        else:
-            user_id = session['user_id']
+        user_id = get_user_id()
         
         feedback_item = model.query.get((user_id, recipe_id))
         feedback = feedback_item.get_feedback() if feedback_item else False
@@ -35,30 +38,21 @@ class RecipePersonalizationManager():
 
 
     def add_or_update_feedback(self, recipe_id, feedback, model):
-        if 'user_id' not in session:
-            user_id = "ebbe4421-c37b-4bd1-ac39-2337b1535206"
-
-            # json_response = jsonify({ 
-            #     'error': 'user_id not in session, log in again'
-            # })
-            # return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-        
-        else:
-            user_id = session['user_id']
+        user_id = get_user_id()
         
         feedback_item = model.query.get((user_id, recipe_id))
 
         if feedback_item:      # item already in list
             feedback_item.update_feedback(feedback)
             self.db.session.commit()
-            print("update item")
+
             json_response = jsonify({
                 'user_id': user_id,
                 'recipe_id': recipe_id,
                 'feedback': feedback
             })
             return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
-        print("create item")
+
         feedback_item = model(user_id, recipe_id, feedback)
         self.db.session.add(feedback_item)
         self.db.session.commit()
@@ -73,18 +67,12 @@ class RecipePersonalizationManager():
     
 
     def get_all_user_feedbacks(self, model):     # get all items in model belonging to user 
-        if 'user_id' not in session:                                # user not logged in 
-            json_response = jsonify({
-                'error': 'user_id not in session, log in again'
-            })
-            return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-
-        user_id = session['user_id']
+        user_id = get_user_id()
         user_feedbacks = model.query.filter(model.user_id == user_id)
         user_feedbacks_map = {}
         user_feedbacks_map["feedbacks"] = [
             { 
-                "recipe_id": int.from_bytes(item.recipe_id, 'little'),
+                "recipe_id": item.recipe_id,
                 "feedback": item.get_feedback() 
             } for item in user_feedbacks]
         json_response = jsonify(user_feedbacks_map)

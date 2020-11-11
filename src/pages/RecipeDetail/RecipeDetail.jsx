@@ -6,7 +6,9 @@ import MasterList from "./MasterList";
 import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
 import { useParams } from "react-router-dom";
+import { UserRating } from "../../components/UserRating";
 import { FavouritesButton } from "../../components/FavouritesButton";
+import { RecipeCartButton } from "../../components/RecipeCartButton";
 
 const RecipeDetail = () => {
   const [sampleOrders, setSampleOrders] = useState([]);
@@ -47,7 +49,8 @@ const RecipeDetail = () => {
     <main id="mainContent">
       <h1> Showing recipe detail for recipe {recipe_id}</h1>
       <FavouritesButton recipe_id={recipe_id}/>
-
+      <RecipeCartButton recipe_id={recipe_id}/>
+      <UserRating recipe_id={recipe_id}/>
       <div className="container-fluid">
         <div className="row">
           <div className={sidebarStyle}>

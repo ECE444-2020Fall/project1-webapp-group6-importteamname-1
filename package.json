@@ -3,19 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@material/menu": "^7.0.0",
     "bootstrap": "4.5.0",
     "classnames": "2.2.6",
+    "concurrently": "5.2.0",
     "flask-cors": "^0.0.1",
     "fontsource-roboto": "^3.0.3",
     "fs-extra": "9.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
-    "react-scripts": "^4.0.0",
-    "concurrently": "5.2.0"
+    "react-scripts": "^4.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"
