@@ -38,7 +38,6 @@ const RecipeCartButton = ({recipe_id}) => {
       className={classes.button}
       startIcon={<ShoppingCartIcon/>}
       onClick={() => {
-        console.log("CLICK")
         isCarted ? removeItem(recipe_id, CONSTANTS.ENDPOINT.RECIPE_CART) : addItem(recipe_id, CONSTANTS.ENDPOINT.RECIPE_CART)
         setIsCarted(!isCarted)
       }

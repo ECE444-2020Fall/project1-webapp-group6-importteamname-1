@@ -38,7 +38,6 @@ const FavouritesButton = ({recipe_id}) => {
       className={classes.button}
       startIcon={<FavoriteBorderIcon/>}
       onClick={() => {
-        console.log("CLICK")
         isFavourite ? removeItem(recipe_id, CONSTANTS.ENDPOINT.FAVOURITES_LIST) : addItem(recipe_id, CONSTANTS.ENDPOINT.FAVOURITES_LIST)
         setIsFavourite(!isFavourite)
       }

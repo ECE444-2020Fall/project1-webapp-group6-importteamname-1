@@ -65,7 +65,6 @@ const setFeedback = (endpoint, item, feedback) => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
-      console.log(response)
       return response.text();
     })
     .then(body => JSON.parse(body))
