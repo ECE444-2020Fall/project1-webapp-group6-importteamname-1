@@ -15,10 +15,7 @@ const getItem = (item, endpoint) => {
       }
       return response.text();
     })
-    .then(body => {
-      const x = JSON.parse(body);
-      return x
-    })
+    .then(body => JSON.parse(body))
 
 }
 
