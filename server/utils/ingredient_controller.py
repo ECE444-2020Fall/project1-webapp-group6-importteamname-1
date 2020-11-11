@@ -13,7 +13,7 @@ class IngredientController():
         self.db.session.commit()
         
         json_response = jsonify({
-            'recipe_id': int.from_bytes(recipe_id, byteorder='little'),
+            'recipe_id': recipe_id,
             'ingredient_name': ingredient_name
         })
 
@@ -26,7 +26,7 @@ class IngredientController():
 
         for ingredient in ingredients:
             ingredient_object = {
-                "recipe_id": int.from_bytes(ingredient.recipe_id, byteorder='little'),
+                "recipe_id": ingredient.recipe_id,
                 "ingredient_name": ingredient.ingredient_name,
                 "amount": ingredient.amount,
                 "unit_of_measurement": ingredient.unit_of_measurement
