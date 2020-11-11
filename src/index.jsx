@@ -4,10 +4,18 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import { createStore } from 'redux';
+import store from './store';
+import { Provider } from 'react-redux';
+// import rootReducer from './reducers/postReducer';
+
+// const store = createStore(rootReducer);
 
 ReactDOM.render(
     <BrowserRouter>
-      <App />
+      <Provider store={store}> 
+        <App />
+      </Provider>
     </BrowserRouter>,
   document.getElementById("root")
 );

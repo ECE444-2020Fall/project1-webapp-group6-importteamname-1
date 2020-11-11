@@ -3,18 +3,24 @@ import RecipeCard from "../../components/common/RecipeCard";
 import axios from 'axios';
 import CONSTANTS from '../../constants';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'; 
+import { getRecipes } from '../../actions/recipeActions';
 
-const RecipeSearchResults = () => {
-  const [data, setData] = useState({ recipes: [] });
+const RecipeSearchResults = (props) => {
+  // const [data, setData] = useState({ recipes: [] });
+  // const { recipes } = props.posts; // From redux
+  // console.log(props);
 
   useEffect(() => {
-    (async () => {
-      const recipeSearchResult = await axios(
-        CONSTANTS.ENDPOINT.GET_ALL_RECIPES,
-      );
+    //   async () => {
+    //   const recipeSearchResult = await axios(
+    //     CONSTANTS.ENDPOINT.GET_ALL_RECIPES,
+    //   );
  
-      setData(recipeSearchResult.data);
-    })();
+    //   setData(recipeSearchResult.data);
+    // }
+    props.getRecipes()
+
   }, []);
 
   return (
@@ -22,7 +28,7 @@ const RecipeSearchResults = () => {
       <div className="row justify-content-center py-5">
         <h3>Recipe Search Results</h3>
       </div>
-        {data.recipes.map(recipe => (
+        {/* {data.recipes.map(recipe => (
           <Link key={recipe.recipe_id} to={"/recipe-search-results/" + recipe.recipe_id}>
             <RecipeCard key={recipe.recipe_id}
                         recipeId={recipe.recipe_id} 
@@ -35,9 +41,15 @@ const RecipeSearchResults = () => {
                         carbs={recipe.carbs}
                         fat={recipe.fat} />
             </Link>
-        ))}
+        ))} */}
     </main>
   );
 }
 
-export default RecipeSearchResults;
+const mapStateToProps = (state) => {
+  return {
+    recipes: state.recipes
+  }
+}
+
+export default connect(mapStateToProps, {getRecipes})(RecipeSearchResults);

@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button } from "@material-ui/core";
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,9 +65,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RecipeDetail = () => {
+const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
+  const post = props.post; 
+
+  console.log(recipe_id);
+  console.log(props);
 
   return (
     <div className={classes.root}>
@@ -109,4 +114,19 @@ const RecipeDetail = () => {
   );
 }
 
-export default RecipeDetail;
+const mapStateToProps = (state, ownProps) => {
+  let id = useParams();
+  console.log("map id");
+  console.log(id.recipe_id);
+  return {
+    // post: state.posts.find(post => post.id == id.recipe_id)
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps)(RecipeDetail);
