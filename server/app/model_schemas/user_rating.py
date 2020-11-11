@@ -12,7 +12,7 @@ class UserRating(db.Model):
     )
     recipe_id = db.Column(
         db.Integer,
-        db.ForeignKey('recipe.recipe_id'),
+        # db.ForeignKey('recipe.recipe_id'),
         nullable=False,
         primary_key=True
     )

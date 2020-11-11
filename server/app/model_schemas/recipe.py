@@ -7,6 +7,7 @@ class Recipe(db.Model):
     __tablename__ = 'recipe'
     
     recipe_id = db.Column(
+        'recipe_id',
         db.Integer,
         primary_key=True, 
         nullable=False
@@ -76,3 +77,31 @@ class Recipe(db.Model):
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
+
+
+# class UserFavourites(db.Model):
+#     __tablename__ = 'user_favourites'
+#     user_id = db.Column(
+#         'user_id',
+#         UUIDType(), 
+#         db.ForeignKey('user.user_id'),
+#         nullable=False,
+#         primary_key=True
+#     )
+#     recipe_id = db.Column(
+#         'recipe_id',
+#         db.Integer,
+#         db.ForeignKey('recipe.recipe_id'),
+#         primary_key=True,
+#         nullable=False
+#     )
+
+#     def __init__(self, user_id, recipe_id):
+#         self.user_id = user_id
+#         self.recipe_id = recipe_id
+
+#     def get_feedback(self):
+#         return True
+
+#     def get_item_name(self):
+#         return int.from_bytes(self.recipe_id, byteorder='little')

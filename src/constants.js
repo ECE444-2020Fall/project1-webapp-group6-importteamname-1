@@ -2,7 +2,7 @@
 
 CONSTANTS.APP_NAME = 'ChefCoPilot';
 
-CONSTANTS.BACKEND_URL = 'https://chefcopilotbackend.herokuapp.com';
+CONSTANTS.BACKEND_URL = 'http://localhost:3001'//'https://chefcopilotbackend.herokuapp.com';
 
 CONSTANTS.ERROR_MESSAGE = {};
 
@@ -20,4 +20,6 @@ CONSTANTS.ENDPOINT.MASTERDETAIL = `${CONSTANTS.BACKEND_URL}/api/masterdetail`;
 CONSTANTS.ENDPOINT.REMOVE_SHOPPING_LIST_ITEM = `${CONSTANTS.BACKEND_URL}/api/remove_item_from_shopping_list`;
 CONSTANTS.ENDPOINT.ADD_SHOPPING_LIST_ITEM = `${CONSTANTS.BACKEND_URL}/api/add_item_to_shopping_list`;
 CONSTANTS.ENDPOINT.GET_SHOPPING_LIST = `${CONSTANTS.BACKEND_URL}/api/shopping_list`;
+CONSTANTS.ENDPOINT.FAVOURITES_LIST = `${CONSTANTS.BACKEND_URL}/api/favourites_list`;
+
 export default CONSTANTS;
