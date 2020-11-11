@@ -57,24 +57,21 @@ const NavBar = () => {
         </Link>
         <div className="navbar-nav">
           <Link className="nav-item nav-link active" to="/">
-            Add Recipes
+            Add Ingredients
           </Link>
-          <Link className="nav-item nav-link active" to="RecipeSearchResults">
+          <Link className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
           </Link>
-          <Link className="nav-item nav-link active" to="RecipeDetail">
-            Recipe Detail
-          </Link>
-          <Link className="nav-item nav-link active" to="FavouriteRecipes">
+          <Link className="nav-item nav-link active" to="/favourite-recipes">
             Favourite Recipes
           </Link>
-          <Link className="nav-item nav-link active" to="CalorieTracker">
-            Calorie Tracker
+          <Link className="nav-item nav-link active" to="/calorie-tracker">
+            Nutrition Tracker
           </Link>
-          <Link className="nav-item nav-link active" to="ShoppingList">
+          <Link className="nav-item nav-link active" to="/shopping-list">
             Shopping List
           </Link>
-          <Link className="nav-item nav-link active" to="RecipeCart">
+          <Link className="nav-item nav-link active" to="/recipe-cart">
             Recipe Cart
           </Link>
           <SimpleMenu></SimpleMenu>
