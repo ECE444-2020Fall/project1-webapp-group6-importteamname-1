@@ -9,7 +9,7 @@ import FavouriteRecipes from './pages/FavouriteRecipes/FavouriteRecipes';
 import ShoppingList from './pages/ShoppingList/ShoppingList';
 import CalorieTracker from './pages/CalorieTracker/CalorieTracker';
 import RecipeCart from './pages/RecipeCart/RecipeCart';
-import ScrollIntoView from './components/ScrollIntoView';
+import ScrollIntoView from './components/common/ScrollIntoView';
 
 const App = () => {
   return (

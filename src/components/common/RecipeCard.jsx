@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import imageUnavailable from '../images/noImage.jpg';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +52,10 @@ const RecipeCard = (props) => {
 RecipeCard.propTypes = {
     imageUrl: PropTypes.string,
     recipeName: PropTypes.string,
-    recipeId: PropTypes.number
+    recipeId: PropTypes.number,
+    timeToCookInMinutes: PropTypes.number,
+    calories: PropTypes.number,
+    servings: PropTypes.number
 };
 
 export default RecipeCard;

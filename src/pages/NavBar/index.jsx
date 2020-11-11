@@ -57,7 +57,7 @@ const NavBar = () => {
         </Link>
         <div className="navbar-nav">
           <Link className="nav-item nav-link active" to="/">
-            Add Recipes
+            Add Ingredients
           </Link>
           <Link className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
@@ -66,7 +66,7 @@ const NavBar = () => {
             Favourite Recipes
           </Link>
           <Link className="nav-item nav-link active" to="/calorie-tracker">
-            Calorie Tracker
+            Nutrition Tracker
           </Link>
           <Link className="nav-item nav-link active" to="/shopping-list">
             Shopping List

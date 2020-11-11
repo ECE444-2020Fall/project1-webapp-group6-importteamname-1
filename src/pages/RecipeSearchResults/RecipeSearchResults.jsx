@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
-import RecipeCard from "../../components/RecipeCard";
+import RecipeCard from "../../components/common/RecipeCard";
 import axios from 'axios';
+import CONSTANTS from '../../constants';
 import { Link } from 'react-router-dom';
 
 const RecipeSearchResults = () => {
@@ -9,7 +10,7 @@ const RecipeSearchResults = () => {
   useEffect(() => {
     (async () => {
       const recipeSearchResult = await axios(
-        'http://localhost:3001/api/recipes',
+        CONSTANTS.ENDPOINT.GET_ALL_RECIPES,
       );
  
       setData(recipeSearchResult.data);
@@ -22,7 +23,7 @@ const RecipeSearchResults = () => {
         <h3>Recipe Search Results</h3>
       </div>
         {data.recipes.map(recipe => (
-          <Link to={"/recipe-search-results/" + recipe.recipe_id}>
+          <Link key={recipe.recipe_id} to={"/recipe-search-results/" + recipe.recipe_id}>
             <RecipeCard key={recipe.recipe_id}
                         recipeId={recipe.recipe_id} 
                         recipeName={recipe.recipe_name}

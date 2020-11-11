@@ -1,17 +1,13 @@
-﻿import React, { useState } from "react";
-import styles from "./styles.module.css";
-import CONSTANTS from "../../constants";
+﻿import React from "react";
 import Ingredients from "../../components/RecipeDetail/Ingredients";
 import NutritionFacts from "../../components/RecipeDetail/NutritionFacts";
 import RecipeRating from "../../components/RecipeDetail/RecipeRating";
-import RecipeInstruction from "../../components/RecipeDetail/RecipeInstruction";
 import RecipeUserNotes from "../../components/RecipeDetail/RecipeUserNotes";
 import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button } from "@material-ui/core";
-import { Autorenew } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,10 +67,6 @@ const useStyles = makeStyles((theme) => ({
 const RecipeDetail = () => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
-  const imgStyle = {
-    height: 'auto',
-    maxWidth: '30%'
-  };
 
   return (
     <div className={classes.root}>
@@ -82,7 +74,6 @@ const RecipeDetail = () => {
           <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
             <Paper className={classes.recipePhotoPaper}>
               <p> Recipe ID {recipe_id} </p>
-               {/* <img src={sampleImage} style={imgStyle} /> */}
             </Paper>
             <Paper className={classes.userActionsPaper}>
               <RecipeRating />
@@ -113,7 +104,6 @@ const RecipeDetail = () => {
             </Paper>
           </Grid>  
         </Grid>
-
     </div>
   );
 }
