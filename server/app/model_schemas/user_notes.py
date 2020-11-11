@@ -11,7 +11,7 @@ class UserNotes(db.Model):
         primary_key=True
     )
     recipe_id = db.Column(
-        db.Integer,
+        UUIDType(), 
         db.ForeignKey('recipe.recipe_id'),
         nullable=False,
         primary_key=True
@@ -31,3 +31,6 @@ class UserNotes(db.Model):
 
     def get_feedback(self):
         return self.user_notes
+
+    def get_item_name(self):
+        return int.from_bytes(self.recipe_id, byteorder='little')

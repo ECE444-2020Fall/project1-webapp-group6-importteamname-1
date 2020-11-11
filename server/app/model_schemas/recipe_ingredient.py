@@ -6,7 +6,7 @@ class RecipeIngredient(db.Model):
     __tablename__ = 'recipe_ingredient'
 
     recipe_id = db.Column(  
-        db.Integer,
+        UUIDType(),
         db.ForeignKey('recipe.recipe_id'),
         nullable=False,
         primary_key=True

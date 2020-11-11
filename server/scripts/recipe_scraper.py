@@ -1,6 +1,6 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+import uuid
 from app import db, app, recipe_controller, ingredient_controller
 from app.models import *
 from constants import CONSTANTS
@@ -70,7 +70,7 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         None
     """
     for recipe in spoonacular_recipes_json["recipes"]:
-        recipe_id = recipe["id"]
+        spoonacular_recipe_id = recipe["id"]
         recipe_name = recipe["title"]
         image_url = recipe["image"]
         cuisines = str(recipe["cuisines"][:])
@@ -85,15 +85,16 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         carbs = float(recipe_nutrition_json["carbs"][:-1])
         fat = float(recipe_nutrition_json["fat"][:-1])
         protein = float(recipe_nutrition_json["protein"][:-1])
-   
+
+        recipe_id = uuid.uuid4()
         populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
                                                         servings, instructions, calories, carbs, fat, protein)
         
-        process_recipe_ingredients(spoonacular_api_key, recipe_id)
+        process_recipe_ingredients(spoonacular_api_key, spoonacular_recipe_id, recipe_id)
     return 
 
 
-def process_recipe_ingredients(spoonacular_api_key, recipe_id):
+def process_recipe_ingredients(spoonacular_api_key, spoonacular_recipe_id, recipe_id):
     """
     Parse a recipe's ingredients from Spoonacular API and extract fields that are needed for the Chef Co-Pilot App.
 
@@ -103,7 +104,7 @@ def process_recipe_ingredients(spoonacular_api_key, recipe_id):
     Returns:
         None
     """
-    spoonacular_recipe_ingredients_json = get_ingredients_from_spoonacular_api_using_recipe_id(spoonacular_api_key, recipe_id)
+    spoonacular_recipe_ingredients_json = get_ingredients_from_spoonacular_api_using_recipe_id(spoonacular_api_key, spoonacular_recipe_id)
 
     for ingredient in spoonacular_recipe_ingredients_json["ingredients"]:
         ingredient_name = ingredient["name"]
@@ -133,7 +134,7 @@ def populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_
     Returns:
         None.
     """
-    recipe_controller.add_recipe(Recipe, recipe_id.to_bytes(10, 'little'), recipe_name, image_url, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
+    recipe_controller.add_recipe(Recipe, recipe_id, recipe_name, image_url, cuisines, instructions, time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
     print("Inserted: recipe_id: {}, recipe_name: {}".format(recipe_id, recipe_name))
    
 
@@ -150,7 +151,7 @@ def populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_me
         A HTTP status code of the request to server.py's endpoint.
     """
     
-    ingredient_controller.add_ingredient(RecipeIngredient, recipe_id.to_bytes(10, 'little'), ingredient_name, amount, unit_of_measurement)
+    ingredient_controller.add_ingredient(RecipeIngredient, recipe_id, ingredient_name, amount, unit_of_measurement)
   
     print("Inserted: recipe_id: {}, ingredient_name: {}".format(recipe_id, ingredient_name))
 
