@@ -35,11 +35,11 @@ const RecipeCard = (props) => {
   return (
     <div className={classes.root}> 
        <Grid container spacing={7} className={classes.grid} direction="row">         
-          <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
+          <Grid item xs={8} md={8}  className={classes.leftColumn}>
             <Paper className={classes.recipePaper}>
-              <img src={props.imageUrl} alt={imageUnavailable} style={imgStyle}></img>
+              <img src={props.imageUrl} alt="" style={imgStyle}></img>
               <p> Recipe ID: {props.recipeId} </p>
-              <p> Recipe Name {props.recipeName} </p>
+              <p> Recipe Name: {props.recipeName} </p>
             </Paper>
           </Grid>
         </Grid>

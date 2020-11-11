@@ -1,77 +1,120 @@
 ﻿import React, { useState } from "react";
-import classnames from "classnames";
-import WarningMessage from "../WarningMessage";
-import Detail from "./Detail";
-import MasterList from "./MasterList";
 import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
+import Ingredients from "../../components/RecipeDetail/Ingredients";
+import NutritionFacts from "../../components/RecipeDetail/NutritionFacts";
+import RecipeRating from "../../components/RecipeDetail/RecipeRating";
+import RecipeInstruction from "../../components/RecipeDetail/RecipeInstruction";
+import RecipeUserNotes from "../../components/RecipeDetail/RecipeUserNotes";
 import { useParams } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { Button } from "@material-ui/core";
+import { Autorenew } from "@material-ui/icons";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 50
+  },
+  grid: {
+    width: '100%',
+    margin: '0px'
+  },
+  leftColumn: {
+    marginLeft: 50
+  },
+  recipePhotoPaper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: 20,
+    minHeight: 300
+  },
+  userActionsPaper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: 20
+  },
+  instructionsPaper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: 20,
+    minHeight: 300
+  },
+  userAddNotesPaper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: 20,
+    minHeight: 200
+  },
+  ingredientsPaper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: 20,
+    minHeight: 300
+  },
+  nutritionFactsPaper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: 20,
+    minHeight: 200
+  },
+}));
 
 const RecipeDetail = () => {
-  const [sampleOrders, setSampleOrders] = useState([]);
-  const [currentSampleOrder, setCurrentSampleOrder] = useState({});
-  const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
-  const sidebarStyle = classnames("col-2","p-0","border-right", styles.sidebar);
   let { recipe_id } =  useParams();
-
-  const getSampleOrders = () => {
-    let promiseSampleOrders = fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-
-    return promiseSampleOrders;
-  }
-
-  const closeWarningMessage = () => {
-    setWarningMessage({warningMessageOpen: false , warningMessageText: ""});
-  }
-
-  React.useEffect(() => {
-    getSampleOrders()
-    .then(listSampleOrders => {
-        setSampleOrders(listSampleOrders)
-        setCurrentSampleOrder(listSampleOrders[0]);
-    })
-    .catch(error =>
-    {
-      setWarningMessage({warningMessageOpen: true, warningMessageText: `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`});
-    });
-  }, []);
+  const classes = useStyles();
+  const imgStyle = {
+    height: 'auto',
+    maxWidth: '30%'
+  };
 
   return (
-    <main id="mainContent">
-      <h1> Showing recipe detail for recipe {recipe_id}</h1>
-      <div className="container-fluid">
-        <div className="row">
-          <div className={sidebarStyle}>
-            <div className="list-group list-group-flush border-bottom">
-              {sampleOrders.map((sampleOrder) => (
-                <MasterList
-                  selectSampleOrder={setCurrentSampleOrder}
-                  sampleOrder={sampleOrder}
-                  key={sampleOrder.id}
-                  isActive={sampleOrder === currentSampleOrder}
-                />
-              ))}
-            </div>
-          </div>
-          {currentSampleOrder.id && (
-            <Detail
-              textSampleData={currentSampleOrder}
-            />
-          )}
-        </div>
-      </div>
-      <WarningMessage
-        open={warningMessage.warningMessageOpen}
-        text={warningMessage.warningMessageText}
-        onWarningClose={closeWarningMessage}
-      />
-    </main>
+    <div className={classes.root}>
+        <Grid container spacing={7} className={classes.grid} direction="row">         
+          <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
+            <Paper className={classes.recipePhotoPaper}>
+              <p> Recipe ID {recipe_id} </p>
+               {/* <img src={sampleImage} style={imgStyle} /> */}
+            </Paper>
+            <Paper className={classes.userActionsPaper}>
+              <RecipeRating />
+              <Button variant="contained" color="primary">
+                Add to Cart
+              </Button>
+              <Button variant="contained" color="primary">
+                Add to Favourites
+              </Button>
+            </Paper>
+            <Paper className={classes.instructionsPaper}>
+               <preparationSteps />
+            </Paper>
+            <Paper className={classes.userAddNotesPaper}>
+              <RecipeUserNotes />
+              <Button variant="contained" color="primary">
+                Add Note
+              </Button>
+            </Paper>
+          </Grid>
+     
+          <Grid item xs={3} md={3} direction="column">
+            <Paper className={classes.ingredientsPaper}>
+               <Ingredients />
+            </Paper>
+            <Paper className={classes.nutritionFactsPaper}>
+              <NutritionFacts />
+            </Paper>
+          </Grid>  
+        </Grid>
+
+    </div>
   );
 }
 
