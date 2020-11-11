@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import Button from '@material-ui/core/Button';
 
-const AddRecipes = () => {
+const AddIngredients = () => {
   return <main id="mainContent">
     <div className="container">
       <div className="row justify-content-center mt-5 p-0">
@@ -13,4 +13,4 @@ const AddRecipes = () => {
     </div>
   </main>;
 }
-export default AddRecipes;
+export default AddIngredients;
