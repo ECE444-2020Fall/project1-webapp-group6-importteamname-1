@@ -3,6 +3,7 @@ import Ingredients from "../../components/RecipeDetail/Ingredients";
 import NutritionFacts from "../../components/RecipeDetail/NutritionFacts";
 import RecipeRating from "../../components/RecipeDetail/RecipeRating";
 import RecipeUserNotes from "../../components/RecipeDetail/RecipeUserNotes";
+import RecipeInstruction from "../../components/RecipeDetail/RecipeInstruction";
 import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -66,7 +67,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-// Need to fetch instructions!!!
+/*
+TODO:
+-fetch user notes from database (GET user_notes by recipe_id and user_id)
+-fetch ingredients from database (GET ingredients by recipe_id)
+*/
 
 const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
@@ -83,10 +88,13 @@ const RecipeDetail = (props) => {
         <Grid container spacing={7} className={classes.grid} direction="row">  
           <Grid item xs={3} md={3} direction="column">
             <Paper className={classes.ingredientsPaper}>
-               <Ingredients />
+               <Ingredients servings={currentRecipe.servings} />
             </Paper>
             <Paper className={classes.nutritionFactsPaper}>
-              <NutritionFacts />
+              <NutritionFacts calories={currentRecipe.calories} 
+                              protein={currentRecipe.protein} 
+                              carbs={currentRecipe.carbs} 
+                              fat={currentRecipe.fat} />
             </Paper>
           </Grid>  
 
@@ -94,6 +102,8 @@ const RecipeDetail = (props) => {
             <Paper className={classes.recipePhotoPaper}>
               <p> Recipe ID {recipe_id} </p>
               <p> Recipe Name: {currentRecipe.recipe_name} </p>
+              <p> Image: {currentRecipe.image_url} </p>
+              <p> Cuisine: {currentRecipe.cuisine} </p>
             </Paper>
             <Paper className={classes.userActionsPaper}>
               <RecipeRating />
@@ -105,7 +115,8 @@ const RecipeDetail = (props) => {
               </Button>
             </Paper>
             <Paper className={classes.instructionsPaper}>
-               {/* <preparationSteps /> */}
+              <RecipeInstruction timeToCookInMinutes={currentRecipe.time_to_cook_in_minutes} 
+                                 instructions={currentRecipe.instructions} />
             </Paper>
             <Paper className={classes.userAddNotesPaper}>
               <RecipeUserNotes />

@@ -1,14 +1,12 @@
 import React from "react";
 
-const RecipeInstruction = () => {
+const RecipeInstruction = (props) => {
     
     return (
       <div>
-          <ul>
-              <li>Step 1</li>
-              <li>Step 2</li>
-              <li>Step 3</li>
-          </ul>
+          <h3>Instruction:</h3>
+          <p>Time to cook: {props.timeToCookInMinutes} minutes</p>
+          <p>{props.instructions}</p>
       </div>
     );
   }
