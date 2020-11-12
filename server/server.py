@@ -120,6 +120,12 @@ def get_all_ingredients():
     return ingredient_controller.get_all_ingredients(RecipeIngredient)
 
 
+@app.route('/api/ingredients/<string:recipe_id>', methods=['GET'])
+def get_ingredient_by_recipe_id(recipe_id):
+    print("YOO")
+    return ingredient_controller.get_ingredient_by_recipe_id(RecipeIngredient, recipe_id)
+
+
 @app.route('/api/ingredients', methods=['DELETE'])
 def remove_all_ingredients():
     return ingredient_controller.delete_all_ingredients(RecipeIngredient)

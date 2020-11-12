@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button } from "@material-ui/core";
 import { connect } from 'react-redux';
+import { getRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
 import CONSTANTS from '../../constants';
 import axios from 'axios';
@@ -77,21 +78,27 @@ TODO:
 const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
-  const [data, setData] = useState({ ingredients: [] });
+  const [ingredients, setIngredients] = useState({});
   let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id)
 
   useEffect(() => {
     (async () => {
       const recipeIngredients = await axios(
-        CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID,
+        CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`) 
       );
-      console.log(recipeIngredients); // REMOVE
-      setData(recipeIngredients.data);
+      console.log(CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`)); // REMOVE
+      setIngredients(recipeIngredients.data);
     })();
   }, []);
 
-  console.log(data.ingredients);  // REMOVE
+  console.log(ingredients);  // REMOVE
   
+  // Used for fixing bug related to page refresh
+  useEffect(() => {
+    props.getRecipes()
+  }, []);
+
+
   /*
   method 1) GET ingredient by ID
   method 2) GET all ingredients, then do filter in here
@@ -145,8 +152,9 @@ const RecipeDetail = (props) => {
 
 RecipeDetail.propTypes = {
   data: PropTypes.object,
+  getRecipes: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})
 
-export default connect(mapStateToProps)(RecipeDetail);
+export default connect(mapStateToProps, {getRecipes})(RecipeDetail);

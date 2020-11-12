@@ -1,4 +1,5 @@
 from flask import jsonify, make_response, session
+from sqlalchemy import any_
 from constants import CONSTANTS
 from collections import defaultdict
 
@@ -23,7 +24,6 @@ class IngredientController():
     def get_all_ingredients(self, model):
         ingredients = model.query.all() 
         ingredient_map = {"ingredients": []}
-
         for ingredient in ingredients:
             ingredient_object = {
                 "recipe_id": ingredient.recipe_id,
@@ -35,6 +35,17 @@ class IngredientController():
             ingredient_map["ingredients"].append(ingredient_object)
 
         return make_response(jsonify(ingredient_map), CONSTANTS['HTTP_STATUS']['200_OK'])
+
+
+    def get_ingredient_by_recipe_id(self, model, recipe_id):
+        ingredient = self.db.session.query(model).filter_by(recipe_id=recipe_id).first()
+        json_response = jsonify({ 
+            'recipe_id': recipe_id,
+            'ingredient_name': ingredient.ingredient_name,
+            'amount': ingredient.amount,
+            'unit_of_measurement': ingredient.unit_of_measurement 
+        })
+        return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
 
 
     def delete_all_ingredients(self, model):
