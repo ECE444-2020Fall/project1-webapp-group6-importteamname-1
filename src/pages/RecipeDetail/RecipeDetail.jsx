@@ -82,7 +82,7 @@ const RecipeDetail = (props) => {
   useEffect(() => {
     (async () => {
       const recipeIngredients = await axios(
-        CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`) 
+        `${CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID}${'/'}${recipe_id}` 
       );
       setIngredients(recipeIngredients.data);
     })();

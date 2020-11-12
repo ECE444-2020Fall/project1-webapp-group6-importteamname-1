@@ -15,7 +15,7 @@ const RecipeSearchResults = (props) => {
   if (props.data.recipes) { 
     recipeSearchResult = <div>
           {props.data.recipes.map(recipe => (
-            <Link key={recipe.recipe_id} to={"/recipe-search-results/" + recipe.recipe_id}>
+            <Link key={recipe.recipe_id} to={`${"/recipe-search-results/"}${recipe.recipe_id}`}>
               <RecipeCard key={recipe.recipe_id}
                           recipeId={recipe.recipe_id} 
                           recipeName={recipe.recipe_name}

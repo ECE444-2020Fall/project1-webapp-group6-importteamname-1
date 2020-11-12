@@ -8,7 +8,7 @@ const Ingredients = (props) => {
     recipeIngredients = 
       <div>
         {props.ingredientsList.ingredients.map(ingredient => (
-          <p key={(ingredient.recipe_id).concat(ingredient.ingredient_name)}>
+          <p key={`${ingredient.recipe_id}${ingredient.ingredient_name}`}>
           {ingredient.ingredient_name} {ingredient.amount} {ingredient.unit_of_measurement}</p>
         ))}
       </div>

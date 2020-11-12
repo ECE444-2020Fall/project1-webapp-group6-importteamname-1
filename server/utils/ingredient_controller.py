@@ -37,8 +37,9 @@ class IngredientController():
 
 
     def get_ingredient_by_recipe_id(self, model, recipe_id):
-        ingredients = self.db.session.query(model).filter_by(recipe_id=recipe_id).all() # neet to get ALL that match id        
+        ingredients = self.db.session.query(model).filter_by(recipe_id=recipe_id).all()        
         ingredient_map = {"ingredients": []}
+        
         for ingredient in ingredients:
             ingredient_object = {
                 "recipe_id": ingredient.recipe_id,
