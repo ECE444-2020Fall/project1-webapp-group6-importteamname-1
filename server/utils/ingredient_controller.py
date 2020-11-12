@@ -38,7 +38,7 @@ class IngredientController():
 
 
     def get_ingredient_by_recipe_id(self, model, recipe_id):
-        ingredient = self.db.session.query(model).filter_by(recipe_id=recipe_id).first()
+        ingredient = self.db.session.query(model).filter_by(recipe_id=recipe_id).first()# neet to get ALL that match id
         json_response = jsonify({ 
             'recipe_id': recipe_id,
             'ingredient_name': ingredient.ingredient_name,

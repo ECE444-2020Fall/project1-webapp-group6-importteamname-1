@@ -109,7 +109,8 @@ const RecipeDetail = (props) => {
         <Grid container spacing={7} className={classes.grid} direction="row">  
           <Grid item xs={3} md={3} direction="column">
             <Paper className={classes.ingredientsPaper}>
-               <Ingredients servings={currentRecipe.servings} />
+               <Ingredients servings={currentRecipe.servings} 
+                            ingredients={ingredients} />
             </Paper>
             <Paper className={classes.nutritionFactsPaper}>
               <NutritionFacts calories={currentRecipe.calories} 
