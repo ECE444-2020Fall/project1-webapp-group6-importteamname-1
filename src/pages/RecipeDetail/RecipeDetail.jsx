@@ -70,11 +70,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/*
-TODO:
--fetch user notes from database (GET user_notes by recipe_id and user_id)
--fetch ingredients from database (GET ingredients by recipe_id)
-*/
 const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
@@ -97,12 +92,6 @@ const RecipeDetail = (props) => {
   useEffect(() => {
     props.getRecipes()
   }, []);
-
-
-  /*
-  method 1) GET ingredient by ID
-  method 2) GET all ingredients, then do filter in here
-  */ 
 
   return (
     <div className={classes.root}>
