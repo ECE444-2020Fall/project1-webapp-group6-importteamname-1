@@ -5,6 +5,9 @@ import RecipeRating from "../../components/RecipeDetail/RecipeRating";
 import RecipeUserNotes from "../../components/RecipeDetail/RecipeUserNotes";
 import RecipeInstruction from "../../components/RecipeDetail/RecipeInstruction";
 import { useParams } from "react-router-dom";
+import { UserRating } from "../../components/UserRating";
+import { FavouritesButton } from "../../components/FavouritesButton";
+import { RecipeCartButton } from "../../components/RecipeCartButton";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -117,6 +120,9 @@ const RecipeDetail = (props) => {
             </Paper>
             <Paper className={classes.userActionsPaper}>
               <RecipeRating />
+              <UserRating recipe_id={recipe_id} />
+              <RecipeCartButton recipe_id={recipe_id} />
+              <FavouritesButton recipe_id={recipe_id} />
               <Button variant="contained" color="primary">
                 Add to Cart
               </Button>

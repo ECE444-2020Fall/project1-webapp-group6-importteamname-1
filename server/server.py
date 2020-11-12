@@ -16,7 +16,7 @@ from app.models import *
 CORS(app)
 app.secret_key = "TESTKEY"
 
-@app.route('/api/drop')
+@app.route('/api/drop')     # ONLY FOR DEBUGGING
 def drop_db():
     UserRating.query.delete()
     UserNotes.query.delete()
@@ -26,7 +26,7 @@ def drop_db():
     db.session.commit()
     return "dropped table"
 
-@app.route('/api/add_or_update_user_notes', methods=['POST'])
+@app.route('/api/user_notes', methods=['POST'])
 def add_or_update_user_notes():
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
@@ -40,27 +40,25 @@ def show_user_notes():
 
 @app.route('/api/user_rating', methods=['POST'])
 def add_or_update_user_rating():
-    recipe_id = int(request.get_json()["recipe_id"])
+    recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserRating)
 
-@app.route('/api/user_rating/<int:recipe_id>')
+@app.route('/api/user_rating/<string:recipe_id>')
 def show_user_rating(recipe_id):
-    print("HI")
     return recipe_personalization_manager.get_user_feedback(recipe_id, UserRating)
 
 @app.route('/api/user_ratings')
 def show_user_ratings():
     return recipe_personalization_manager.get_all_user_feedbacks(UserRating)
 
-
-@app.route('/api/add_item_to_shopping_list', methods=['POST'])
+@app.route('/api/shopping_list', methods=['POST'])
 def add_item_to_shopping_list():
     item = request.get_json()["item"]
     return inventory_manager.add_item(item, ShoppingList)
 
 
-@app.route('/api/remove_item_from_shopping_list/<string:item>', methods=['DELETE'])
+@app.route('/api/shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
     return inventory_manager.remove_item(item, ShoppingList)
 
@@ -69,7 +67,7 @@ def remove_item_from_shopping_list(item):
 def show_shopping_list():
     return inventory_manager.get_all_user_items(ShoppingList)
 
-@app.route('/api/recipe_cart/<int:recipe_id>')
+@app.route('/api/recipe_cart/<string:recipe_id>')
 def add_item_to_recipe_cart(recipe_id):
     return inventory_manager.get_item(recipe_id, RecipeCart)
 
@@ -95,11 +93,9 @@ def get_recipe_favs_list():
     recipe_id = request.get_json()["item"]
     return inventory_manager.add_item(recipe_id, UserFavourites)
 
-
 @app.route('/api/favourites_list/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_from_favs_list(recipe_id):
     return inventory_manager.remove_item(recipe_id, UserFavourites)
-
 
 @app.route('/api/favourites_list')
 def show_favs_list():
@@ -157,29 +153,6 @@ def get_all_recipes():
 def remove_all_recipes():
     return recipe_controller.delete_all_recipes(Recipe)
 
-# @app.route('/api/favourites_list/<int:recipe_id>')
-# def get_recipe_favourites_details(recipe_id):
-#     return recipe_personalization_manager.get_user_feedback(recipe_id, UserFavourites)
-
-@app.route('/api/show_recipes')
-def show_recipes():
-    recipes = Recipe.query.all() # get all recipes
-    recipe_list = []
-
-    for recipe in recipes:
-        recipe_info_object = {}
-        recipe_info_object["recipe_id"] = recipe.recipe_id
-        recipe_info_object["recipe_name"] = recipe.recipe_name
-        recipe_info_object["cuisine"] = recipe.cuisine
-        recipe_info_object["instructions"] = recipe.instructions
-        recipe_info_object["time_to_cook_in_minutes"] = recipe.time_to_cook_in_minutes
-        recipe_info_object["servings"] = recipe.servings
-        recipe_info_object["calories"] = recipe.calories
-        recipe_info_object["protein"] = recipe.protein
-        recipe_info_object["carbs"] = recipe.carbs
-        recipe_info_object["fat"] = recipe.fat
-        recipe_list.append(recipe_info_object)
-    return jsonify(recipe_list)
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/add_user/<string:name>/<string:password>')
