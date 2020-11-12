@@ -11,10 +11,10 @@ class ConsumedRecipes(db.Model):
         primary_key=True
     )
     recipe_id = db.Column(
-        db.Integer,
+        UUIDType(), 
         db.ForeignKey('recipe.recipe_id'),
-        nullable=False,
-        primary_key=True
+        primary_key=True,
+        nullable=False
     )
     consumption_date = db.Column(
         db.Date,
