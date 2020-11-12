@@ -12,8 +12,6 @@ const RecipeSearchResults = (props) => {
 
   let recipeSearchResult = null;
 
-  console.log(props.data.recipes);
-  console.log(typeof props.data.recipes);
   if (props.data.recipes) { 
     recipeSearchResult = <div>
           {props.data.recipes.map(recipe => (
