@@ -6,7 +6,7 @@ export const getRecipes = () => async dispatch => {
         const res = await axios.get(CONSTANTS.ENDPOINT.GET_ALL_RECIPES);
         dispatch({
             type: 'GET_ALL_RECIPES',
-            payload: res.data
+            payload: res.data.recipes
         })
     }
     catch (e) {

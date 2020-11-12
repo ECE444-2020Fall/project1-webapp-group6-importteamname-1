@@ -11,12 +11,11 @@ const RecipeSearchResults = (props) => {
     props.getRecipes()
   }, []);
 
-  // console.log(props.recipes.recipes.recipes);
   let recipeSearchResult = null;
 
-  if (props.recipes.recipes.recipes) { // For some reason, Redux returns the JSON object nested 3 times.
+  if (props.data.recipes) { 
     recipeSearchResult = <div>
-          {props.recipes.recipes.recipes.map(recipe => (
+          {props.data.recipes.map(recipe => (
             <Link key={recipe.recipe_id} to={"/recipe-search-results/" + recipe.recipe_id}>
               <RecipeCard key={recipe.recipe_id}
                           recipeId={recipe.recipe_id} 
@@ -45,6 +44,6 @@ const RecipeSearchResults = (props) => {
   );
 }
 
-const mapStateToProps = (state) => ({recipes: state.recipes})
+const mapStateToProps = (state) => ({data: state.recipes})
 
 export default connect(mapStateToProps, {getRecipes})(RecipeSearchResults);

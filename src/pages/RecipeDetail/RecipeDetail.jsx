@@ -65,13 +65,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+// Need to fetch instructions!!!
+
 const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
-  const post = props.post; 
 
-  console.log(recipe_id);
-  console.log(props);
+  // console.log(recipe_id);
+  // console.log(props);
+  console.log(props.data.recipes)
+  let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id)
+  console.log(currentRecipe);
 
   return (
     <div className={classes.root}>
@@ -88,6 +93,7 @@ const RecipeDetail = (props) => {
           <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
             <Paper className={classes.recipePhotoPaper}>
               <p> Recipe ID {recipe_id} </p>
+              <p> Recipe Name: {currentRecipe.recipe_name} </p>
             </Paper>
             <Paper className={classes.userActionsPaper}>
               <RecipeRating />
@@ -115,17 +121,6 @@ const RecipeDetail = (props) => {
 }
 
 
-// const mapStateToProps = (state, ownProps) => {
-//   let id = useParams();
-//   console.log("map id");
-//   console.log(id.recipe_id);
-//   return {
-//     // post: state.posts.find(post => post.id == id.recipe_id)
-//   }
-// }
-
-
-
-const mapStateToProps = (state) => ({recipes: state.recipes})
+const mapStateToProps = (state) => ({data: state.recipes})
 
 export default connect(mapStateToProps)(RecipeDetail);
