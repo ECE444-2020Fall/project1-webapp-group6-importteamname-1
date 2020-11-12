@@ -16,8 +16,6 @@ import background1 from './background1.png'
 import background2 from './background2.png'
 import background3 from './background3.png'
 
-
-
 function Background() {
   var rand = Math.floor(Math.random() * Math.floor(3))
   if(rand == 0){
@@ -30,6 +28,7 @@ function Background() {
     return background3
   }
 }
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,15 +61,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+
+const Register = () => {
     // Must add login support
 
-
-    //Login Vars
-    const [userL, setUserL] = React.useState("")
-    const [userErrorL, setUserErrorL] = React.useState(false)
-    const [passL, setPassL] = React.useState("")
-    const [passErrorL, setPassErrorL] = React.useState(false)
+    //Register Vars
+    
+    const [user, setUser] = React.useState("")
+    const [userError, setUserError] = React.useState(false)
+    const [pass, setPass] = React.useState("")
+    const [pass2, setPass2] = React.useState("")
+    const [passError, setPassError] = React.useState(false)
 
 
     function validateUser(val) {
@@ -87,53 +88,74 @@ const Login = () => {
         return (true)
     }
 
-    //LOGIN
+    function validateEqualPass(val1, val2){
+        if (val1 == val2){
+            return (true)
+        }
+        return (false)
+    }
 
-    const handleUserChangeL = (val) => {
+    //REGISTER
+    const handleUserChange = (val) => {
+        setUser(val.target.value)
         if (validateUser(val.target.value)) {
-            setUserErrorL(false);
+            setUserError(false);
         } else {
-            setUserErrorL(true);
+            setUserError(true);
         }
-        setUserL(val.target.value)
+        
     }
 
-    const handlePassChangeL = (val) => {
-        if (validatePass(val.target.value)) {
-            setPassErrorL(false)
+    const handlePassChange = (val) => {
+        setPass(val.target.value)
+        if (validatePass(val.target.value) && validateEqualPass(val.target.value, pass2)) {
+            setPassError(false)
         } else {
-            setPassErrorL(true)
+            setPassError(true)
         }
-        setPassL(val.target.value)
+       
     }
 
+    const handlePass2Change = (val) => {
+        setPass2(val.target.value)
+        if (validatePass(val.target.value) && validateEqualPass(pass, val.target.value)) {
+            setPassError(false)
+        } else {
+            setPassError(true)
+        }
+    }
 
-    const handleLogin = (evt) => {
+    const handleRegister = (evt) => {
+        //evt.preventDefault()
         //Write validation for users
-        if (validateUser(userL) && validatePass(passL)) {
+        
+        if (validateUser(user) && validatePass(pass) && validateEqualPass(pass, pass2)) {
             //handle 
-            //const req = CONSTANTS.ENDPOINT.LOGIN + String(userL) + "/" + String(passL);
-            const req = CONSTANTS.ENDPOINT.LOGIN;
-            fetch(req, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: 'post',
-                body: JSON.stringify({
-                    'name': userL,
-                    'password': passL
-                })
-            }).then( Response => {
-                return Response.json;
-            })
+            
         } else {
-            setPassL("")
-            evt.preventDefault();
-            return
+            evt.preventDefault()
+            setPass("")
+            setPass2("")
+            return 
         }
-        //check database for login
-        return
+        //const req = CONSTANTS.ENDPOINT.REGISTER + String(user) + "/" + String(pass);
+        const req = CONSTANTS.ENDPOINT.REGISTER;
+        fetch(req, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify({
+                'name': user,
+                'password': pass
+            })
+        }).then( Response => {
+            return Response.json;
+        })
+        
+        //Write validation for users
+        //update database
     }
     const classes = useStyles();
 
@@ -147,33 +169,42 @@ const Login = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Login
+                        Register
                     </Typography>
-                    <form className={classes.form} onSubmit={handleLogin}>
+                    <form className={classes.form} onSubmit={handleRegister}>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
+                            onChange={handleUserChange}
                             id="username"
-                            error={userErrorL}
-                            onChange={handleUserChangeL}
                             label="Username"
-                            name="username"
+                            error={userError}
                             autoComplete="Username"
                             autoFocus />
                         <TextField
                             variant="outlined"
                             margin="normal"
+                            onChange={handlePassChange}
                             required
                             fullWidth
-                            error={passErrorL}
-                            name="password"
-                            onChange={handlePassChangeL}
+                            error={passError}
                             label="Password"
                             type="password"
                             id="password"
                             autoComplete="current-password" />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            onChange={handlePass2Change}
+                            error={passError}
+                            label="Confrim Password"
+                            type="password"
+                            id="password"
+                            autoComplete="confirm-password" />
                         <Button
                             type="submit"
                             fullWidth
@@ -181,14 +212,14 @@ const Login = () => {
                             color="primary"
                             className={classes.submit}
                         >
-                            Sign In
+                            Register
                         </Button>
                         <Grid container>
                             <Grid item xs>
                             </Grid>
                             <Grid item>
-                                <Link href="Register" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                <Link href="Login" variant="body2">
+                                    {"Already have an account? Sign in!"}
                                 </Link>
                             </Grid>
                         </Grid>
@@ -199,7 +230,7 @@ const Login = () => {
     );
 
 }
-export default Login;
+export default Register;
 
 
 

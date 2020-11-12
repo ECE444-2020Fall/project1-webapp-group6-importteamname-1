@@ -16,8 +16,9 @@ import CalorieTracker from "./components/CalorieTracker/CalorieTracker";
 
 import RecipeCart from "./components/RecipeCart/RecipeCart";
 
-import Login from "./components/Login/Login"
+import Login from "./components/Login/Login";
 
+import Register from "./components/Login/Register";
 //TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
     return (
@@ -31,6 +32,7 @@ const App = () => {
           <Route path = "/CalorieTracker" component = { CalorieTracker } />
           <Route path = "/RecipeCart" component = { RecipeCart } />
           <Route path = "/Login" component = { Login } />
+          <Route path = "/Register" component = { Register } />
         </Switch>
         <Footer />
       </React.Fragment>
