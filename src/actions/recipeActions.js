@@ -1,13 +1,15 @@
-import axios from 'axios';
 import CONSTANTS from '../constants';
 
 export const getRecipes = () => async dispatch => {
     try {
-        const res = await axios.get(CONSTANTS.ENDPOINT.GET_ALL_RECIPES);
-        dispatch({
-            type: 'GET_ALL_RECIPES',
-            payload: res.data.recipes
-        })
+        await fetch(CONSTANTS.ENDPOINT.GET_ALL_RECIPES)
+            .then(response => response.json())
+            .then(json =>{
+                dispatch({
+                    type: 'GET_ALL_RECIPES',
+                    payload: json.recipes
+                })
+            })
     }
     catch (e) {
         dispatch({

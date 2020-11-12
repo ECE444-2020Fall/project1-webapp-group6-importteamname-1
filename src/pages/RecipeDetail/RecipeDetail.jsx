@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 import { getRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
 import CONSTANTS from '../../constants';
-import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,10 +80,11 @@ const RecipeDetail = (props) => {
 
   useEffect(() => {
     (async () => {
-      const recipeIngredients = await axios(
-        `${CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID}${'/'}${recipe_id}` 
-      );
-      setIngredients(recipeIngredients.data);
+      await fetch(`${CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID}${'/'}${recipe_id}`)
+      .then(response => response.json())
+      .then(fetchedIngredients =>{
+        setIngredients(fetchedIngredients);
+      })
     })();
   }, []);
 
