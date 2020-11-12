@@ -4,5 +4,5 @@ import postReducer from './postReducer';
 
 export default combineReducers({
     recipes: recipeReducer,
-    posts: postReducer
+    // posts: postReducer
 })

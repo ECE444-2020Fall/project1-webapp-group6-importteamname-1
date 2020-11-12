@@ -99,7 +99,7 @@ const RecipeDetail = (props) => {
               </Button>
             </Paper>
             <Paper className={classes.instructionsPaper}>
-               <preparationSteps />
+               {/* <preparationSteps /> */}
             </Paper>
             <Paper className={classes.userAddNotesPaper}>
               <RecipeUserNotes />
@@ -114,19 +114,18 @@ const RecipeDetail = (props) => {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  let id = useParams();
-  console.log("map id");
-  console.log(id.recipe_id);
-  return {
-    // post: state.posts.find(post => post.id == id.recipe_id)
-  }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+// const mapStateToProps = (state, ownProps) => {
+//   let id = useParams();
+//   console.log("map id");
+//   console.log(id.recipe_id);
+//   return {
+//     // post: state.posts.find(post => post.id == id.recipe_id)
+//   }
+// }
 
-  }
-}
+
+
+const mapStateToProps = (state) => ({recipes: state.recipes})
 
 export default connect(mapStateToProps)(RecipeDetail);
