@@ -84,16 +84,8 @@ const RecipeDetail = (props) => {
       const recipeIngredients = await axios(
         CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`) 
       );
-      // console.log(CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`)); // REMOVE
       setIngredients(recipeIngredients.data);
     })();
-  }, []);
-
-  // console.log(ingredients);  // REMOVE
-  
-  // Used for fixing bug related to page refresh
-  useEffect(() => {
-    props.getRecipes()
   }, []);
 
   return (
@@ -123,12 +115,6 @@ const RecipeDetail = (props) => {
               <UserRating recipe_id={recipe_id} />
               <RecipeCartButton recipe_id={recipe_id} />
               <FavouritesButton recipe_id={recipe_id} />
-              <Button variant="contained" color="primary">
-                Add to Cart
-              </Button>
-              <Button variant="contained" color="primary">
-                Add to Favourites
-              </Button>
             </Paper>
             <Paper className={classes.instructionsPaper}>
               <RecipeInstruction timeToCookInMinutes={currentRecipe.time_to_cook_in_minutes} 
