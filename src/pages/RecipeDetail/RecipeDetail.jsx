@@ -86,12 +86,12 @@ const RecipeDetail = (props) => {
       const recipeIngredients = await axios(
         CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`) 
       );
-      console.log(CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`)); // REMOVE
+      // console.log(CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID.concat('/', `${recipe_id}`)); // REMOVE
       setIngredients(recipeIngredients.data);
     })();
   }, []);
 
-  console.log(ingredients);  // REMOVE
+  // console.log(ingredients);  // REMOVE
   
   // Used for fixing bug related to page refresh
   useEffect(() => {
@@ -110,7 +110,7 @@ const RecipeDetail = (props) => {
           <Grid item xs={3} md={3} direction="column">
             <Paper className={classes.ingredientsPaper}>
                <Ingredients servings={currentRecipe.servings} 
-                            ingredients={ingredients} />
+                            ingredientsList={ingredients} />
             </Paper>
             <Paper className={classes.nutritionFactsPaper}>
               <NutritionFacts calories={currentRecipe.calories} 
