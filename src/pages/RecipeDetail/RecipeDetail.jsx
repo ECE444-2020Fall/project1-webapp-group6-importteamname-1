@@ -1,4 +1,4 @@
-﻿import React from "react";
+﻿import React, { useState, useEffect } from "react";
 import Ingredients from "../../components/RecipeDetail/Ingredients";
 import NutritionFacts from "../../components/RecipeDetail/NutritionFacts";
 import RecipeRating from "../../components/RecipeDetail/RecipeRating";
@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import { Button } from "@material-ui/core";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import CONSTANTS from '../../constants';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,7 +77,25 @@ TODO:
 const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
+  const [data, setData] = useState({ ingredients: [] });
   let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id)
+
+  useEffect(() => {
+    (async () => {
+      const recipeIngredients = await axios(
+        CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID,
+      );
+      console.log(recipeIngredients); // REMOVE
+      setData(recipeIngredients.data);
+    })();
+  }, []);
+
+  console.log(data.ingredients);  // REMOVE
+  
+  /*
+  method 1) GET ingredient by ID
+  method 2) GET all ingredients, then do filter in here
+  */ 
 
   return (
     <div className={classes.root}>
