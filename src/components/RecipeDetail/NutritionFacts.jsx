@@ -1,7 +1,7 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 const NutritionFacts = (props) => {
-    
     return (
       <div>
         Nutrition Facts:
@@ -13,4 +13,11 @@ const NutritionFacts = (props) => {
     );
   }
   
+NutritionFacts.propTypes = {
+  calories: PropTypes.number,
+  protein: PropTypes.number,
+  carbs: PropTypes.number,
+  fat: PropTypes.number,
+};
+
   export default NutritionFacts;

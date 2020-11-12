@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button } from "@material-ui/core";
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,22 +67,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 /*
 TODO:
 -fetch user notes from database (GET user_notes by recipe_id and user_id)
 -fetch ingredients from database (GET ingredients by recipe_id)
 */
-
 const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
-
-  // console.log(recipe_id);
-  // console.log(props);
-  console.log(props.data.recipes)
   let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id)
-  console.log(currentRecipe);
 
   return (
     <div className={classes.root}>
@@ -97,7 +91,6 @@ const RecipeDetail = (props) => {
                               fat={currentRecipe.fat} />
             </Paper>
           </Grid>  
-
           <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
             <Paper className={classes.recipePhotoPaper}>
               <p> Recipe ID {recipe_id} </p>
@@ -125,12 +118,14 @@ const RecipeDetail = (props) => {
               </Button>
             </Paper>
           </Grid>
-    
         </Grid>
     </div>
   );
 }
 
+RecipeDetail.propTypes = {
+  data: PropTypes.object,
+};
 
 const mapStateToProps = (state) => ({data: state.recipes})
 

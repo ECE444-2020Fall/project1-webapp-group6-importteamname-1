@@ -1,10 +1,9 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import RecipeCard from "../../components/common/RecipeCard";
-import axios from 'axios';
-import CONSTANTS from '../../constants';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import { getRecipes } from '../../actions/recipeActions';
+import PropTypes from 'prop-types';
 
 const RecipeSearchResults = (props) => {
   useEffect(() => {
@@ -43,6 +42,11 @@ const RecipeSearchResults = (props) => {
     </main>
   );
 }
+
+RecipeSearchResults.propTypes = {
+  data: PropTypes.object,
+  getRecipes: PropTypes.object
+};
 
 const mapStateToProps = (state) => ({data: state.recipes})
 
