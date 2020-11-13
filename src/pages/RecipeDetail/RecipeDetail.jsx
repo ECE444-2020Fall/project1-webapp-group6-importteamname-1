@@ -80,7 +80,7 @@ const RecipeDetail = (props) => {
 
   useEffect(() => {
     (async () => {
-      await fetch(`${CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID}${'/'}${recipe_id}`)
+      await fetch(`${CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID}/${recipe_id}`)
       .then(response => response.json())
       .then(fetchedIngredients =>{
         setIngredients(fetchedIngredients);

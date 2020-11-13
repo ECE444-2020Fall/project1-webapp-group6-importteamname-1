@@ -38,16 +38,17 @@ class IngredientController():
 
     def get_ingredient_by_recipe_id(self, model, recipe_id):
         ingredients = self.db.session.query(model).filter_by(recipe_id=recipe_id).all()        
-        ingredient_map = {"ingredients": []}
-        
-        for ingredient in ingredients:
-            ingredient_object = {
+             
+        ingredient_map = {
+            "ingredients": 
+            [{
                 "recipe_id": ingredient.recipe_id,
                 "ingredient_name": ingredient.ingredient_name,
                 "amount": ingredient.amount,
                 "unit_of_measurement": ingredient.unit_of_measurement
-            }
-            ingredient_map["ingredients"].append(ingredient_object)
+            } 
+            for ingredient in ingredients
+        ]}
        
         return make_response(jsonify(ingredient_map), CONSTANTS['HTTP_STATUS']['200_OK'])
 
