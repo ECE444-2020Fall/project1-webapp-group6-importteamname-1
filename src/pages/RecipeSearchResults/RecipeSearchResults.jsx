@@ -36,17 +36,19 @@ const RecipeSearchResults = (props) => {
     recipeSearchResult = <div>
           {props.data.recipes.map(recipe => (
             <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
-              <RecipeCard key={recipe.recipe_id}
-                          recipeId={recipe.recipe_id} 
-                          recipeName={recipe.recipe_name}
-                          imageUrl={recipe.image_url}
-                          timeToCookInMinutes={recipe.time_to_cook_in_minutes}
-                          servings={recipe.servings}
-                          calories={recipe.calories}
-                          protein={recipe.protein}
-                          carbs={recipe.carbs}
-                          fat={recipe.fat} />
-              </Link>
+              <RecipeCard 
+                key={recipe.recipe_id}
+                recipeId={recipe.recipe_id} 
+                recipeName={recipe.recipe_name}
+                imageUrl={recipe.image_url}
+                timeToCookInMinutes={recipe.time_to_cook_in_minutes}
+                servings={recipe.servings}
+                calories={recipe.calories}
+                protein={recipe.protein}
+                carbs={recipe.carbs}
+                fat={recipe.fat} 
+              />
+            </Link>
           ))}
       </div>
   } else {

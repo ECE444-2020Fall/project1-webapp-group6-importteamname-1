@@ -29,45 +29,28 @@ const useStyles = makeStyles((theme) => ({
   leftColumn: {
     marginLeft: 50
   },
-  recipePhotoPaper: {
-    padding: theme.spacing(2),
+  commonPaperStyleAttributes: {
+    padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
+  },
+  recipePhotoPaper: {
     minHeight: 300
   },
   userActionsPaper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
     marginBottom: 20
   },
   instructionsPaper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    marginBottom: 20,
     minHeight: 300
   },
   userAddNotesPaper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    marginBottom: 20,
     minHeight: 200
   },
   ingredientsPaper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    marginBottom: 20,
     minHeight: 300
   },
   nutritionFactsPaper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    marginBottom: 20,
     minHeight: 200
   },
 }));
@@ -92,35 +75,38 @@ const RecipeDetail = (props) => {
     <div className={classes.root}>
         <Grid container spacing={7} className={classes.grid} direction="row">  
           <Grid item xs={3} md={3} direction="column">
-            <Paper className={classes.ingredientsPaper}>
-               <Ingredients servings={currentRecipe.servings} 
-                            ingredientsList={ingredients} />
+            <Paper className={`${classes.commonPaperStyleAttributes} ${classes.ingredientsPaper}`}>
+               <Ingredients servings={currentRecipe.servings} ingredientsList={ingredients} />
             </Paper>
-            <Paper className={classes.nutritionFactsPaper}>
-              <NutritionFacts calories={currentRecipe.calories} 
-                              protein={currentRecipe.protein} 
-                              carbs={currentRecipe.carbs} 
-                              fat={currentRecipe.fat} />
+            <Paper className={`${classes.commonPaperStyleAttributes} ${classes.nutritionFactsPaper}`}>
+              <NutritionFacts 
+                calories={currentRecipe.calories} 
+                protein={currentRecipe.protein} 
+                carbs={currentRecipe.carbs} 
+                fat={currentRecipe.fat} 
+              />
             </Paper>
           </Grid>  
           <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
-            <Paper className={classes.recipePhotoPaper}>
+            <Paper className={`${classes.commonPaperStyleAttributes} ${classes.recipePhotoPaper}`}>
               <p> Recipe ID {recipe_id} </p>
               <p> Recipe Name: {currentRecipe.recipe_name} </p>
               <p> Image: {currentRecipe.image_url} </p>
               <p> Cuisine: {currentRecipe.cuisine} </p>
             </Paper>
-            <Paper className={classes.userActionsPaper}>
+            <Paper className={`${classes.commonPaperStyleAttributes} ${classes.userActionsPaper}`}>
               <RecipeRating />
               <UserRating recipe_id={recipe_id} />
               <RecipeCartButton recipe_id={recipe_id} />
               <FavouritesButton recipe_id={recipe_id} />
             </Paper>
-            <Paper className={classes.instructionsPaper}>
-              <RecipeInstruction timeToCookInMinutes={currentRecipe.time_to_cook_in_minutes} 
-                                 instructions={currentRecipe.instructions} />
+            <Paper className={`${classes.commonPaperStyleAttributes} ${classes.instructionsPaper}`}>
+              <RecipeInstruction 
+                timeToCookInMinutes={currentRecipe.time_to_cook_in_minutes} 
+                instructions={currentRecipe.instructions} 
+              />
             </Paper>
-            <Paper className={classes.userAddNotesPaper}>
+            <Paper className={`${classes.commonPaperStyleAttributes} ${classes.userAddNotesPaper}`}>
               <RecipeUserNotes />
               <Button variant="contained" color="primary">
                 Add Note
