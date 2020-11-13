@@ -1,16 +1,19 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
-const RecipeInstruction = () => {
-    
-    return (
-      <div>
-          <ul>
-              <li>Step 1</li>
-              <li>Step 2</li>
-              <li>Step 3</li>
-          </ul>
-      </div>
-    );
-  }
-  
-  export default RecipeInstruction;
+const RecipeInstruction = (props) => {
+  return (
+    <div>
+        <h3>Instruction:</h3>
+        <p>Time to cook: {props.timeToCookInMinutes} minutes</p>
+        <p>{props.instructions}</p>
+    </div>
+  );
+}
+
+RecipeInstruction.propTypes = {
+  timeToCookInMinutes: PropTypes.number,
+  instructions: PropTypes.string,
+};
+
+export default RecipeInstruction;

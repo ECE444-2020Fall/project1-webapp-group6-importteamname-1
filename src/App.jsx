@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './pages/NavBar';
@@ -10,8 +10,15 @@ import ShoppingList from './pages/ShoppingList/ShoppingList';
 import CalorieTracker from './pages/CalorieTracker/CalorieTracker';
 import RecipeCart from './pages/RecipeCart/RecipeCart';
 import ScrollIntoView from './components/common/ScrollIntoView';
+import { connect } from 'react-redux'; 
+import { getRecipes } from './actions/recipeActions';
+import PropTypes from 'prop-types';
 
-const App = () => {
+const App = (props) => {
+  useEffect(() => {
+    props.getRecipes()
+  }, []);
+
   return (
     <React.Fragment>
       <ScrollIntoView>
@@ -30,4 +37,11 @@ const App = () => {
   );
 }
 
-export default App;
+App.propTypes = {
+  data: PropTypes.object,
+  getRecipes: PropTypes.object
+};
+
+const mapStateToProps = (state) => ({data: state.recipes})
+
+export default connect(mapStateToProps, {getRecipes})(App);
