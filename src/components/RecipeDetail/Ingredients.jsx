@@ -18,6 +18,8 @@ const Ingredients = (props) => {
   
   return (
       <div>
+        Servings: 
+        {props.servings}
         Ingredients:
         {recipeIngredients}
       </div>
@@ -26,7 +28,8 @@ const Ingredients = (props) => {
   
   Ingredients.propTypes = {
     ingredients: PropTypes.object,
-    ingredientsList: PropTypes.object
+    ingredientsList: PropTypes.object,
+    servings: PropTypes.object
   };
 
   export default Ingredients;
