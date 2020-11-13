@@ -18,6 +18,7 @@ const RecipeSearchResults = (props) => {
   const handleSortToggle = (valueToBeSorted) => {    
     const currentSortOrder = props.data.sortOrder;
     let recipesToBeSorted = null;
+    let sortedRecipes = null;
 
     if (props.data.sortedRecipes.length == 0) {
       recipesToBeSorted = [...props.data.recipes];
@@ -26,10 +27,10 @@ const RecipeSearchResults = (props) => {
     }
 
     if (currentSortOrder === "descending") {
-      const sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
+      sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
     } else if (currentSortOrder === "ascending") {
-      const sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
+      sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
     } 
   }
