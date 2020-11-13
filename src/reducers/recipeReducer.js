@@ -27,7 +27,7 @@ export default function(state = initialState, action) {
                 sortedRecipes: action.sortedRecipes,
                 sortOrder: 'descending'
             }
-        case 'CLEAR_SORT_FILTER':
+        case 'CLEAR_RECIPE_SORT_FILTER':
             return {
                 ...state,
                 sortedRecipes: [] 

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useEffect } from 'react';
 import RecipeCard from "../../components/common/RecipeCard";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
@@ -7,30 +7,38 @@ import PropTypes from 'prop-types';
 const RecipeSearchResults = (props) => {
   let recipeSearchResult = null;
 
-  let handleSortToggle = (valueToBeSorted) => {
-    if (valueToBeSorted === "clear_sort_filter") {
-      
+  /*
+  When a user refreshes the page or revisit the web app, we need to show unsorted recipes.
+  We use useEffect() to clear sortedRecipes from Redux store when a user refreshes the page.
+  */
+  useEffect(() => {
+    props.clearRecipeSortFilter();
+  }, []);
+
+  const handleSortToggle = (valueToBeSorted) => {    
+    const currentSortOrder = props.data.sortOrder;
+    let recipesToBeSorted = null;
+
+    if (props.data.sortedRecipes.length == 0) {
+      recipesToBeSorted = [...props.data.recipes];
+    } else {
+      recipesToBeSorted = props.data.sortedRecipes;
     }
 
-    const currentSortOrder = props.data.sortOrder;
-    
     if (currentSortOrder === "descending") {
-      const sortedRecipes = props.data.recipes.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
+      const sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
     } else if (currentSortOrder === "ascending") {
-      const sortedRecipes = props.data.recipes.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
+      const sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
     } 
   }
 
-/* 
-if sortedRecipes not empty, accesss it
-if empty, access recipes
-*/
+  let recipesToBeDisplayed = props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  if (props.data.recipes) { 
+  if (props.data[recipesToBeDisplayed]) { 
     recipeSearchResult = <div>
-          {props.data.recipes.map(recipe => (
+          {props.data[recipesToBeDisplayed].map(recipe => (
             <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
               <RecipeCard 
                 key={recipe.recipe_id}
@@ -60,7 +68,7 @@ if empty, access recipes
         <button onClick={() => handleSortToggle("time_to_cook_in_minutes")}>Time To Cook</button>
         <button onClick={() => handleSortToggle("calories")}>Calories</button>
         <button onClick={() => handleSortToggle("servings")}>Servings</button>
-        <button onClick={() => handleSortToggle("clear_sort_filter")}>Clear Sorting</button>
+        <button onClick={() => props.clearRecipeSortFilter()}>Clear Sort Filter</button>
         {recipeSearchResult}
     </main>
   );
@@ -70,7 +78,8 @@ RecipeSearchResults.propTypes = {
   data: PropTypes.object,
   getRecipes: PropTypes.object,
   sortRecipesAscending: PropTypes.func,
-  sortRecipesDescending: PropTypes.func
+  sortRecipesDescending: PropTypes.func,
+  clearRecipeSortFilter: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})
@@ -87,6 +96,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: `SORT_BY_${valueToBeSorted}_DESCENDING`,
         sortedRecipes: sortedRecipes
+      })
+    },
+    clearRecipeSortFilter: () => {
+      dispatch({
+        type: "CLEAR_RECIPE_SORT_FILTER",
       })
     }
   }
