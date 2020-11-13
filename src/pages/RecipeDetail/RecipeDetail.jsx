@@ -30,41 +30,41 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 50
   },
   recipePhotoPaper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
     minHeight: 300
   },
   userActionsPaper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20
   },
   instructionsPaper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
     minHeight: 300
   },
   userAddNotesPaper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
     minHeight: 200
   },
   ingredientsPaper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
     minHeight: 300
   },
   nutritionFactsPaper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
@@ -134,7 +134,7 @@ const RecipeDetail = (props) => {
 
 RecipeDetail.propTypes = {
   data: PropTypes.object,
-  getRecipes: PropTypes.object
+  getRecipes: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})

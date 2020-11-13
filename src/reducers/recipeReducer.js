@@ -1,5 +1,6 @@
 const initialState = {
     recipes: [],
+    sortOrder: ''
 }
 
 export default function(state = initialState, action) {
@@ -13,11 +14,13 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.sortedRecipesByTimeToCookAscending,
+                sortOrder: 'ascending'
             }
         case 'SORT_TIME_TO_COOK_DESCENDING':
             return {
                 ...state,
                 recipes: action.sortedRecipesByTimeToCookDescending,
+                sortOrder: 'descending'
             }
         default: return state
     }

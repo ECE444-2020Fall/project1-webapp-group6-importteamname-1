@@ -11,6 +11,12 @@ const RecipeSearchResults = (props) => {
 
  // Use switch-case 
  // Pass in the attribute that we wanna sort the recipes by 
+  let handleSortToggle = () => {
+    // Check sortOrder in redux store
+    // if it's '' or asc, sort desc
+    // else sort asc
+  }
+
   let handleSortAscending = () => {
     const sortedRecipes = props.data.recipes.sort((a, b) => a.time_to_cook_in_minutes - b.time_to_cook_in_minutes);
     console.log(sortedRecipes);
@@ -62,8 +68,8 @@ const RecipeSearchResults = (props) => {
 RecipeSearchResults.propTypes = {
   data: PropTypes.object,
   getRecipes: PropTypes.object,
-  sortRecipesByTimeToCookAscending: PropTypes.object,
-  sortRecipesByTimeToCookDescending: PropTypes.object
+  sortRecipesByTimeToCookAscending: PropTypes.func,
+  sortRecipesByTimeToCookDescending: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})
