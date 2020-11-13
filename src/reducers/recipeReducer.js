@@ -1,6 +1,5 @@
 const initialState = {
     recipes: [],
-    loading: true
 }
 
 export default function(state = initialState, action) {
@@ -9,7 +8,16 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.payload,
-                loading: false
+            }
+        case 'SORT_TIME_TO_COOK_ASCENDING':
+            return {
+                ...state,
+                recipes: action.sortedRecipesByTimeToCookAscending,
+            }
+        case 'SORT_TIME_TO_COOK_DESCENDING':
+            return {
+                ...state,
+                recipes: action.sortedRecipesByTimeToCookDescending,
             }
         default: return state
     }

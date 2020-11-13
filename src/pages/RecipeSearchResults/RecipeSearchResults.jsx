@@ -1,14 +1,28 @@
-﻿import React, { useEffect } from 'react';
+﻿import React from 'react';
 import RecipeCard from "../../components/common/RecipeCard";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
-import { getRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
 
 const RecipeSearchResults = (props) => {
-  useEffect(() => {
-    props.getRecipes()
-  }, []);
+  
+// https://stackblitz.com/edit/react-2njvau?file=index.js
+
+
+ // Use switch-case 
+ // Pass in the attribute that we wanna sort the recipes by 
+  let handleSortAscending = () => {
+    const sortedRecipes = props.data.recipes.sort((a, b) => a.time_to_cook_in_minutes - b.time_to_cook_in_minutes);
+    console.log(sortedRecipes);
+    props.sortRecipesByTimeToCookAscending(sortedRecipes);
+  }
+
+  let handleSortDescending = () => {
+    const sortedRecipes = props.data.recipes.sort((a, b) => b.time_to_cook_in_minutes - a.time_to_cook_in_minutes);
+    console.log(sortedRecipes);
+    props.sortRecipesByTimeToCookDescending(sortedRecipes);
+  }
+  
 
   let recipeSearchResult = null;
 
@@ -38,6 +52,8 @@ const RecipeSearchResults = (props) => {
       <div className="row justify-content-center py-5">
         <h3>Recipe Search Results</h3>
       </div>
+        <button onClick={handleSortAscending}>Sort preparation time asc</button>
+        <button onClick={handleSortDescending}>Sort preparation time desc</button>
          {recipeSearchResult}
     </main>
   );
@@ -45,9 +61,28 @@ const RecipeSearchResults = (props) => {
 
 RecipeSearchResults.propTypes = {
   data: PropTypes.object,
-  getRecipes: PropTypes.object
+  getRecipes: PropTypes.object,
+  sortRecipesByTimeToCookAscending: PropTypes.object,
+  sortRecipesByTimeToCookDescending: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})
 
-export default connect(mapStateToProps, {getRecipes})(RecipeSearchResults);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sortRecipesByTimeToCookAscending: (sortedRecipes) => { 
+        dispatch({
+          type:'SORT_TIME_TO_COOK_ASCENDING', 
+          sortedRecipesByTimeToCookAscending: sortedRecipes
+        })
+      },
+      sortRecipesByTimeToCookDescending: (sortedRecipes) => {
+         dispatch({
+          type: 'SORT_TIME_TO_COOK_DESCENDING',
+          sortedRecipesByTimeToCookDescending: sortedRecipes
+         })
+      }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeSearchResults);
