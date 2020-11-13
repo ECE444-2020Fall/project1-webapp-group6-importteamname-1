@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import {Redirect} from 'react-router-dom';
 import background1 from './background1.png'
 import background2 from './background2.png'
 import background3 from './background3.png'
@@ -72,6 +73,8 @@ const Register = () => {
     const [pass, setPass] = React.useState("")
     const [pass2, setPass2] = React.useState("")
     const [passError, setPassError] = React.useState(false)
+    const [passInvalid, setPassInvalid] = React.useState("")
+    const [userCreated, setUserCreated] = React.useState(false)
 
 
     function validateUser(val) {
@@ -126,108 +129,135 @@ const Register = () => {
     }
 
     const handleRegister = (evt) => {
-        //evt.preventDefault()
         //Write validation for users
-        
-        if (validateUser(user) && validatePass(pass) && validateEqualPass(pass, pass2)) {
+        evt.preventDefault()
+        var validUser = false
+        if (validateUser(user) && validatePass(pass)) {
             //handle 
+            //setValidUser(false)
+            //const req = CONSTANTS.ENDPOINT.LOGIN + String(userL) + "/" + String(passL);
+            const req = CONSTANTS.ENDPOINT.REGISTER;
+            fetch(req, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'post',
+                body: JSON.stringify({
+                    'name': user,
+                    'password': pass
+                })
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw Error(response.statusText);
+              }
+              console.log("Got here")
+              return response.json();
+            })
+            .then(body => {
+                console.log(body.userExists)
+                validUser=body.userFree
+                if(!validUser){
+                    setPass("")
+                    console.log("Invalid")
+                    setPassInvalid("Username already exists")
+                    setUserCreated(false)
+                    setUserError(true)
+
+              }
+              else{
+                console.log("Valid")
+                setUserCreated(true)
+                setPassInvalid("")
+              }
+            }
+            )
+            
             
         } else {
-            evt.preventDefault()
             setPass("")
-            setPass2("")
-            return 
+            return
         }
-        //const req = CONSTANTS.ENDPOINT.REGISTER + String(user) + "/" + String(pass);
-        const req = CONSTANTS.ENDPOINT.REGISTER;
-        fetch(req, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'post',
-            body: JSON.stringify({
-                'name': user,
-                'password': pass
-            })
-        }).then( Response => {
-            return Response.json;
-        })
-        
-        //Write validation for users
-        //update database
+        //check database for login
+        //return
     }
     const classes = useStyles();
-
-    return (
-        <Grid container component="main" className={classes.root}>
-            <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Register
-                    </Typography>
-                    <form className={classes.form} onSubmit={handleRegister}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            onChange={handleUserChange}
-                            id="username"
-                            label="Username"
-                            error={userError}
-                            autoComplete="Username"
-                            autoFocus />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            onChange={handlePassChange}
-                            required
-                            fullWidth
-                            error={passError}
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password" />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            onChange={handlePass2Change}
-                            error={passError}
-                            label="Confrim Password"
-                            type="password"
-                            id="password"
-                            autoComplete="confirm-password" />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
+    if(!userCreated){
+        return (
+            <Grid container component="main" className={classes.root}>
+                <CssBaseline />
+                <Grid item xs={false} sm={4} md={7} className={classes.image} />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
                             Register
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
+                        </Typography>
+                        <form className={classes.form} onSubmit={handleRegister}>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                onChange={handleUserChange}
+                                id="username"
+                                label="Username"
+                                error={userError}
+                                autoComplete="Username"
+                                autoFocus />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                onChange={handlePassChange}
+                                required
+                                fullWidth
+                                error={passError}
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password" />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                onChange={handlePass2Change}
+                                error={passError}
+                                label="Confrim Password"
+                                type="password"
+                                id="password"
+                                autoComplete="confirm-password" />
+                            {passInvalid.length > 0 && <span id="error">&nbsp;{passInvalid}</span>}
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Register
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="Login" variant="body2">
+                                        {"Already have an account? Sign in!"}
+                                    </Link>
+                                </Grid>
                             </Grid>
-                            <Grid item>
-                                <Link href="Login" variant="body2">
-                                    {"Already have an account? Sign in!"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                </Grid>
             </Grid>
-        </Grid>
-    );
+        );
+    }
+    else{
+        return <Redirect to='/welcome'/>
+    }
 
 }
 export default Register;

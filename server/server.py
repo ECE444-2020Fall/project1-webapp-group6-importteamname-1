@@ -19,27 +19,30 @@ app.secret_key = "TESTKEY"
 #@app.route('/api/add_user/<string:name>/<string:password>', methods=['POST'])
 @app.route(CONSTANTS['ENDPOINT']['REGISTER'], methods=['POST'])
 def add_new_user():
+    
     body = request.get_json()
     name =  body["name"]
     password = body["password"]
+    ret = {}
+    ret['userFree'] = True
     user = User.query.filter(
-        User.username == name, User.password == password
+        User.username == name
     ).first()
     if user:
-        return "User already exists"
-
+        ret['userFree'] = False
+        return jsonify(ret)
     new_user = User(name, password)
     db.session.add(new_user)
     db.session.commit()
     session["user_id"] = new_user.user_id
     print(session)
-    return ""
+    return jsonify(ret)
 
 # EXAMPLE OF HOW TO REMOVE ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 @app.route('/api/remove_user/<string:name>/<string:password>')
 def remove_user(name, password):
     user = User.query.filter(
-        User.username == name and User.password == password
+        User.username == name , User.password == password
     ).first()
     if user: 
         db.session.delete(user[0])
@@ -67,17 +70,20 @@ def login_user():
     body = request.get_json()
     name =  body["name"]
     password = body["password"]
+    ret = {}
+    ret['found'] = False
     user = User.query.filter(
-        User.username == name and User.password == password
+        User.username == name , User.password == password
     ).first()
     if user:
         session["user_id"] = user.user_id
         print("found user")
-        print(session)
-        print()
-        return "Found User"
-    print("User not found")
-    return "User not found"
+        ret['found'] = True
+    else:
+        print("User not found")
+    return jsonify(ret)
+    
+    
     
 
 # EXAMPLE OF HOW TO ADD ITEM WITH FOREIGN KEY <PART OF YANISA's DB SETUP>

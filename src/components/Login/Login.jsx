@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import {Redirect} from 'react-router-dom';
 import background1 from './background1.png'
 import background2 from './background2.png'
 import background3 from './background3.png'
@@ -60,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  error: {
+
+  }
 }));
 
 const Login = () => {
@@ -71,8 +75,9 @@ const Login = () => {
     const [userErrorL, setUserErrorL] = React.useState(false)
     const [passL, setPassL] = React.useState("")
     const [passErrorL, setPassErrorL] = React.useState(false)
-
-
+    const [passInvalid, setPassInvalid] = React.useState("")
+    const [userFound, setUserFound] = React.useState(false)
+    
     function validateUser(val) {
         if (val.length < 5 || val.length > 16) {
             return (false)
@@ -110,8 +115,11 @@ const Login = () => {
 
     const handleLogin = (evt) => {
         //Write validation for users
+        evt.preventDefault()
+        var validUser = false
         if (validateUser(userL) && validatePass(passL)) {
             //handle 
+            //setValidUser(false)
             //const req = CONSTANTS.ENDPOINT.LOGIN + String(userL) + "/" + String(passL);
             const req = CONSTANTS.ENDPOINT.LOGIN;
             fetch(req, {
@@ -124,79 +132,110 @@ const Login = () => {
                     'name': userL,
                     'password': passL
                 })
-            }).then( Response => {
-                return Response.json;
             })
+            .then(response => {
+              if (!response.ok) {
+                throw Error(response.statusText);
+              }
+              return response.json();
+            })
+            .then(body => {
+              validUser=body.found
+              if(!validUser){
+                setPassL("")
+                console.log("Invalid")
+                setPassInvalid("Username/Password Invalid")
+                setUserFound(false)
+                setPassErrorL(true)
+                setUserErrorL(true)
+
+              }
+              else{
+                console.log("Valid")
+                setUserFound(true)
+                setPassInvalid("")
+              }
+
+              }
+            )
+            
+            
         } else {
             setPassL("")
-            evt.preventDefault();
             return
         }
         //check database for login
-        return
+        //return
     }
     const classes = useStyles();
 
-    return (
-        <Grid container component="main" className={classes.root}>
-            <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Login
-                    </Typography>
-                    <form className={classes.form} onSubmit={handleLogin}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            error={userErrorL}
-                            onChange={handleUserChangeL}
-                            label="Username"
-                            name="username"
-                            autoComplete="Username"
-                            autoFocus />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            error={passErrorL}
-                            name="password"
-                            onChange={handlePassChangeL}
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password" />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign In
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
-                            </Grid>
-                            <Grid item>
-                                <Link href="Register" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </div>
-            </Grid>
-        </Grid>
-    );
+    if(!userFound){
+      return (
+          <Grid container component="main" className={classes.root}>
+              <CssBaseline />
+              <Grid item xs={false} sm={4} md={7} className={classes.image} />
+              <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                  <div className={classes.paper}>
+                      <Avatar className={classes.avatar}>
+                          <LockOutlinedIcon />
+                      </Avatar>
+                      <Typography component="h1" variant="h5">
+                          Login
+                      </Typography>
+                      <form className={classes.form} onSubmit={handleLogin}>
+                          <TextField
+                              variant="outlined"
+                              margin="normal"
+                              required
+                              fullWidth
+                              id="username"
+                              error={userErrorL}
+                              onChange={handleUserChangeL}
+                              label="Username"
+                              autoComplete="Username"
+                              autoFocus />
+                          <TextField
+                              variant="outlined"
+                              margin="normal"
+                              required
+                              fullWidth
+                              error={passErrorL}
+                              onChange={handlePassChangeL}
+                              label="Password"
+                              type="password"
+                              id="password"
+                              autoComplete="current-password" />
+                          {passInvalid.length > 0 && <span id="error">&nbsp;{passInvalid}</span>}
+                          <Button
+                              type="submit"
+                              fullWidth
+                              variant="contained"
+                              color="primary"
+                              className={classes.submit}
+                          >
+                              Sign In
+                          </Button>
+                          
+                          <Grid container>
+                              <Grid item xs>
+                              </Grid>
+                              <Grid item>
+                                  <Link href="Register" variant="body2">
+                                      {"Don't have an account? Sign Up"}
+                                  </Link>
+                              </Grid>
+                          </Grid>
+                      </form>
+                  </div>
+              </Grid>
+          </Grid>
+      );
+    }
+    else{
+      
+      return <Redirect to='/welcome'/>
+    }
+
 
 }
 export default Login;
