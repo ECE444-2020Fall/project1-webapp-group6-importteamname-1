@@ -29,7 +29,7 @@ const RecipeSearchResults = (props) => {
     if (currentSortOrder === "descending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
-    } else if (currentSortOrder === "ascending") {
+    } else { // currentSortOrder is initialized to ''. When the user clicks the sort button for the first time, we sort recipes descending by default.
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
     } 
