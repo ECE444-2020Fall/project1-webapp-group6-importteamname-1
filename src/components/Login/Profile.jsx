@@ -65,9 +65,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Welcome = () => {
+const Profile = () => {
     // Must add login support
     const [loggedOut, setLoggedOut] = React.useState(false)
+
 
     const handleLogout = (evt) => {
       evt.preventDefault()
@@ -85,8 +86,8 @@ const Welcome = () => {
               <Grid item xs={false} sm={4} md={7} className={classes.image} />
               <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                   <div className={classes.paper}>
-                      <Typography component="h1" variant="h3" color="primary">
-                          Welcome Back!
+                      <Typography component="h1" variant="h3" color="primary" align="center">
+                          Welcome to ChefCoPilot
                       </Typography>
                       <p/>
                       <Typography component="h1" variant="body1">
@@ -117,7 +118,7 @@ const Welcome = () => {
 
 
 }
-export default Welcome;
+export default Profile;
 
 
 

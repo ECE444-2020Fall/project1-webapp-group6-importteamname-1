@@ -10,6 +10,7 @@ from sample_data import sample_data
 
 from app import db, app
 from app.models import *
+import hashlib
 
 
 CORS(app)
@@ -22,7 +23,8 @@ def add_new_user():
     
     body = request.get_json()
     name =  body["name"]
-    password = body["password"]
+    password = hashlib.md5(body["password"].encode())
+    password = password.hexdigest()
     ret = {}
     ret['userFree'] = True
     user = User.query.filter(
@@ -49,7 +51,7 @@ def remove_user(name, password):
         db.session.commit()
     return ""
 
-@app.route('/api/get_user', methods=['GET'])
+@app.route(CONSTANTS['ENDPOINT']['GET_USER'], methods=['GET'])
 def get_user():
     if 'user_id' not in session:
         return jsonify({'error': 'user_id not found'})
@@ -69,7 +71,8 @@ def get_user():
 def login_user():
     body = request.get_json()
     name =  body["name"]
-    password = body["password"]
+    password = hashlib.md5(body["password"].encode())
+    password = password.hexdigest()
     ret = {}
     ret['found'] = False
     user = User.query.filter(
@@ -82,6 +85,13 @@ def login_user():
     else:
         print("User not found")
     return jsonify(ret)
+
+@app.route(CONSTANTS['ENDPOINT']['LOGOUT'], methods=['POST'])
+def logout_user():
+    if 'user_id' in session:
+        del session['user_id']
+    return
+
     
     
     

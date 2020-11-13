@@ -155,17 +155,14 @@ const Login = () => {
                 setUserFound(true)
                 setPassInvalid("")
               }
-
+              
               }
             )
             
             
-        } else {
-            setPassL("")
-            return
         }
-        //check database for login
-        //return
+        document.getElementById("Login-Form").reset()
+        return
     }
     const classes = useStyles();
 
@@ -182,7 +179,7 @@ const Login = () => {
                       <Typography component="h1" variant="h5">
                           Login
                       </Typography>
-                      <form className={classes.form} onSubmit={handleLogin}>
+                      <form id = "Login-Form" className={classes.form} onSubmit={handleLogin}>
                           <TextField
                               variant="outlined"
                               margin="normal"

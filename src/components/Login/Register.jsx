@@ -175,12 +175,9 @@ const Register = () => {
             )
             
             
-        } else {
-            setPass("")
-            return
         }
-        //check database for login
-        //return
+        document.getElementById("Register-Form").reset()
+        return
     }
     const classes = useStyles();
     if(!userCreated){
@@ -196,7 +193,7 @@ const Register = () => {
                         <Typography component="h1" variant="h5">
                             Register
                         </Typography>
-                        <form className={classes.form} onSubmit={handleRegister}>
+                        <form id="Register-Form" className={classes.form} onSubmit={handleRegister}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"

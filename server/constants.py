@@ -13,7 +13,8 @@ CONSTANTS = {
         'LIST': '/api/list',
         'REGISTER': '/api/add_user',
         'LOGIN': '/api/login',
-        'GET_USER': '/api/login/get_user'
+        'GET_USER': '/api/get_user',
+        'LOGOUT': '/api/logout'
     },
     'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot',
     'DB_SCHEMA': {

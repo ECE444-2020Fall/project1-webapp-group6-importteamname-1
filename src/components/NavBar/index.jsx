@@ -17,7 +17,7 @@ const NavBar = () => {
           {CONSTANTS.APP_NAME}
         </Link>
         <div className="navbar-nav">
-          <Link className="nav-item nav-link active" to="/">
+          <Link className="nav-item nav-link active" to="/AddRecipes">
             Add Recipes
           </Link>
           <Link className="nav-item nav-link active" to="RecipeSearchResults">
@@ -35,8 +35,8 @@ const NavBar = () => {
           <Link className="nav-item nav-link active" to="RecipeCart">
             Recipe Cart
           </Link>
-          <Link className="nav-item nav-link active" to="Login">
-            Login
+          <Link className="nav-item nav-link active" to="Profile">
+            Profile
           </Link>
         </div>
       </nav>

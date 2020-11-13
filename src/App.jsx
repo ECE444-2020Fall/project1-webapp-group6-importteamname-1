@@ -20,30 +20,53 @@ import Login from "./components/Login/Login";
 
 import Register from "./components/Login/Register";
 
-import Welcome from "./components/Login/Welcome"
+import Welcome from "./components/Login/Welcome";
 
-import RouteToLogin from "./components/Login/RouteToLogin"
+import RouteToLogin from "./components/Login/RouteToLogin";
+
+import Profile from "./components/Login/Profile";
 
 //TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
     return (
       <React.Fragment>
-        <NavBar />
         <Switch>
-          <Route path = "/AddRecipes" component = { AddRecipes } />
-          <Route path = "/RecipeSearchResults" component = { RecipeSearchResults } />
-          <Route path = "/RecipeDetail" component = { RecipeDetail } />
-          <Route path = "/FavouriteRecipes" component = { FavouriteRecipes } />
-          <Route path = "/CalorieTracker" component = { CalorieTracker } />
-          <Route path = "/RecipeCart" component = { RecipeCart } />
-          <Route path = "/welcome" component = { Welcome } />
-          <Route path = "/Login" component = { Login } />
-          <Route path = "/Register" component = { Register } />
-          <Route exact path = "/" component = { RouteToLogin } />
+          <Route exact path={["/", "/Login", "/Register"]} component={ LoginContainer } />
+          <Route component={ defaultContainer } />
         </Switch>
         <Footer />
       </React.Fragment>
     );
 }
 
+const LoginContainer = () => {
+  return (
+  <React.Fragment>
+    <Route exact path = "/" component = { RouteToLogin } />
+    <Route path = "/Login" component = { Login } />
+    <Route path = "/Register" component = { Register } />
+  </React.Fragment>
+  )
+}
+  
+const defaultContainer = () => {
+  return (
+  <React.Fragment>
+    <NavBar />
+    <Route path = "/AddRecipes" component = { AddRecipes } />
+    <Route path = "/RecipeSearchResults" component = { RecipeSearchResults } />
+    <Route path = "/RecipeDetail" component = { RecipeDetail } />
+    <Route path = "/FavouriteRecipes" component = { FavouriteRecipes } />
+    <Route path = "/CalorieTracker" component = { CalorieTracker } />
+    <Route path = "/RecipeCart" component = { RecipeCart } />
+    <Route path = "/welcome" component = { Welcome } />
+    <Route path = "/Profile" component = { Profile} />
+  </React.Fragment>
+  )
+
+}
+
+
 export default App;
+
+          
