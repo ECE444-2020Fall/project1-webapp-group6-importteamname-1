@@ -5,32 +5,28 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const RecipeSearchResults = (props) => {
-  
-// https://stackblitz.com/edit/react-2njvau?file=index.js
-
-
- // Use switch-case 
- // Pass in the attribute that we wanna sort the recipes by 
-  let handleSortToggle = () => {
-    // Check sortOrder in redux store
-    // if it's '' or asc, sort desc
-    // else sort asc
-  }
-
-  let handleSortAscending = () => {
-    const sortedRecipes = props.data.recipes.sort((a, b) => a.time_to_cook_in_minutes - b.time_to_cook_in_minutes);
-    console.log(sortedRecipes);
-    props.sortRecipesByTimeToCookAscending(sortedRecipes);
-  }
-
-  let handleSortDescending = () => {
-    const sortedRecipes = props.data.recipes.sort((a, b) => b.time_to_cook_in_minutes - a.time_to_cook_in_minutes);
-    console.log(sortedRecipes);
-    props.sortRecipesByTimeToCookDescending(sortedRecipes);
-  }
-  
-
   let recipeSearchResult = null;
+
+  let handleSortToggle = (valueToBeSorted) => {
+    if (valueToBeSorted === "clear_sort_filter") {
+      
+    }
+
+    const currentSortOrder = props.data.sortOrder;
+    
+    if (currentSortOrder === "descending") {
+      const sortedRecipes = props.data.recipes.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
+      props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
+    } else if (currentSortOrder === "ascending") {
+      const sortedRecipes = props.data.recipes.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
+      props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
+    } 
+  }
+
+/* 
+if sortedRecipes not empty, accesss it
+if empty, access recipes
+*/
 
   if (props.data.recipes) { 
     recipeSearchResult = <div>
@@ -60,9 +56,12 @@ const RecipeSearchResults = (props) => {
       <div className="row justify-content-center py-5">
         <h3>Recipe Search Results</h3>
       </div>
-        <button onClick={handleSortAscending}>Sort preparation time asc</button>
-        <button onClick={handleSortDescending}>Sort preparation time desc</button>
-         {recipeSearchResult}
+        <p>Sort by:</p>
+        <button onClick={() => handleSortToggle("time_to_cook_in_minutes")}>Time To Cook</button>
+        <button onClick={() => handleSortToggle("calories")}>Calories</button>
+        <button onClick={() => handleSortToggle("servings")}>Servings</button>
+        <button onClick={() => handleSortToggle("clear_sort_filter")}>Clear Sorting</button>
+        {recipeSearchResult}
     </main>
   );
 }
@@ -70,26 +69,26 @@ const RecipeSearchResults = (props) => {
 RecipeSearchResults.propTypes = {
   data: PropTypes.object,
   getRecipes: PropTypes.object,
-  sortRecipesByTimeToCookAscending: PropTypes.func,
-  sortRecipesByTimeToCookDescending: PropTypes.func
+  sortRecipesAscending: PropTypes.func,
+  sortRecipesDescending: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sortRecipesByTimeToCookAscending: (sortedRecipes) => { 
-        dispatch({
-          type:'SORT_TIME_TO_COOK_ASCENDING', 
-          sortedRecipesByTimeToCookAscending: sortedRecipes
-        })
-      },
-      sortRecipesByTimeToCookDescending: (sortedRecipes) => {
-         dispatch({
-          type: 'SORT_TIME_TO_COOK_DESCENDING',
-          sortedRecipesByTimeToCookDescending: sortedRecipes
-         })
-      }
+    sortRecipesAscending: (sortedRecipes, valueToBeSorted) => { 
+      dispatch({
+        type:`SORT_BY_${valueToBeSorted}_ASCENDING`, 
+        sortedRecipes: sortedRecipes
+      })
+    },
+    sortRecipesDescending: (sortedRecipes, valueToBeSorted) => {
+      dispatch({
+        type: `SORT_BY_${valueToBeSorted}_DESCENDING`,
+        sortedRecipes: sortedRecipes
+      })
+    }
   }
 }
 
