@@ -57,8 +57,8 @@ const NavBar = () => {
           {CONSTANTS.APP_NAME}
         </Link>
         <div className="navbar-nav">
-          <Link className="nav-item nav-link active" to="/AddRecipes">
-            Add Recipes
+          <Link className="nav-item nav-link active" to="/AddIngredients">
+            Add Ingredients
           </Link>
           <Link className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
