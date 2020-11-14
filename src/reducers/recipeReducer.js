@@ -1,6 +1,7 @@
 const initialState = {
     recipes: [],
-    loading: true
+    sortedRecipes: [],
+    sortOrder: ''
 }
 
 export default function(state = initialState, action) {
@@ -9,8 +10,29 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.payload,
-                loading: false
             }
-        default: return state
+        case 'SORT_BY_CALORIES_ASCENDING':
+        case 'SORT_BY_SERVINGS_ASCENDING':
+        case 'SORT_BY_TIME_TO_COOK_IN_MINUTES_ASCENDING':
+            return {
+                ...state,
+                sortedRecipes: action.sortedRecipes,
+                sortOrder: 'ascending'
+            }
+        case 'SORT_BY_CALORIES_DESCENDING':
+        case 'SORT_BY_SERVINGS_DESCENDING':
+        case 'SORT_BY_TIME_TO_COOK_IN_MINUTES_DESCENDING':
+            return {
+                ...state,
+                sortedRecipes: action.sortedRecipes,
+                sortOrder: 'descending'
+            }
+        case 'CLEAR_RECIPE_SORT_FILTER':
+            return {
+                ...state,
+                sortedRecipes: [] 
+            }
+        default: 
+            return state
     }
 }

@@ -13,8 +13,8 @@ class ScrollIntoView extends PureComponent {
 }
 
 ScrollIntoView.propTypes = {
-  location: PropTypes.string,
-  children: PropTypes.string,
+  location: PropTypes.object,
+  children: PropTypes.array,
 };
 
 export default withRouter(ScrollIntoView);
