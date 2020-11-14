@@ -77,14 +77,7 @@ const Register = () => {
     const [userCreated, setUserCreated] = React.useState(false)
 
 
-    function validateUser(val) {
-        if (val.length < 5 || val.length > 16) {
-            return (false)
-        } 
-        return (true)
-    }
-
-    function validatePass(val){
+    function validateText(val) {
         if (val.length < 5 || val.length > 16) {
             return (false)
         } 
@@ -101,17 +94,12 @@ const Register = () => {
     //REGISTER
     const handleUserChange = (val) => {
         setUser(val.target.value)
-        if (validateUser(val.target.value)) {
-            setUserError(false);
-        } else {
-            setUserError(true);
-        }
-        
+        setUserError(!validateText(val.target.value))
     }
 
     const handlePassChange = (val) => {
         setPass(val.target.value)
-        if (validatePass(val.target.value) && validateEqualPass(val.target.value, pass2)) {
+        if (validateText(val.target.value) && validateEqualPass(val.target.value, pass2)) {
             setPassError(false)
         } else {
             setPassError(true)
@@ -121,7 +109,7 @@ const Register = () => {
 
     const handlePass2Change = (val) => {
         setPass2(val.target.value)
-        if (validatePass(val.target.value) && validateEqualPass(pass, val.target.value)) {
+        if (validateText(val.target.value) && validateEqualPass(pass, val.target.value)) {
             setPassError(false)
         } else {
             setPassError(true)
@@ -132,7 +120,7 @@ const Register = () => {
         //Write validation for users
         evt.preventDefault()
         var validUser = false
-        if (validateUser(user) && validatePass(pass)) {
+        if (validateText(user) && validateText(pass)) {
             //handle 
             //setValidUser(false)
             //const req = CONSTANTS.ENDPOINT.LOGIN + String(userL) + "/" + String(passL);
@@ -149,32 +137,23 @@ const Register = () => {
                 })
             })
             .then(response => {
-              if (!response.ok) {
-                throw Error(response.statusText);
-              }
-              console.log("Got here")
               return response.json();
             })
             .then(body => {
-                console.log(body.userExists)
                 validUser=body.userFree
                 if(!validUser){
                     setPass("")
-                    console.log("Invalid")
                     setPassInvalid("Username already exists")
                     setUserCreated(false)
                     setUserError(true)
 
-              }
-              else{
-                console.log("Valid")
-                setUserCreated(true)
-                setPassInvalid("")
-              }
+                }
+                else{
+                    setUserCreated(true)
+                    setPassInvalid("")
+                }
             }
-            )
-            
-            
+            )   
         }
         document.getElementById("Register-Form").reset()
         return

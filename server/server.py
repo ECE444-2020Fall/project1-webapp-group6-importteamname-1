@@ -32,24 +32,13 @@ def add_new_user():
     ).first()
     if user:
         ret['userFree'] = False
-        return jsonify(ret)
+        return make_response(jsonify(ret), CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
     new_user = User(name, password)
     db.session.add(new_user)
     db.session.commit()
     session["user_id"] = new_user.user_id
-    print(session)
-    return jsonify(ret)
+    return make_response(jsonify(ret), CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
-# EXAMPLE OF HOW TO REMOVE ENTRIES TO DB  <PART OF YANISA's DB SETUP>
-@app.route('/api/remove_user/<string:name>/<string:password>')
-def remove_user(name, password):
-    user = User.query.filter(
-        User.username == name , User.password == password
-    ).first()
-    if user: 
-        db.session.delete(user[0])
-        db.session.commit()
-    return ""
 
 @app.route(CONSTANTS['ENDPOINT']['GET_USER'], methods=['GET'])
 def get_user():
@@ -58,9 +47,8 @@ def get_user():
     user = User.query.filter(
         User.user_id == session.get('user_id')
     ).first()
-    res = {}
-    res['username'] = user.username
-    res['user_id'] = user.user_id
+    res = {'username': user.username}
+    
     if user:
         return jsonify(res)
     return jsonify({'error': 'sessions user not in database'})
@@ -80,17 +68,15 @@ def login_user():
     ).first()
     if user:
         session["user_id"] = user.user_id
-        print("found user")
         ret['found'] = True
-    else:
-        print("User not found")
     return jsonify(ret)
 
 @app.route(CONSTANTS['ENDPOINT']['LOGOUT'], methods=['POST'])
 def logout_user():
     if 'user_id' in session:
         del session['user_id']
-    return
+        return make_response(CONSTANTS['HTTP_STATUS']['200_OK'])
+    return make_response(CONSTANTS['HTTP_STATUS']['400_BAD_REQUEST'])
 
     
     

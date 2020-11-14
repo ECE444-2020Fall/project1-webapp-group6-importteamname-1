@@ -71,98 +71,59 @@ const Login = () => {
 
 
     //Login Vars
-    const [userL, setUserL] = React.useState("")
-    const [userErrorL, setUserErrorL] = React.useState(false)
-    const [passL, setPassL] = React.useState("")
-    const [passErrorL, setPassErrorL] = React.useState(false)
+    const [user, setuser] = React.useState("")
+    const [userError, setUserError] = React.useState(false)
+    const [pass, setPass] = React.useState("")
+    const [passError, setPassError] = React.useState(false)
     const [passInvalid, setPassInvalid] = React.useState("")
     const [userFound, setUserFound] = React.useState(false)
     
-    function validateUser(val) {
+    function validateText(val){
         if (val.length < 5 || val.length > 16) {
             return (false)
         } 
         return (true)
-    }
-
-    function validatePass(val){
-        if (val.length < 5 || val.length > 16) {
-            return (false)
-        } 
-        return (true)
-    }
-
-    //LOGIN
-
-    const handleUserChangeL = (val) => {
-        if (validateUser(val.target.value)) {
-            setUserErrorL(false);
-        } else {
-            setUserErrorL(true);
-        }
-        setUserL(val.target.value)
-    }
-
-    const handlePassChangeL = (val) => {
-        if (validatePass(val.target.value)) {
-            setPassErrorL(false)
-        } else {
-            setPassErrorL(true)
-        }
-        setPassL(val.target.value)
     }
 
 
     const handleLogin = (evt) => {
-        //Write validation for users
-        evt.preventDefault()
-        var validUser = false
-        if (validateUser(userL) && validatePass(passL)) {
-            //handle 
-            //setValidUser(false)
-            //const req = CONSTANTS.ENDPOINT.LOGIN + String(userL) + "/" + String(passL);
-            const req = CONSTANTS.ENDPOINT.LOGIN;
-            fetch(req, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: 'post',
-                body: JSON.stringify({
-                    'name': userL,
-                    'password': passL
-                })
+      //Write validation for users
+      evt.preventDefault()
+      var validUser = false
+      if (validateText(user) && validateText(pass)) {
+        fetch(CONSTANTS.ENDPOINT.LOGIN, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify({
+                'name': user,
+                'password': pass
             })
-            .then(response => {
-              if (!response.ok) {
-                throw Error(response.statusText);
-              }
-              return response.json();
-            })
-            .then(body => {
-              validUser=body.found
-              if(!validUser){
-                setPassL("")
-                console.log("Invalid")
-                setPassInvalid("Username/Password Invalid")
-                setUserFound(false)
-                setPassErrorL(true)
-                setUserErrorL(true)
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(body => {
+          validUser=body.found
+          if(!validUser){
+            setPass("")
+            setPassInvalid("Username/Password Invalid")
+            setUserFound(false)
+            setPassError(true)
+            setUserError(true)
 
-              }
-              else{
-                console.log("Valid")
-                setUserFound(true)
-                setPassInvalid("")
-              }
-              
-              }
-            )
-            
-            
-        }
-        document.getElementById("Login-Form").reset()
-        return
+          }
+          else{
+            setUserFound(true)
+            setPassInvalid("")
+          }
+          
+        })
+      }
+      document.getElementById("Login-Form").reset()
+      return
     }
     const classes = useStyles();
 
@@ -186,8 +147,12 @@ const Login = () => {
                               required
                               fullWidth
                               id="username"
-                              error={userErrorL}
-                              onChange={handleUserChangeL}
+                              error={userError}
+                              onChange= { (val) => {
+                                setUserError(!validateText(val.target.value));
+                                setuser(val.target.value)
+                                }
+                              }
                               label="Username"
                               autoComplete="Username"
                               autoFocus />
@@ -196,8 +161,12 @@ const Login = () => {
                               margin="normal"
                               required
                               fullWidth
-                              error={passErrorL}
-                              onChange={handlePassChangeL}
+                              error={passError}
+                              onChange= { (val) => {
+                                setPassError(!validateText(val.target.value));
+                                setPass(val.target.value)
+                                }
+                              }
                               label="Password"
                               type="password"
                               id="password"
