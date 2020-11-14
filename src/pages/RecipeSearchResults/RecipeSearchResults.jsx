@@ -62,6 +62,7 @@ const RecipeSearchResults = (props) => {
                         {recipe.calories} Calories
                       </Typography>
                     </Link>
+                    <br></br>
                     <Typography >
                       <UserRating recipe_id={recipe.recipe_id} />
                     </Typography>
