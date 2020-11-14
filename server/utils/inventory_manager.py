@@ -2,19 +2,6 @@ from flask import jsonify, make_response, session
 from constants import CONSTANTS
 from collections import defaultdict
 
-def get_user_id():
-    print(session)
-    if 'user_id' not in session:
-        print("user id not in session")
-        user_id = "9890648f-c400-4c98-9796-e1afbc7774db"
-        # json_response = jsonify({ 
-        #     'error': 'user_id not in session, log in again'
-        # })
-        # return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-    else:
-        print("user id in session")
-        user_id = session['user_id']
-    return user_id
 
 
 class InventoryManager():
@@ -75,9 +62,9 @@ class InventoryManager():
         user_items_map = {}
         user_items_map["items"] = [item.get_item_name() for item in user_items]
 
-        print(user_items_map)
         json_response = jsonify(user_items_map)
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
+
 
     def get_all_items(self, model):             # show all items in the model (ONLY FOR DEBUG PURPOSES)
         all_items = model.query.all()

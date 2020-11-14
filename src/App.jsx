@@ -17,7 +17,7 @@ import Register from "./pages/Login/Register";
 import Welcome from "./pages/Login/Welcome";
 import RouteToLogin from "./pages/Login/RouteToLogin";
 import Profile from "./pages/Login/Profile";
-import Footer from './pages/Footer'
+import Footer from "./pages/Footer";
 
 const App = (props) => {
   useEffect(() => {

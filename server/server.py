@@ -16,8 +16,6 @@ from app import db, app
 from app.models import *
 import hashlib
 
-# 06eddc19-0e98-4939-9b23-631705cff730
-
 inventory_manager = InventoryManager(db)
 recipe_personalization_manager = RecipePersonalizationManager(db)
 recipe_controller = RecipeController(db)
@@ -156,7 +154,8 @@ def remove_recipe_cart_item(recipe_id):
 
 @app.route('/api/recipe_cart')
 def show_recipe_cart():
-    return inventory_manager.get_all_user_items(RecipeCart)
+    user_carted_recipe_ids = inventory_manager.get_all_user_items(RecipeCart).get_json()["items"]
+    return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 @app.route('/api/favourites_list/<string:recipe_id>')
 def add_recipe_to_favs_list(recipe_id):
@@ -189,7 +188,8 @@ def show_favs_list():
     if not user_id:
         return user_id_not_found_response() 
 
-    return inventory_manager.get_all_user_items(user_id, UserFavourites)
+    user_fav_recipe_ids = inventory_manager.get_all_user_items(user_id, UserFavourites).get_json()["items"]
+    return recipe_controller.get_recipes_by_ids(user_fav_recipe_ids, Recipe)
 
 
 @app.route('/api/ingredients/add', methods=['POST']) 
