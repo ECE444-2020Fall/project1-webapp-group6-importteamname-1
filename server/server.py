@@ -15,7 +15,7 @@ import hashlib
 
 # 06eddc19-0e98-4939-9b23-631705cff730
 
-CORS(app)
+CORS(app, supports_credentials=True)
 app.secret_key = "TESTKEY"
 
 @app.route('/api/drop')     # ONLY FOR DEBUGGING
@@ -84,7 +84,8 @@ def remove_recipe_cart_item(recipe_id):
 
 @app.route('/api/recipe_cart')
 def show_recipe_cart():
-    return inventory_manager.get_all_user_items(RecipeCart)
+    user_carted_recipe_ids = inventory_manager.get_all_user_items(RecipeCart).get_json()["items"]
+    return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 @app.route('/api/favourites_list/<string:recipe_id>')
 def add_recipe_to_favs_list(recipe_id):
@@ -101,7 +102,8 @@ def remove_recipe_from_favs_list(recipe_id):
 
 @app.route('/api/favourites_list')
 def show_favs_list():
-    return inventory_manager.get_all_user_items(UserFavourites)
+    user_fav_recipe_ids = inventory_manager.get_all_user_items(UserFavourites).get_json()["items"]
+    return recipe_controller.get_recipes_by_ids(user_fav_recipe_ids, Recipe)
 
 
 @app.route('/api/ingredients/add', methods=['POST']) 

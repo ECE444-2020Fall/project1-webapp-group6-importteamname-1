@@ -52,7 +52,7 @@ const RecipeCard = (props) => {
 RecipeCard.propTypes = {
     imageUrl: PropTypes.string,
     recipeName: PropTypes.string,
-    recipeId: PropTypes.number,
+    recipeId: PropTypes.string,
     timeToCookInMinutes: PropTypes.number,
     calories: PropTypes.number,
     servings: PropTypes.number

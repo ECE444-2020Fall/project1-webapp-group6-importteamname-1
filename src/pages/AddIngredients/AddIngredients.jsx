@@ -5,7 +5,7 @@ const AddIngredients = () => {
   return <main id="mainContent">
     <div className="container">
       <div className="row justify-content-center mt-5 p-0">
-        <h3>Add Recipes</h3>
+        <h3>Add Ingredients</h3>
       </div>
       <Button variant="contained" color="primary">
           Sample Button
