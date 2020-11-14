@@ -8,8 +8,9 @@ from flask_cors import CORS
 from constants import CONSTANTS
 from sample_data import sample_data
 
-from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller, ingredient_controller
+from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller, ingredient_controller, calorie_tracker_manager
 from app.models import *
+from datetime import date
 import hashlib
 
 # 06eddc19-0e98-4939-9b23-631705cff730
@@ -152,6 +153,25 @@ def get_all_recipes():
 @app.route('/api/recipes', methods=['DELETE'])
 def remove_all_recipes():
     return recipe_controller.delete_all_recipes(Recipe)
+
+@app.route('/api/calorie_tracker/add', methods=['POST'])
+def add_consumed_recipe():
+    recipe_id = uuid.uuid4()
+    date = date.today()
+    return calorie_tracker_manager.add_consumed_recipe(ConsumedRecipes, recipe_id, date)
+
+@app.route('/api/calorie_tracker/delete', methods=['DELETE'])
+def delete_consumed_recipe()
+    recipe_id = uuid.uuid4()
+    date = date.today()
+    return calorie_tracker_manager.delete_consumed_recipe(ConsumedRecipes, recipe_id, date)
+
+@app.route('/api/calorie_tracker', methds=['GET'])
+def get_consumed_recipes()
+    date = date.today()
+    return calorie_tracker_manager.get_consumed_recipes(ConsumedRecipes, Recipe)
+
+
 
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
