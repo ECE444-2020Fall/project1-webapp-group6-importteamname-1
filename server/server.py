@@ -10,10 +10,11 @@ from sample_data import sample_data
 
 from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller, ingredient_controller
 from app.models import *
+import hashlib
 
 # 06eddc19-0e98-4939-9b23-631705cff730
 
-CORS(app)
+CORS(app, supports_credentials=True)
 app.secret_key = "TESTKEY"
 
 @app.route('/api/drop')     # ONLY FOR DEBUGGING
@@ -82,7 +83,8 @@ def remove_recipe_cart_item(recipe_id):
 
 @app.route('/api/recipe_cart')
 def show_recipe_cart():
-    return inventory_manager.get_all_user_items(RecipeCart)
+    user_carted_recipe_ids = inventory_manager.get_all_user_items(RecipeCart).get_json()["items"]
+    return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 @app.route('/api/favourites_list/<string:recipe_id>')
 def add_recipe_to_favs_list(recipe_id):
@@ -99,7 +101,8 @@ def remove_recipe_from_favs_list(recipe_id):
 
 @app.route('/api/favourites_list')
 def show_favs_list():
-    return inventory_manager.get_all_user_items(UserFavourites)
+    user_fav_recipe_ids = inventory_manager.get_all_user_items(UserFavourites).get_json()["items"]
+    return recipe_controller.get_recipes_by_ids(user_fav_recipe_ids, Recipe)
 
 
 @app.route('/api/ingredients/add', methods=['POST']) 
@@ -154,25 +157,64 @@ def remove_all_recipes():
 
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
-@app.route('/api/add_user/<string:name>/<string:password>')
-def add_new_user(name, password):
+#@app.route('/api/add_user/<string:name>/<string:password>', methods=['POST'])
+@app.route(CONSTANTS['ENDPOINT']['REGISTER'], methods=['POST'])
+def add_new_user():
+    
+    body = request.get_json()
+    name =  body["name"]
+    password = hashlib.md5(body["password"].encode())
+    password = password.hexdigest()
+    ret = {}
+    ret['userFree'] = True
+    user = User.query.filter(
+        User.username == name
+    ).first()
+    if user:
+        ret['userFree'] = False
+        return make_response(jsonify(ret), CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
     new_user = User(name, password)
     db.session.add(new_user)
     db.session.commit()
     session["user_id"] = new_user.user_id
-    print(session)
-    return ""
+    return make_response(jsonify(ret), CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
-# EXAMPLE OF HOW TO REMOVE ENTRIES TO DB  <PART OF YANISA's DB SETUP>
-@app.route('/api/remove_user/<string:name>/<string:password>')
-def remove_user(name, password):
+
+@app.route(CONSTANTS['ENDPOINT']['GET_USER'], methods=['GET'])
+def get_user():
+    if 'user_id' not in session:
+        return jsonify({'error': 'user_id not found'})
     user = User.query.filter(
-        User.username == name and User.password == password
+        User.user_id == session.get('user_id')
     ).first()
-    if user: 
-        db.session.delete(user[0])
-        db.session.commit()
-    return ""
+    res = {'username': user.username}
+    
+    if user:
+        return jsonify(res)
+    return jsonify({'error': 'sessions user not in database'})
+
+@app.route(CONSTANTS['ENDPOINT']['LOGIN'], methods=['POST'])
+def login_user():
+    body = request.get_json()
+    name =  body["name"]
+    password = hashlib.md5(body["password"].encode())
+    password = password.hexdigest()
+    ret = {}
+    ret['found'] = False
+    user = User.query.filter(
+        User.username == name , User.password == password
+    ).first()
+    if user:
+        session["user_id"] = user.user_id
+        ret['found'] = True
+    return jsonify(ret)
+
+@app.route(CONSTANTS['ENDPOINT']['LOGOUT'], methods=['POST'])
+def logout_user():
+    if 'user_id' in session:
+        del session['user_id']
+        return make_response(CONSTANTS['HTTP_STATUS']['200_OK'])
+    return make_response(CONSTANTS['HTTP_STATUS']['400_BAD_REQUEST'])
 
 # EXAMPLE OF HOW TO ADD ITEM WITH FOREIGN KEY <PART OF YANISA's DB SETUP>
 @app.route('/api/add_item/<string:item>')

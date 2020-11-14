@@ -25,7 +25,9 @@ const ShoppingList = () => {
 
   if (refreshList) {
     setRefreshList(false)
-    fetch(CONSTANTS.ENDPOINT.SHOPPING_LIST)
+    fetch(CONSTANTS.ENDPOINT.SHOPPING_LIST, {
+      credentials: 'include'
+    })
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);

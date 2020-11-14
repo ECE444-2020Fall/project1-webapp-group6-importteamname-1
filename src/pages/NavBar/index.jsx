@@ -46,6 +46,7 @@ export function SimpleMenu() {
 //TODO Web Template Studio: Add a new link in the NavBar for your page here.
 // A skip link is included as an accessibility best practice. For more information visit https://www.w3.org/WAI/WCAG21/Techniques/general/G1.
 const NavBar = () => {
+  
   return (
     <React.Fragment>
       <div className={styles.skipLink}>
@@ -56,8 +57,8 @@ const NavBar = () => {
           {CONSTANTS.APP_NAME}
         </Link>
         <div className="navbar-nav">
-          <Link className="nav-item nav-link active" to="/">
-            Add Ingredients
+          <Link className="nav-item nav-link active" to="/AddRecipes">
+            Add Recipes
           </Link>
           <Link className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
@@ -73,6 +74,9 @@ const NavBar = () => {
           </Link>
           <Link className="nav-item nav-link active" to="/recipe-cart">
             Recipe Cart
+          </Link>
+          <Link className="nav-item nav-link active" to="Profile">
+            Profile
           </Link>
           <SimpleMenu></SimpleMenu>
         </div>
