@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 
-export default function AteThis() {
+export default function RecipeConsumedToggle() {
     const [state, setState] = React.useState({
       ateThis: false,
     });
