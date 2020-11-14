@@ -45,6 +45,28 @@ class RecipeController():
 
         return make_response(jsonify(recipe_map), CONSTANTS['HTTP_STATUS']['200_OK'])
 
+    def get_recipes_by_ids(self, recipe_ids, model):
+        recipes = model.query.filter(model.recipe_id.in_(recipe_ids)).all() 
+        recipe_map = {"recipes": []}
+
+        for recipe in recipes:
+            recipe_info_object = {
+                "recipe_id": recipe.recipe_id,
+                "recipe_name": recipe.recipe_name,
+                "image_url": recipe.image_url,
+                "cuisine": recipe.cuisine,
+                "instructions": recipe.instructions,
+                "time_to_cook_in_minutes": recipe.time_to_cook_in_minutes,
+                "servings": recipe.servings,
+                "calories": recipe.calories,
+                "protein": recipe.protein,
+                "carbs": recipe.carbs,
+                "fat": recipe.fat
+            }
+
+            recipe_map["recipes"].append(recipe_info_object)
+
+        return make_response(jsonify(recipe_map), CONSTANTS['HTTP_STATUS']['200_OK'])
 
     def delete_all_recipes(self, model):
         num_recipes = self.db.session.query(model).count()
