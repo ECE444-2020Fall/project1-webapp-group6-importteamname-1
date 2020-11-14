@@ -13,28 +13,53 @@ import ScrollIntoView from './components/common/ScrollIntoView';
 import { connect } from 'react-redux'; 
 import { getRecipes } from './actions/recipeActions';
 import PropTypes from 'prop-types';
+import Login from "./pages/Login/Login";
+import Register from "./pages/Login/Register";
+import Welcome from "./pages/Login/Welcome";
+import RouteToLogin from "./pages/Login/RouteToLogin";
+import Profile from "./pages/Login/Profile";
 
 const App = (props) => {
   useEffect(() => {
     props.getRecipes()
   }, []);
-
-  return (
-    <React.Fragment>
-      <ScrollIntoView>
-        <NavBar />
+    return (
+      <React.Fragment>
         <Switch>
-          <Route exact path='/' component={AddIngredients} />
-          <Route exact path='/favourite-recipes' component={FavouriteRecipes} />
-          <Route exact path='/shopping-list' component={ShoppingList} />
-          <Route exact path='/calorie-tracker' component={CalorieTracker} />
-          <Route exact path='/recipe-cart' component={RecipeCart} />
-          <Route exact path='/recipe-search-results/:recipe_id' component={RecipeDetail} />
-          <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
+          <Route exact path={["/", "/Login", "/Register"]} component={LoginContainer} />
+          <Route component={defaultContainer} />
         </Switch>
-        </ScrollIntoView>
-    </React.Fragment>
-  );
+        <Footer />
+      </React.Fragment>
+    );
+}
+
+const LoginContainer = () => {
+  return (
+  <React.Fragment>
+    <Route exact path = "/" component = {RouteToLogin} />
+    <Route path = "/Login" component = {Login} />
+    <Route path = "/Register" component = {Register} />
+  </React.Fragment>
+  )
+}
+  
+const defaultContainer = () => {
+  return (
+  <React.Fragment>
+    <NavBar />
+    <Route path = "/AddRecipes" component = {AddRecipes} />
+    <Route path = "/RecipeSearchResults" component = {RecipeSearchResults} />
+    <Route path = "/welcome" component = {Welcome} />
+    <Route path = "/Profile" component = {Profile} />
+    <Route exact path='/favourite-recipes' component={FavouriteRecipes} />
+    <Route exact path='/shopping-list' component={ShoppingList} />
+    <Route exact path='/calorie-tracker' component={CalorieTracker} />
+    <Route exact path='/recipe-cart' component={RecipeCart} />
+    <Route exact path='/recipe-search-results/:recipe_id' component={RecipeDetail} />
+    <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
+  </React.Fragment>
+  )
 }
 
 App.propTypes = {
@@ -45,3 +70,4 @@ App.propTypes = {
 const mapStateToProps = (state) => ({data: state.recipes})
 
 export default connect(mapStateToProps, {getRecipes})(App);
+
