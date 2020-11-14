@@ -12,10 +12,22 @@ from app import db, app, inventory_manager, recipe_personalization_manager, reci
 from app.models import *
 import hashlib
 
+# 06eddc19-0e98-4939-9b23-631705cff730
+
 CORS(app)
 app.secret_key = "TESTKEY"
 
-@app.route('/api/add_or_update_user_notes', methods=['POST'])
+@app.route('/api/drop')     # ONLY FOR DEBUGGING
+def drop_db():
+    UserRating.query.delete()
+    UserNotes.query.delete()
+    RecipeIngredient.query.delete()
+    RecipeCart.query.delete()
+    Recipe.query.delete()
+    db.session.commit()
+    return "dropped table"
+
+@app.route('/api/user_notes', methods=['POST'])
 def add_or_update_user_notes():
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
@@ -27,25 +39,27 @@ def show_user_notes():
     return recipe_personalization_manager.get_all_user_feedbacks(UserNotes)
 
 
-@app.route('/api/add_or_update_user_rating', methods=['POST'])
+@app.route('/api/user_rating', methods=['POST'])
 def add_or_update_user_rating():
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserRating)
 
+@app.route('/api/user_rating/<string:recipe_id>')
+def show_user_rating(recipe_id):
+    return recipe_personalization_manager.get_user_feedback(recipe_id, UserRating)
 
 @app.route('/api/user_ratings')
 def show_user_ratings():
     return recipe_personalization_manager.get_all_user_feedbacks(UserRating)
 
-
-@app.route('/api/add_item_to_shopping_list', methods=['POST'])
+@app.route('/api/shopping_list', methods=['POST'])
 def add_item_to_shopping_list():
     item = request.get_json()["item"]
     return inventory_manager.add_item(item, ShoppingList)
 
 
-@app.route('/api/remove_item_from_shopping_list/<string:item>', methods=['DELETE'])
+@app.route('/api/shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
     return inventory_manager.remove_item(item, ShoppingList)
 
@@ -54,26 +68,44 @@ def remove_item_from_shopping_list(item):
 def show_shopping_list():
     return inventory_manager.get_all_user_items(ShoppingList)
 
+@app.route('/api/recipe_cart/<string:recipe_id>')
+def add_item_to_recipe_cart(recipe_id):
+    return inventory_manager.get_item(recipe_id, RecipeCart)
 
-@app.route('/api/add_recipe_to_favourites_list', methods=['POST'])
-def add_recipe_to_favs_list():
+@app.route('/api/recipe_cart', methods=['POST'])
+def get_recipe_cart_item():
     recipe_id = request.get_json()["item"]
-    return inventory_manager.add_item(recipe_id, FavouritesList)
+    return inventory_manager.add_item(recipe_id, RecipeCart)
 
+@app.route('/api/recipe_cart/<string:recipe_id>', methods=['DELETE'])
+def remove_recipe_cart_item(recipe_id):
+    return inventory_manager.remove_item(recipe_id, RecipeCart)
 
-@app.route('/api/remove_recipe_from_favourites_list/<string:recipe_id>', methods=['DELETE'])
+@app.route('/api/recipe_cart')
+def show_recipe_cart():
+    return inventory_manager.get_all_user_items(RecipeCart)
+
+@app.route('/api/favourites_list/<string:recipe_id>')
+def add_recipe_to_favs_list(recipe_id):
+    return inventory_manager.get_item(recipe_id, UserFavourites)
+
+@app.route('/api/favourites_list', methods=['POST'])
+def get_recipe_favs_list():
+    recipe_id = request.get_json()["item"]
+    return inventory_manager.add_item(recipe_id, UserFavourites)
+
+@app.route('/api/favourites_list/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_from_favs_list(recipe_id):
-    return inventory_manager.remove_item(recipe_id, FavouritesList)
-
+    return inventory_manager.remove_item(recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list')
 def show_favs_list():
-    return inventory_manager.get_all_user_items(FavouritesList)
+    return inventory_manager.get_all_user_items(UserFavourites)
 
 
 @app.route('/api/ingredients/add', methods=['POST']) 
 def add_ingredient():
-    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    recipe_id = request.get_json()["recipe_id"]
     ingredient_name = request.get_json()["ingredient_name"]
     amount = request.get_json()["amount"]
     unit_of_measurement = request.get_json()["unit_of_measurement"]
@@ -85,6 +117,11 @@ def get_all_ingredients():
     return ingredient_controller.get_all_ingredients(RecipeIngredient)
 
 
+@app.route('/api/ingredients/<string:recipe_id>', methods=['GET'])
+def get_ingredient_by_recipe_id(recipe_id):
+    return ingredient_controller.get_ingredient_by_recipe_id(RecipeIngredient, recipe_id)
+
+
 @app.route('/api/ingredients', methods=['DELETE'])
 def remove_all_ingredients():
     return ingredient_controller.delete_all_ingredients(RecipeIngredient)
@@ -92,7 +129,7 @@ def remove_all_ingredients():
 
 @app.route('/api/recipes/add', methods=['POST']) 
 def add_recipe(): 
-    recipe_id = (request.get_json()["recipe_id"]).to_bytes(10, 'little')
+    recipe_id = uuid.uuid4()
     recipe_name = request.get_json()["recipe_name"]
     image_url = request.get_json()["image_url"]
     cuisines = request.get_json()["cuisines"]
@@ -251,6 +288,7 @@ def page_not_found(error):
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
 
 if __name__ == '__main__':
+    # session["user_id"] = "ebbe4421-c37b-4bd1-ac39-2337b1535206"
     app.run(port=CONSTANTS['PORT'])
     db.create_all()
     print("creating all db")

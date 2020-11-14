@@ -1,119 +1,53 @@
-﻿import React, { useState } from "react";
-import ListItem from "./ListItem";
-import Form from "./Form";
-import WarningMessage from "../WarningMessage";
-import CONSTANTS from "../../constants";
+﻿import React, { useEffect } from 'react';
+import RecipeCard from "../../components/common/RecipeCard";
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'; 
+import { getRecipes } from '../../actions/recipeActions';
+import PropTypes from 'prop-types';
 
-const RecipeSearchResults = () => {
-  const [items, setItems] = useState([]);
-  const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
-
-  const getItems = () => {
-    let promiseList = fetch(CONSTANTS.ENDPOINT.LIST)
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-    return promiseList;
-  }
-
-  const deleteItem = (item) => {
-    fetch(`${CONSTANTS.ENDPOINT.LIST}/${item.id}`, { method: "DELETE" })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(result => {
-        setItems(items.filter(item => item.id !== result.id));
-      })
-      .catch(error => {
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
-        });
-      });
-  }
-
-  const addItem = (textField) => {
-    // Warning Pop Up if the user submits an empty message
-    if (!textField) {
-      setWarningMessage({
-        warningMessageOpen: true,
-        warningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
-      });
-      return;
-    }
-
-    fetch(CONSTANTS.ENDPOINT.LIST, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: textField
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(itemAdded =>{
-        setItems([itemAdded, ...items]);
-      })
-      .catch(error =>
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
-        })
-      );
-  };
-
-  const closeWarningMessage = () => {
-    setWarningMessage({
-      warningMessageOpen: false,
-      warningMessageText: ""
-    });
-  };
-
-  React.useEffect(() => {
-    getItems()
-      .then(list => {setItems(list)})
-      .catch(error =>
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
-        })
-      );
+const RecipeSearchResults = (props) => {
+  useEffect(() => {
+    props.getRecipes()
   }, []);
+
+  let recipeSearchResult = null;
+
+  if (props.data.recipes) { 
+    recipeSearchResult = <div>
+          {props.data.recipes.map(recipe => (
+            <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
+              <RecipeCard key={recipe.recipe_id}
+                          recipeId={recipe.recipe_id} 
+                          recipeName={recipe.recipe_name}
+                          imageUrl={recipe.image_url}
+                          timeToCookInMinutes={recipe.time_to_cook_in_minutes}
+                          servings={recipe.servings}
+                          calories={recipe.calories}
+                          protein={recipe.protein}
+                          carbs={recipe.carbs}
+                          fat={recipe.fat} />
+              </Link>
+          ))}
+      </div>
+  } else {
+    recipeSearchResult = <p>No recipes available.</p>
+  }
 
   return (
     <main id="mainContent" className="container">
       <div className="row justify-content-center py-5">
-        <h3>Recipe_Search_Results</h3>
+        <h3>Recipe Search Results</h3>
       </div>
-      <div className="row">
-        <div className="col-12 p-0">
-          <Form addItem={addItem}/>
-        </div>
-        {items.map(listItem => (
-          <ListItem
-            key={listItem.id}
-            item={listItem}
-            deleteItem={deleteItem}
-          />
-        ))}
-        <WarningMessage
-          open={warningMessage.warningMessageOpen}
-          text={warningMessage.warningMessageText}
-          onWarningClose={closeWarningMessage}
-        />
-      </div>
+         {recipeSearchResult}
     </main>
   );
 }
 
-export default RecipeSearchResults;
+RecipeSearchResults.propTypes = {
+  data: PropTypes.object,
+  getRecipes: PropTypes.object
+};
+
+const mapStateToProps = (state) => ({data: state.recipes})
+
+export default connect(mapStateToProps, {getRecipes})(RecipeSearchResults);

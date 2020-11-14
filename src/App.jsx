@@ -1,37 +1,28 @@
-﻿import React from 'react';
-
+﻿import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './pages/NavBar';
-
-import Footer from './pages/Footer';
-
-import AddRecipes from './pages/AddRecipes/AddRecipes';
-
+import AddIngredients from './pages/AddIngredients/AddIngredients';
 import RecipeSearchResults from './pages/RecipeSearchResults/RecipeSearchResults';
-
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
-
 import FavouriteRecipes from './pages/FavouriteRecipes/FavouriteRecipes';
-
 import ShoppingList from './pages/ShoppingList/ShoppingList';
-
 import CalorieTracker from './pages/CalorieTracker/CalorieTracker';
-
 import RecipeCart from './pages/RecipeCart/RecipeCart';
-
+import ScrollIntoView from './components/common/ScrollIntoView';
+import { connect } from 'react-redux'; 
+import { getRecipes } from './actions/recipeActions';
+import PropTypes from 'prop-types';
 import Login from "./pages/Login/Login";
-
 import Register from "./pages/Login/Register";
-
 import Welcome from "./pages/Login/Welcome";
-
 import RouteToLogin from "./pages/Login/RouteToLogin";
-
 import Profile from "./pages/Login/Profile";
 
-//TODO Web Template Studio: Add routes for your new pages here.
-const App = () => {
+const App = (props) => {
+  useEffect(() => {
+    props.getRecipes()
+  }, []);
     return (
       <React.Fragment>
         <Switch>
@@ -69,10 +60,14 @@ const defaultContainer = () => {
     <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
   </React.Fragment>
   )
-
 }
 
+App.propTypes = {
+  data: PropTypes.object,
+  getRecipes: PropTypes.object
+};
 
-export default App;
+const mapStateToProps = (state) => ({data: state.recipes})
 
-          
+export default connect(mapStateToProps, {getRecipes})(App);
+

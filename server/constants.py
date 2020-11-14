@@ -18,7 +18,7 @@ CONSTANTS = {
         'GET_USER': '/api/get_user',
         'LOGOUT': '/api/logout'
     },
-    'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot',
+    'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot?charset=utf8',
     'CHEF_COPILOT': {
         'LOCAL_HOST_BASE_URL': "http://localhost:3001/api",
         'ADD_RECIPE': "/recipes/add",

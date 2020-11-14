@@ -9,13 +9,13 @@ const ShoppingList = () => {
   const [refreshList, setRefreshList] = useState(true)
 
   const removeShoppingListItem = (item) => {
-    removeItem(item, CONSTANTS.ENDPOINT.REMOVE_SHOPPING_LIST_ITEM)
+    removeItem(item, CONSTANTS.ENDPOINT.SHOPPING_LIST)
       .then(() => setRefreshList(true))
   }
 
   const addShoppingListItem = () => {
     if (newItem) {
-      addItem(newItem, CONSTANTS.ENDPOINT.ADD_SHOPPING_LIST_ITEM)
+      addItem(newItem, CONSTANTS.ENDPOINT.SHOPPING_LIST)
         .then(() => {
           setRefreshList(true)
           setNewItem('')
@@ -25,7 +25,7 @@ const ShoppingList = () => {
 
   if (refreshList) {
     setRefreshList(false)
-    fetch(CONSTANTS.ENDPOINT.GET_SHOPPING_LIST)
+    fetch(CONSTANTS.ENDPOINT.SHOPPING_LIST)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
