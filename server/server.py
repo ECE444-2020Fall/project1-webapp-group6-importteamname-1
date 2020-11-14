@@ -154,7 +154,11 @@ def remove_recipe_cart_item(recipe_id):
 
 @app.route('/api/recipe_cart')
 def show_recipe_cart():
-    user_carted_recipe_ids = inventory_manager.get_all_user_items(RecipeCart).get_json()["items"]
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    user_carted_recipe_ids = inventory_manager.get_all_user_items(user_id, RecipeCart).get_json()["items"]
     return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 @app.route('/api/favourites_list/<string:recipe_id>')

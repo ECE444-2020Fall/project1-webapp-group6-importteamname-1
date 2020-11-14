@@ -64,7 +64,7 @@ const defaultContainer = () => {
 
 App.propTypes = {
   data: PropTypes.object,
-  getRecipes: PropTypes.object
+  getRecipes: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})

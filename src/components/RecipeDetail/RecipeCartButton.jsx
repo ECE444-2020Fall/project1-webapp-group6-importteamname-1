@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {addItem, removeItem, getItem} from '../../utils/list_utils';
 import CONSTANTS from "../../constants";
-import { useParams } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -14,9 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RecipeCartButton = () => {
+const RecipeCartButton = ({recipe_id}) => {
   const classes = useStyles();
-  const { recipe_id } = useParams();
 
   const [isCarted, setIsCarted] = useState(false);
   const [refresh, setRefresh] = useState(true)
@@ -49,5 +48,10 @@ const RecipeCartButton = () => {
     </Button>
   )
 }
+
+RecipeCartButton.propTypes = {
+  recipe_id: PropTypes.string
+};
+
 
 export { RecipeCartButton };
