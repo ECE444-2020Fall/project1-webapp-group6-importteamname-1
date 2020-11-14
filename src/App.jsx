@@ -9,7 +9,6 @@ import FavouriteRecipes from './pages/FavouriteRecipes/FavouriteRecipes';
 import ShoppingList from './pages/ShoppingList/ShoppingList';
 import CalorieTracker from './pages/CalorieTracker/CalorieTracker';
 import RecipeCart from './pages/RecipeCart/RecipeCart';
-import ScrollIntoView from './components/common/ScrollIntoView';
 import { connect } from 'react-redux'; 
 import { getRecipes } from './actions/recipeActions';
 import PropTypes from 'prop-types';
@@ -18,6 +17,7 @@ import Register from "./pages/Login/Register";
 import Welcome from "./pages/Login/Welcome";
 import RouteToLogin from "./pages/Login/RouteToLogin";
 import Profile from "./pages/Login/Profile";
+import Footer from "./pages/Footer";
 
 const App = (props) => {
   useEffect(() => {
@@ -48,7 +48,7 @@ const defaultContainer = () => {
   return (
   <React.Fragment>
     <NavBar />
-    <Route path = "/AddRecipes" component = {AddRecipes} />
+    <Route path = "/AddIngredients" component = {AddIngredients} />
     <Route path = "/RecipeSearchResults" component = {RecipeSearchResults} />
     <Route path = "/welcome" component = {Welcome} />
     <Route path = "/Profile" component = {Profile} />

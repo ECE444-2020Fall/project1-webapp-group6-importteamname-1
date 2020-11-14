@@ -34,7 +34,6 @@ class InventoryManager():
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
 
 
-
     def add_item(self, item, model):
         user_id = get_user_id()        
 
@@ -78,9 +77,9 @@ class InventoryManager():
         user_items_map = {}
         user_items_map["items"] = [item.get_item_name() for item in user_items]
 
-        print(user_items_map)
         json_response = jsonify(user_items_map)
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
+
 
     def get_all_items(self, model):             # show all items in the model (ONLY FOR DEBUG PURPOSES)
         all_items = model.query.all()
