@@ -63,15 +63,34 @@ class CalorieTrackerManager():
 
         for consumed_recipe in consumed_recipes:
             recipe_info_object = {
-                "recipe_id": recipe.recipe_id,
-                "recipe_name": recipe.recipe_name,
-                "image_url": recipe.image_url,
-                "calories": recipe.calories / recipe.servings,
-                "protein": recipe.protein / recipe.servings,
-                "carbs": recipe.carbs / recipe.servings,
-                "fat": recipe.fat / recipe.servings
+                "recipe_id": consumed_recipe.recipe_id,
+                "recipe_name": consumed_recipe.recipe_name,
+                "image_url": consumed_recipe.image_url,
+                "calories": consumed_recipe.calories / consumed_recipe.servings,
+                "protein": consumed_recipe.protein / consumed_recipe.servings,
+                "carbs": consumed_recipe.carbs / consumed_recipe.servings,
+                "fat": consumed_recipe.fat / consumed_recipe.servings
             }
 
             consumed_recipes_map["consumed_recipes"].append(recipe_info_object)
 
         return make_response(jsonify(consumed_recipes_map), CONSTANTS['HTTP_STATUS']['200_OK'])
+
+    #This function retreives the aggregated nutrition information for consumed recipes
+    def consumed_recipes_nutrition_total(self, model1, model2, date):
+        user_id = get_user_id()
+        consumed_recipes_list = self.db.session.query(model1).filter_by(user_id=user_id, consumption_date=date).all()
+        recipes = model2.query.all() 
+        consumed_recipes = self.db.session.query(model1, model2).join(model2, model2.recipe_id == model1.recipe_id).all()
+        totalCalories = 0, totalCarbs = 0, totalProtein =0,  totalFat = 0
+
+        for consumed_recipe in consumed_recipes:
+            total_calories += consumed_recipe.calories
+            total_carbs += consumed_recipe.carbs
+            total_protein += consumed_recipe.protein
+            total_fat += consumed_recipe.fat 
+
+        nutrition_facts = {'calories': total_calories, 'carbs': total_carbs, 'protein': total_protein, 'fat': total_fat}
+
+
+        return make_response(jsonify(nutrition_facts), CONSTANTS['HTTP_STATUS']['200_OK'])

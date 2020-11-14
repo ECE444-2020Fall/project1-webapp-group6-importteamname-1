@@ -173,7 +173,10 @@ def get_consumed_recipes()
     date = date.today()
     return calorie_tracker_manager.get_consumed_recipes(ConsumedRecipes, Recipe)
 
-
+@app.route('/api/calorie_tracker/total', methds=['GET'])
+def consumed_recipes_nutrition_total()
+    date = date.today()
+    return calorie_tracker_manager.consumed_recipes_nutrition_total(ConsumedRecipes, Recipe, date)
 
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
