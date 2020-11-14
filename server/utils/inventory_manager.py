@@ -3,6 +3,7 @@ from constants import CONSTANTS
 from collections import defaultdict
 
 def get_user_id():
+    print(session)
     if 'user_id' not in session:
         print("user id not in session")
         user_id = "9890648f-c400-4c98-9796-e1afbc7774db"
@@ -21,8 +22,7 @@ class InventoryManager():
     def __init__(self, db):
         self.db = db 
 
-    def get_item(self, item, model):
-        user_id = get_user_id()
+    def get_item(self, user_id, item, model):
         
         item = model.query.get((user_id, item))      # item already in list
 
@@ -35,8 +35,7 @@ class InventoryManager():
 
 
 
-    def add_item(self, item, model):
-        user_id = get_user_id()        
+    def add_item(self, user_id, item, model):
 
         if model.query.get((user_id, item)):      # item already in list
             json_response = jsonify({
@@ -54,8 +53,7 @@ class InventoryManager():
         self.db.session.commit()
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
     
-    def remove_item(self, item, model):
-        user_id = get_user_id()
+    def remove_item(self, user_id, item, model):
 
         item_to_remove = model.query.get((user_id, item))
         if not item_to_remove:          # item not in list 
@@ -71,8 +69,7 @@ class InventoryManager():
         })
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
 
-    def get_all_user_items(self, model):     # get all items in model belonging to user 
-        user_id = get_user_id()
+    def get_all_user_items(self, user_id, model):     # get all items in model belonging to user 
         
         user_items = model.query.filter(model.user_id == user_id)
         user_items_map = {}

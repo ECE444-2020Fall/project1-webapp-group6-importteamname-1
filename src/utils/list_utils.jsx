@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeletableListItem } from '../components/DeletableListItem'
+import { DeletableListItem } from '../components/common/DeletableListItem'
 
 function generateList(items, removeItem) {
   return items.map(item =>
@@ -8,7 +8,9 @@ function generateList(items, removeItem) {
 }
 
 const getItem = (item, endpoint) => {
-  return fetch(`${endpoint}/${item}`)
+  return fetch(`${endpoint}/${item}`, {
+    credentials: 'include'
+  })
     .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText);
@@ -16,12 +18,12 @@ const getItem = (item, endpoint) => {
       return response.text();
     })
     .then(body => JSON.parse(body))
-
 }
 
 const removeItem = (item, endpoint) => {
   return fetch(`${endpoint}/${item}`, {
-    method: 'delete'
+    method: 'delete',
+    credentials: 'include'
   }).then((response) => {
     if (!response.ok) {
       throw Error(response.statusText);
@@ -39,7 +41,8 @@ const addItem = (newItem, endpoint) => {
     method: 'post',
     body: JSON.stringify({
       'item': newItem
-    })
+    }),
+    credentials: 'include'
   }).then((response) => {
     if (response.status === 500) {
       throw Error(response.statusText);
@@ -59,7 +62,8 @@ const setFeedback = (endpoint, item, feedback) => {
     body: JSON.stringify({
       "recipe_id": item,
       "feedback": feedback
-    })
+    }),
+    credentials: 'include'
   })
     .then((response) => {
       if (!response.ok) {

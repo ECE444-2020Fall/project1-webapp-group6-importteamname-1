@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
+import { useParams } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {setFeedback, getItem} from '../utils/list_utils';
-import CONSTANTS from "../constants";
-import PropTypes from 'prop-types';
+import {setFeedback, getItem} from '../../utils/list_utils';
+import CONSTANTS from "../../constants";
 
-const UserRating = ({recipe_id}) => {
+const UserRating = () => {
+  const { recipe_id } = useParams();
+
   const [value, setValue] = useState(false);
   const [refresh, setRefresh] = useState(true) 
 
@@ -32,9 +34,5 @@ const UserRating = ({recipe_id}) => {
     </div>
   );
 }
-
-UserRating.propTypes = {
-  recipe_id: PropTypes.any,
-};
 
 export { UserRating };

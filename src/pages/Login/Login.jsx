@@ -100,7 +100,8 @@ const Login = () => {
             body: JSON.stringify({
                 'name': user,
                 'password': pass
-            })
+            }),
+            credentials: 'include'
         })
         .then(response => {
           return response.json();

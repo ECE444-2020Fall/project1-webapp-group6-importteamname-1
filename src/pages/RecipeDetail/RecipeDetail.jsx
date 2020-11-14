@@ -1,17 +1,15 @@
 ﻿import React, { useState, useEffect } from "react";
 import Ingredients from "../../components/RecipeDetail/Ingredients";
 import NutritionFacts from "../../components/RecipeDetail/NutritionFacts";
-import RecipeRating from "../../components/RecipeDetail/RecipeRating";
-import RecipeUserNotes from "../../components/RecipeDetail/RecipeUserNotes";
 import RecipeInstruction from "../../components/RecipeDetail/RecipeInstruction";
 import { useParams } from "react-router-dom";
-import { UserRating } from "../../components/UserRating";
-import { FavouritesButton } from "../../components/FavouritesButton";
-import { RecipeCartButton } from "../../components/RecipeCartButton";
+import { UserRating } from "../../components/RecipeDetail/UserRating";
+import { FavouritesButton } from "../../components/RecipeDetail/FavouritesButton";
+import { RecipeCartButton } from "../../components/RecipeDetail/RecipeCartButton";
+import { UserNotesContainer } from "../../containers/RecipeDetail/UserNotesContainer";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Button } from "@material-ui/core";
 import { connect } from 'react-redux';
 import { getRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
@@ -111,20 +109,16 @@ const RecipeDetail = (props) => {
               <p> Cuisine: {currentRecipe.cuisine} </p>
             </Paper>
             <Paper className={classes.userActionsPaper}>
-              <RecipeRating />
-              <UserRating recipe_id={recipe_id} />
-              <RecipeCartButton recipe_id={recipe_id} />
-              <FavouritesButton recipe_id={recipe_id} />
+              <UserRating />
+              <RecipeCartButton />
+              <FavouritesButton />
             </Paper>
             <Paper className={classes.instructionsPaper}>
               <RecipeInstruction timeToCookInMinutes={currentRecipe.time_to_cook_in_minutes} 
                                  instructions={currentRecipe.instructions} />
             </Paper>
             <Paper className={classes.userAddNotesPaper}>
-              <RecipeUserNotes />
-              <Button variant="contained" color="primary">
-                Add Note
-              </Button>
+              <UserNotesContainer/>
             </Paper>
           </Grid>
         </Grid>
