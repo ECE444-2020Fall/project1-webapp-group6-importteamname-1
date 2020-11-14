@@ -20,11 +20,7 @@ const RecipeSearchResults = (props) => {
     let recipesToBeSorted = null;
     let sortedRecipes = null;
 
-    if (props.data.sortedRecipes.length == 0) {
-      recipesToBeSorted = [...props.data.recipes];
-    } else {
-      recipesToBeSorted = props.data.sortedRecipes;
-    }
+    recipesToBeSorted = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? [...props.data.recipes] : props.data.sortedRecipes;
 
     if (currentSortOrder === "descending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
@@ -35,7 +31,7 @@ const RecipeSearchResults = (props) => {
     } 
   }
 
-  let recipesToBeDisplayed = props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
+  let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
   if (props.data[recipesToBeDisplayed]) { 
     recipeSearchResult = <div>
