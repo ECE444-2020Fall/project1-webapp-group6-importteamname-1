@@ -20,3 +20,5 @@ class ShoppingList(db.Model):
         self.user_id = user_id
         self.item_name = item_name
 
+    def get_item_name(self):
+        return self.item_name

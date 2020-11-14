@@ -1,4 +1,6 @@
 ﻿import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 const Form = (params) =>{
   const [textField, setTextField] = useState("");
@@ -24,9 +26,11 @@ const Form = (params) =>{
         placeholder="Add text here..."
         aria-label="Add text here..."
       />
-      <button type="submit" className="btn btn-primary ml-2">
-        Submit
-      </button>
+      <Box ml={1}>
+        <Button variant="contained" color="primary">
+            Search
+        </Button>
+      </Box>
     </form>
   );
 }

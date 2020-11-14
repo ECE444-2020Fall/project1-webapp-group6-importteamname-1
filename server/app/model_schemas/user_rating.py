@@ -11,7 +11,7 @@ class UserRating(db.Model):
         primary_key=True
     )
     recipe_id = db.Column(
-        UUIDType(), 
+        db.Integer,
         db.ForeignKey('recipe.recipe_id'),
         nullable=False,
         primary_key=True
@@ -25,3 +25,9 @@ class UserRating(db.Model):
         self.user_id = user_id
         self.recipe_id = recipe_id
         self.user_rating = user_rating
+
+    def update_feedback(self, feedback):
+        self.user_rating = feedback
+
+    def get_feedback(self):
+        return self.user_rating

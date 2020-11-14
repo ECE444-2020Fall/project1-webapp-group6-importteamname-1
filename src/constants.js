@@ -1,28 +1,28 @@
 ﻿const CONSTANTS = {};
 
-CONSTANTS.APP_NAME = "ChefCoPilot";
+CONSTANTS.APP_NAME = 'ChefCoPilot';
+
+//CONSTANTS.BACKEND_URL = 'https://chefcopilotbackend.herokuapp.com';
+CONSTANTS.BACKEND_URL = 'http://localhost:3001';
 
 CONSTANTS.ERROR_MESSAGE = {};
 
-CONSTANTS.ERROR_MESSAGE.LIST_DELETE = "Request to delete list item failed:";
-CONSTANTS.ERROR_MESSAGE.LIST_ADD = "Request to add list item failed:";
-CONSTANTS.ERROR_MESSAGE.LIST_GET = "Request to get list items failed:";
-CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE = "Please enter a valid message";
+CONSTANTS.ERROR_MESSAGE.LIST_DELETE = 'Request to delete list item failed:';
+CONSTANTS.ERROR_MESSAGE.LIST_ADD = 'Request to add list item failed:';
+CONSTANTS.ERROR_MESSAGE.LIST_GET = 'Request to get list items failed:';
+CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE = 'Please enter a valid message';
 
 CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET =
-  "Request to get master detail text failed:";
+  'Request to get master detail text failed:';
 
 CONSTANTS.ENDPOINT = {};
-
-CONSTANTS.ENDPOINT.LIST = "/api/list";
-CONSTANTS.ENDPOINT.REGISTER = "/api/add_user";
-CONSTANTS.ENDPOINT.LOGIN = "/api/login";
-CONSTANTS.ENDPOINT.GET_USER = "/api/get_user";
-CONSTANTS.ENDPOINT.LOGOUT = "/api/logout"
-
-
-CONSTANTS.ENDPOINT.MASTERDETAIL = "/api/masterdetail";
-
-//CONSTRAINTS.ENDPOINT.LIST_ADD
-
+CONSTANTS.ENDPOINT.LIST = `${CONSTANTS.BACKEND_URL}/api/list`;
+CONSTANTS.ENDPOINT.MASTERDETAIL = `${CONSTANTS.BACKEND_URL}/api/masterdetail`;
+CONSTANTS.ENDPOINT.REMOVE_SHOPPING_LIST_ITEM = `${CONSTANTS.BACKEND_URL}/api/remove_item_from_shopping_list`;
+CONSTANTS.ENDPOINT.ADD_SHOPPING_LIST_ITEM = `${CONSTANTS.BACKEND_URL}/api/add_item_to_shopping_list`;
+CONSTANTS.ENDPOINT.GET_SHOPPING_LIST = `${CONSTANTS.BACKEND_URL}/api/shopping_list`;
+CONSTANTS.ENDPOINT.REGISTER = `${CONSTANTS.BACKEND_URL}/api/add_user`;
+CONSTANTS.ENDPOINT.LOGIN = `${CONSTANTS.BACKEND_URL}/api/login`;
+CONSTANTS.ENDPOINT.GET_USER = `${CONSTANTS.BACKEND_URL}/api/get_user`;
+CONSTANTS.ENDPOINT.LOGOUT = `${CONSTANTS.BACKEND_URL}/api/logout`;
 export default CONSTANTS;

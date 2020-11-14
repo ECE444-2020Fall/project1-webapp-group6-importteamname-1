@@ -113,13 +113,11 @@ const Login = () => {
             setUserFound(false)
             setPassError(true)
             setUserError(true)
-
           }
           else{
             setUserFound(true)
             setPassInvalid("")
           }
-          
         })
       }
       document.getElementById("Login-Form").reset()
@@ -201,10 +199,5 @@ const Login = () => {
       
       return <Redirect to='/welcome'/>
     }
-
-
 }
 export default Login;
-
-
-

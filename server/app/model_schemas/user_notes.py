@@ -11,7 +11,7 @@ class UserNotes(db.Model):
         primary_key=True
     )
     recipe_id = db.Column(
-        UUIDType(), 
+        db.Integer,
         db.ForeignKey('recipe.recipe_id'),
         nullable=False,
         primary_key=True
@@ -25,3 +25,9 @@ class UserNotes(db.Model):
         self.user_id = user_id
         self.recipe_id = recipe_id
         self.user_notes = user_notes
+
+    def update_feedback(self, feedback):
+        self.user_notes = feedback
+
+    def get_feedback(self):
+        return self.user_notes
