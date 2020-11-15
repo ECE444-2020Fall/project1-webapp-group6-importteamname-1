@@ -18,11 +18,8 @@ import Welcome from "./pages/Login/Welcome";
 import RouteToLogin from "./pages/Login/RouteToLogin";
 import Profile from "./pages/Login/Profile";
 import Footer from "./pages/Footer";
-<<<<<<< HEAD
 import Pantry from './pages/Pantry/Pantry';
-=======
 import ScrollIntoView from './components/common/ScrollIntoView';
->>>>>>> master
 
 const App = (props) => {
   useEffect(() => {

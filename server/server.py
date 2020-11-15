@@ -4,6 +4,7 @@ from flask import request
 import os
 from os.path import exists, join
 from flask_cors import CORS
+from collections import defaultdict
 
 from constants import CONSTANTS
 from sample_data import sample_data
@@ -36,6 +37,15 @@ def user_id_not_found_response():
         'error': 'user_id not in session, log in again'
     })
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
+
+def sortListByFreq(lis):
+    dic = defaultdict(int)
+    for num in lis:
+        dic[num] += 1
+
+    s_list = sorted(dic, key=dic.__getitem__, reverse=True)
+    return s_list
+
 
 
 @app.route('/api/drop')     # ONLY FOR DEBUGGING
@@ -129,29 +139,47 @@ def show_shopping_list():
 
 @app.route('/api/pantry_list', methods=['POST'])
 def add_item_to_pantry_list():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
     item = request.get_json()["item"]
-    return inventory_manager.add_item(item, PantryList)
+    return inventory_manager.add_item(user_id, item, PantryList)
 
 
 @app.route('/api/pantry_list/<string:item>', methods=['DELETE'])
 def remove_item_from_pantry_list(item):
-    return inventory_manager.remove_item(item, PantryList)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
 
+    return inventory_manager.remove_item(user_id, item, PantryList)
 
 @app.route('/api/pantry_list')
 def show_pantry_list():
-    print("hi")
-    return inventory_manager.get_all_user_items(PantryList)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.get_all_user_items(user_id, PantryList)
 
 @app.route('/api/pantry_recipes', methods=['POST'])
 def recommend_recipes():
-    print("Hi")
-    ingredients = inventory_manager.get_all_user_items(PantryList).get_json()["items"] #List of ingredients
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    ingredients = inventory_manager.get_all_user_items(user_id, PantryList).get_json()["items"] #List of ingredients
+    recipes = []
     for ingredient in ingredients:
-        print(ingredient, ':')
-        print(RecipeIngredient.query.filter(
+        recipeIngredients = RecipeIngredient.query.filter(
             RecipeIngredient.ingredient_name == ingredient
-        ).all())
+        ).all()
+        for recipe in recipeIngredients:
+            recipes.append(recipe.recipe_id)
+    print(recipes)
+    print("Sorted:")
+    recipes = sortListByFreq(recipes)
+    print(recipes)
     return ""
 
 @app.route('/api/recipe_cart/<string:recipe_id>')
