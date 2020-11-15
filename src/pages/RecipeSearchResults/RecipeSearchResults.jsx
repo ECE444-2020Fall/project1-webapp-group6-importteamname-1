@@ -35,10 +35,6 @@ const RecipeSearchResults = (props) => {
     props.clearRecipeSortFilter();
   }, []);
 
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
-
   const handleSortToggle = (valueToBeSorted) => {    
     const currentSortOrder = props.data.sortOrder;
     let recipesToBeSorted = null;
@@ -86,7 +82,6 @@ const RecipeSearchResults = (props) => {
                 />
               </Link>
             </Grid>
-
           ))}
         </Grid>
         <br></br>
@@ -95,7 +90,7 @@ const RecipeSearchResults = (props) => {
           <Pagination
             count={noOfPages}
             page={page}
-            onChange={handleChange}
+            onChange={(event, value) => setPage(value)}
             defaultPage={1}
             color="primary"
             size="large"
@@ -118,7 +113,7 @@ const RecipeSearchResults = (props) => {
         <button onClick={() => props.clearRecipeSortFilter()}>Clear Sort Filter</button>
       {recipeSearchResult}
     </div>
-    );
+  );
 }
 
 RecipeSearchResults.propTypes = {
