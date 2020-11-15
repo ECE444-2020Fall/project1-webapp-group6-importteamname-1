@@ -33,8 +33,8 @@ const NutritionFacts = (props) => {
     <div>
       <Grid container>
         <Grid item xs={12} md={6}>
-          <Typography fontWeight={500} variant="h7" className={classes.title}>
-            Nutrition Facts:
+          <Typography variant="h7" className={classes.title}>
+            <h6>Nutrition Facts:</h6>
           </Typography>
           <div className={classes.demo}>
             <List dense={true}>

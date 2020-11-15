@@ -20,7 +20,7 @@ const UserRating = ({recipe_id}) => {
   return (
     <div>
       <Box component="fieldset" mb={3} borderColor="transparent">
-        <Typography component="legend"> Rating </Typography>
+        <h5>Rating:</h5>
         <Rating
           name="simple-controlled"
           value={value}

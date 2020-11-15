@@ -35,7 +35,7 @@ const Ingredients = (props) => {
       <Grid container>
         <Grid item xs={12} md={6}>
           <Typography fontWeight={500} variant="h7" className={classes.title}>
-            Servings:
+          <h6>Servings:</h6>
           </Typography>
           <div className={classes.demo}>
             <List dense={true}>              
@@ -44,7 +44,7 @@ const Ingredients = (props) => {
                   <RestaurantIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={(props.servings) + (props.servings > 1 ? 'meals' : 'meal')}
+                  primary={(props.servings) + (props.servings > 1 ? ' meals' : ' meal')}
                 />
               </ListItem>
             </List>
@@ -56,7 +56,7 @@ const Ingredients = (props) => {
       <Grid container>
         <Grid item xs={12} md={6}>
           <Typography fontWeight={500} variant="h7" className={classes.title}>
-            Ingredients:
+            <h6>Ingredients:</h6>
           </Typography>
           <div className={classes.demo}>
             <List dense={true}>              
@@ -83,6 +83,7 @@ const Ingredients = (props) => {
   return (
     <div>
         {recipeServings}
+        <br></br>
         {recipeIngredients}
     </div>
     );
