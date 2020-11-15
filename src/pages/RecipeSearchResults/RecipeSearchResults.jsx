@@ -86,7 +86,6 @@ const RecipeSearchResults = (props) => {
                 />
               </Link>
             </Grid>
-
           ))}
         </Grid>
         <br></br>
