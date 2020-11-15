@@ -37,7 +37,7 @@ const UserNotesContainer = () => {
       <Card >
         <CardContent>
           <UserNotesButton editMode={editMode}  setEditMode={setEditMode} userNotes={userNotes} />
-          User notes
+          <h5>User notes</h5>
           {editMode ?
             <NotesTextBox userNotes={userNotes} setUserNotes={setUserNotes} /> :
             <UserNotesContent userNotes={userNotes} />}

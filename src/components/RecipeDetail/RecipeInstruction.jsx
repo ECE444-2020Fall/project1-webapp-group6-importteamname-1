@@ -7,30 +7,25 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const RecipeInstruction = (props) => {
   let parsedInstructions = props.instructions.split(",");
 
-
   return (
     <div>
-        <div style={{
-          display: 'flex',
-        }}>
+        <h5>Instruction:</h5>
+        <div style={{display: 'flex',}}>
           <AccessTimeIcon />
           <p>Time to cook: {props.timeToCookInMinutes} minutes</p>
         </div>
-
-        <h5>Instruction:</h5>
-
         <List dense={true}>              
           {parsedInstructions
-          .slice(1, parsedInstructions.length - 1)
+          .slice(1, parsedInstructions.length-1)
           .map(instructionStep => (
             <ListItem>
               <ListItemIcon>
-                <SubdirectoryArrowRightIcon />
+                <ArrowForwardIcon />
               </ListItemIcon>
               <ListItemText
                 primary={instructionStep}
@@ -38,7 +33,6 @@ const RecipeInstruction = (props) => {
             </ListItem>
           ))}
         </List>
-
     </div>
   );
 }

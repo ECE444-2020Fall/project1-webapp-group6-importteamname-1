@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(4, 0, 2),
   },
+  grid: {
+    width: '100%'
+  }
 }));
 
 const Ingredients = (props) => {
@@ -32,8 +35,8 @@ const Ingredients = (props) => {
 
   if (props.ingredientsList.ingredients) { 
     recipeServings = 
-      <Grid container>
-        <Grid item xs={12} md={6}>
+      <Grid className={classes.grid} container>
+        <Grid className={classes.grid} item xs={12} md={6}>
           <Typography fontWeight={500} variant="h7" className={classes.title}>
           <h6>Servings:</h6>
           </Typography>
