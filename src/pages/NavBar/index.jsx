@@ -56,7 +56,7 @@ const NavBar = () => {
         <Link style={{color: '#ffffff'}} className="navbar-brand" to="/" role="heading" aria-level="1">
           {CONSTANTS.APP_NAME}
         </Link>
-        <div className="navbar-nav" >
+        <div className="navbar-nav">
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/AddIngredients">
             Add Ingredients
           </Link>
