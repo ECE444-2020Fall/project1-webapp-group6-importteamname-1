@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ListWithDeletableItems } from '../../components/common/ListWithDeletableItems'
 import { AddItemTextField } from '../../components/common/AddItemTextField'
-import { PageTitle } from '../../components/common/PageTitle'
 import PropTypes from 'prop-types';
 
 
@@ -17,15 +16,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ListContainer = ({
-  pageTitle,
   newItem,
   setNewItem,
   shoppingItems,
-  addShoppingListItem }) => {
+  addShoppingListItem,
+ }) => {
   const classes = useStyles();
   return (
-    <main id='mainContent'>
-      <PageTitle titleName={pageTitle} />
       <div className={classes.root} >
         <AddItemTextField
           newItem={newItem}
@@ -33,7 +30,6 @@ const ListContainer = ({
           addShoppingListItem={addShoppingListItem} />
         <ListWithDeletableItems shoppingItems={shoppingItems} />
       </div>
-    </main>
   )
 }
 
