@@ -23,13 +23,14 @@ const useStyles = makeStyles((theme) => ({
   },
   grid: {
     width: '100%',
-    margin: '0px'
+    margin: 0,
+    justifyContent: 'center',
   },
   leftColumn: {
-    marginLeft: 50
+    marginLeft: 2
   },
   commonPaperStyleAttributes: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
@@ -75,7 +76,7 @@ const RecipeDetail = (props) => {
 
   return (
     <div className={classes.root}>
-        <Grid container spacing={7} className={classes.grid} direction="row">  
+        <Grid container spacing={3} className={classes.grid} direction="row">  
           <Grid item xs={3} md={3} direction="column">
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.ingredientsPaper}`}>
                <Ingredients servings={currentRecipe.servings} ingredientsList={ingredients} />
@@ -89,7 +90,7 @@ const RecipeDetail = (props) => {
               />
             </Paper>
           </Grid>  
-          <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
+          <Grid item xs={5} md={5} direction="column" className={classes.leftColumn}>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.recipePhotoPaper}`}>
               <img src={foodImg}></img>
               <h4> {currentRecipe.recipe_name} </h4>
@@ -107,7 +108,7 @@ const RecipeDetail = (props) => {
               />
             </Paper>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.userAddNotesPaper}`}>
-            <UserNotesContainer/>
+              <UserNotesContainer/>
             </Paper>
           </Grid>
         </Grid>
