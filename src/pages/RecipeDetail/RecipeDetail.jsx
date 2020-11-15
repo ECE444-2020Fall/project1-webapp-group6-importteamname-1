@@ -19,7 +19,7 @@ import foodImg from "./food.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: 50
+    backgroundColor: '#f7f7f7'
   },
   grid: {
     width: '100%',
