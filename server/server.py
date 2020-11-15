@@ -7,16 +7,37 @@ from flask_cors import CORS
 
 from constants import CONSTANTS
 from sample_data import sample_data
+from utils.inventory_manager import InventoryManager
+from utils.recipe_personalization_manager import RecipePersonalizationManager
+from utils.recipe_controller import RecipeController
+from utils.ingredient_controller import IngredientController
 
-from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller, ingredient_controller, calorie_tracker_manager
+from app import db, app 
 from app.models import *
 from datetime import date
 import hashlib
 
-# 06eddc19-0e98-4939-9b23-631705cff730
+inventory_manager = InventoryManager(db)
+recipe_personalization_manager = RecipePersonalizationManager(db)
+recipe_controller = RecipeController(db)
+ingredient_controller = IngredientController(db)
 
 CORS(app, supports_credentials=True)
 app.secret_key = "TESTKEY"
+
+def get_user_id():
+    if 'user_id' not in session:
+        return False
+    else:
+        user_id = session['user_id']
+    return user_id
+
+def user_id_not_found_response():
+    json_response = jsonify({ 
+        'error': 'user_id not in session, log in again'
+    })
+    return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
+
 
 @app.route('/api/drop')     # ONLY FOR DEBUGGING
 def drop_db():
@@ -30,79 +51,149 @@ def drop_db():
 
 @app.route('/api/user_notes', methods=['POST'])
 def add_or_update_user_notes():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
-    return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserNotes)
+    return recipe_personalization_manager.add_or_update_feedback(user_id, recipe_id, feedback, UserNotes)
 
+@app.route('/api/user_notes/<string:recipe_id>')
+def show_user_note(recipe_id):
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_user_feedback(user_id, recipe_id, UserNotes)
 
 @app.route('/api/user_notes')
 def show_user_notes():
-    return recipe_personalization_manager.get_all_user_feedbacks(UserNotes)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_all_user_feedbacks(user_id, UserNotes)
 
 
 @app.route('/api/user_rating', methods=['POST'])
 def add_or_update_user_rating():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
-    return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserRating)
+    return recipe_personalization_manager.add_or_update_feedback(user_id, recipe_id, feedback, UserRating)
 
 @app.route('/api/user_rating/<string:recipe_id>')
 def show_user_rating(recipe_id):
-    return recipe_personalization_manager.get_user_feedback(recipe_id, UserRating)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_user_feedback(user_id, recipe_id, UserRating)
 
 @app.route('/api/user_ratings')
 def show_user_ratings():
-    return recipe_personalization_manager.get_all_user_feedbacks(UserRating)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_all_user_feedbacks(user_id, UserRating)
 
 @app.route('/api/shopping_list', methods=['POST'])
 def add_item_to_shopping_list():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
     item = request.get_json()["item"]
-    return inventory_manager.add_item(item, ShoppingList)
+    return inventory_manager.add_item(user_id, item, ShoppingList)
 
 
 @app.route('/api/shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
-    return inventory_manager.remove_item(item, ShoppingList)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.remove_item(user_id, item, ShoppingList)
 
 
 @app.route('/api/shopping_list')
 def show_shopping_list():
-    return inventory_manager.get_all_user_items(ShoppingList)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.get_all_user_items(user_id, ShoppingList)
 
 @app.route('/api/recipe_cart/<string:recipe_id>')
 def add_item_to_recipe_cart(recipe_id):
-    return inventory_manager.get_item(recipe_id, RecipeCart)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.get_item(user_id, recipe_id, RecipeCart)
 
 @app.route('/api/recipe_cart', methods=['POST'])
 def get_recipe_cart_item():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["item"]
-    return inventory_manager.add_item(recipe_id, RecipeCart)
+    return inventory_manager.add_item(user_id, recipe_id, RecipeCart)
 
 @app.route('/api/recipe_cart/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_cart_item(recipe_id):
-    return inventory_manager.remove_item(recipe_id, RecipeCart)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.remove_item(user_id, recipe_id, RecipeCart)
 
 @app.route('/api/recipe_cart')
 def show_recipe_cart():
-    user_carted_recipe_ids = inventory_manager.get_all_user_items(RecipeCart).get_json()["items"]
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    user_carted_recipe_ids = inventory_manager.get_all_user_items(user_id, RecipeCart).get_json()["items"]
     return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 @app.route('/api/favourites_list/<string:recipe_id>')
 def add_recipe_to_favs_list(recipe_id):
-    return inventory_manager.get_item(recipe_id, UserFavourites)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.get_item(user_id, recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list', methods=['POST'])
 def get_recipe_favs_list():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["item"]
-    return inventory_manager.add_item(recipe_id, UserFavourites)
+    return inventory_manager.add_item(user_id, recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_from_favs_list(recipe_id):
-    return inventory_manager.remove_item(recipe_id, UserFavourites)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.remove_item(user_id, recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list')
 def show_favs_list():
-    user_fav_recipe_ids = inventory_manager.get_all_user_items(UserFavourites).get_json()["items"]
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    user_fav_recipe_ids = inventory_manager.get_all_user_items(user_id, UserFavourites).get_json()["items"]
     return recipe_controller.get_recipes_by_ids(user_fav_recipe_ids, Recipe)
 
 
