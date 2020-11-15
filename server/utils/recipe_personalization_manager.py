@@ -3,28 +3,13 @@ from constants import CONSTANTS
 from collections import defaultdict
 import sqlalchemy
 
-def get_user_id():
-    if 'user_id' not in session:
-        print("user id not in session")
-        user_id = "9890648f-c400-4c98-9796-e1afbc7774db"
-        # json_response = jsonify({ 
-        #     'error': 'user_id not in session, log in again'
-        # })
-        # return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-    else:
-        print("user id in session")
-        user_id = session['user_id']
-    return user_id
-
 
 class RecipePersonalizationManager():
 
     def __init__(self, db):
         self.db = db 
 
-    def get_user_feedback(self, recipe_id, model):
-        user_id = get_user_id()
-        
+    def get_user_feedback(self, user_id, recipe_id, model):
         feedback_item = model.query.get((user_id, recipe_id))
         feedback = feedback_item.get_feedback() if feedback_item else False
         
@@ -37,9 +22,7 @@ class RecipePersonalizationManager():
 
 
 
-    def add_or_update_feedback(self, recipe_id, feedback, model):
-        user_id = get_user_id()
-        
+    def add_or_update_feedback(self, user_id, recipe_id, feedback, model):
         feedback_item = model.query.get((user_id, recipe_id))
 
         if feedback_item:      # item already in list
@@ -66,8 +49,7 @@ class RecipePersonalizationManager():
 
     
 
-    def get_all_user_feedbacks(self, model):     # get all items in model belonging to user 
-        user_id = get_user_id()
+    def get_all_user_feedbacks(self, user_id, model):     # get all items in model belonging to user 
         user_feedbacks = model.query.filter(model.user_id == user_id)
         user_feedbacks_map = {}
         user_feedbacks_map["feedbacks"] = [
