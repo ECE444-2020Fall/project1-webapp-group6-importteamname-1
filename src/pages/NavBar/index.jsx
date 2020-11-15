@@ -52,30 +52,30 @@ const NavBar = () => {
       <div className={styles.skipLink}>
         <a href="#mainContent">Skip to Main Content</a>
       </div>
-      <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-        <Link className="navbar-brand" to="/" role="heading" aria-level="1">
+      <nav style={{backgroundColor: '#3f51b5'}} className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
+        <Link style={{color: '#ffffff'}} className="navbar-brand" to="/" role="heading" aria-level="1">
           {CONSTANTS.APP_NAME}
         </Link>
-        <div className="navbar-nav">
-          <Link className="nav-item nav-link active" to="/AddIngredients">
+        <div className="navbar-nav" >
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/AddIngredients">
             Add Ingredients
           </Link>
-          <Link className="nav-item nav-link active" to="/recipe-search-results">
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
           </Link>
-          <Link className="nav-item nav-link active" to="/favourite-recipes">
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/favourite-recipes">
             Favourite Recipes
           </Link>
-          <Link className="nav-item nav-link active" to="/calorie-tracker">
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/calorie-tracker">
             Nutrition Tracker
           </Link>
-          <Link className="nav-item nav-link active" to="/shopping-list">
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/shopping-list">
             Shopping List
           </Link>
-          <Link className="nav-item nav-link active" to="/recipe-cart">
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-cart">
             Recipe Cart
           </Link>
-          <Link className="nav-item nav-link active" to="Profile">
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="Profile">
             Profile
           </Link>
           <SimpleMenu></SimpleMenu>
