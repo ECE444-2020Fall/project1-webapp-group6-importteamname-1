@@ -8,18 +8,35 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+  alignItemsAndJustifyContent: {
+    display: 'flex',
+    flexDirection: 'vertical',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+}))
 
 const RecipeInstruction = (props) => {
   let parsedInstructions = props.instructions.split(",");
+  const classes = useStyles()
 
   return (
-    <div>
-        <h5>Instruction:</h5>
-        <div style={{display: 'flex',}}>
-          <AccessTimeIcon />
-          <p>Time to cook: {props.timeToCookInMinutes} minutes</p>
-        </div>
-        <List dense={true}>              
+    <div className={classes.alignItemsAndJustifyContent}>
+        
+        <List dense={true} >
+            <h5>Instruction:</h5>
+            <ListItem className={classes.alignItemsAndJustifyContent}>
+              <ListItemIcon>
+                <AccessTimeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={'Time to cook: ' + props.timeToCookInMinutes + ' minutes'}
+                variant="h3"
+              />
+            </ListItem>              
           {parsedInstructions
           .slice(1, parsedInstructions.length-1)
           .map(instructionStep => (

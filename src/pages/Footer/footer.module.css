@@ -1,7 +1,9 @@
 ﻿.footer {
-  background-color: #1d1d1d;
+  background-color: #3f51b5;
   padding-top: 2rem;
   padding-bottom: 4rem;
+  min-height: 13rem;
+  margin-top: 200px;
 }
 
 .title {
