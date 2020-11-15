@@ -1,25 +1,35 @@
 ﻿import React, { useEffect } from 'react';
-import RecipeCard from "../../components/common/RecipeCard";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Pagination from "@material-ui/lab/Pagination";
+import { Divider, Box } from "@material-ui/core";
+import RecipeCard from "../../components/common/RecipeCard";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: '#f7f7f7'
+    padding: theme.spacing(2),
+    backgroundColor: '#f7f7f7',
+    width: "100%"
+  },
+  paginator: {
+    justifyContent: "center",
+    padding: "10px"
   }
 }));
 
 const RecipeSearchResults = (props) => {
   const classes = useStyles();
   let recipeSearchResult = null;
+  const itemsPerPage = 10;
+  const [page, setPage] = React.useState(1);
+  const [noOfPages] = React.useState(
+    Math.ceil(props.data.recipes.length / itemsPerPage)
+  );
 
-  /*
-  When a user refreshes the page or revisit the web app, we need to show unsorted recipes.
-  We use useEffect() to clear sortedRecipes from Redux store when a user refreshes the page.
-  */
   useEffect(() => {
     props.clearRecipeSortFilter();
   }, []);
@@ -34,7 +44,8 @@ const RecipeSearchResults = (props) => {
     if (currentSortOrder === "descending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
-    } else { // currentSortOrder is initialized to ''. When the user clicks the sort button for the first time, we sort recipes descending by default.
+    } else { 
+      // currentSortOrder is initialized to ''. When the user clicks the sort button for the first time, we sort recipes descending by default.
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
     } 
@@ -42,46 +53,71 @@ const RecipeSearchResults = (props) => {
 
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  if (props.data[recipesToBeDisplayed]) { 
-    recipeSearchResult = <div>
-          {props.data[recipesToBeDisplayed].map(recipe => (
-            <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
-              <RecipeCard 
-                key={recipe.recipe_id}
-                recipeId={recipe.recipe_id} 
-                recipeName={recipe.recipe_name}
-                imageUrl={recipe.image_url}
-                timeToCookInMinutes={recipe.time_to_cook_in_minutes}
-                servings={recipe.servings}
-                calories={recipe.calories}
-                protein={recipe.protein}
-                carbs={recipe.carbs}
-                fat={recipe.fat} 
-              />
-            </Link>
+  if (props.data) { 
+    recipeSearchResult =  <div className={classes.root}>
+        <Grid
+          container
+          spacing={5}
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          {props.data[recipesToBeDisplayed]
+          .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          .map(recipe => (
+          <Grid item key={props.recipe_id} xs={25}>
+              <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
+                <RecipeCard 
+                  key={recipe.recipe_id}
+                  recipeId={recipe.recipe_id} 
+                  recipeName={recipe.recipe_name}
+                  imageUrl={recipe.image_url}
+                  timeToCookInMinutes={recipe.time_to_cook_in_minutes}
+                  servings={recipe.servings}
+                  calories={recipe.calories}
+                  protein={recipe.protein}
+                  carbs={recipe.carbs}
+                  fat={recipe.fat} 
+                />
+              </Link>
+            </Grid>
           ))}
+        </Grid>
+        <br></br>
+        <Divider />
+        <Box component="span">
+          <Pagination
+            count={noOfPages}
+            page={page}
+            onChange={(event, value) => setPage(value)}
+            defaultPage={1}
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+            classes={{ ul: classes.paginator }}
+          />
+        </Box>
       </div>
   } else {
     recipeSearchResult = <p>No recipes available.</p>
   }
 
   return (
-    <main id="mainContent" className={classes.root}>
-      <div className="row justify-content-center py-5">
-        <h3>Recipe Search Results</h3>
-      </div>
+    <div>
         <p>Sort by:</p>
         <button onClick={() => handleSortToggle("time_to_cook_in_minutes")}>Time To Cook</button>
         <button onClick={() => handleSortToggle("calories")}>Calories</button>
         <button onClick={() => handleSortToggle("servings")}>Servings</button>
         <button onClick={() => props.clearRecipeSortFilter()}>Clear Sort Filter</button>
-        {recipeSearchResult}
-    </main>
+      {recipeSearchResult}
+    </div>
   );
 }
 
 RecipeSearchResults.propTypes = {
   data: PropTypes.object,
+  recipe_id: PropTypes.string,
   getRecipes: PropTypes.object,
   sortRecipesAscending: PropTypes.func,
   sortRecipesDescending: PropTypes.func,
