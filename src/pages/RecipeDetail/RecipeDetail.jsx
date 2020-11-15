@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { getRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
 import CONSTANTS from '../../constants';
-import foodImg from "./food.png";
+// import foodImg from "./food.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +55,13 @@ const useStyles = makeStyles((theme) => ({
   },
   recipeAttributeText: {
     fontWeight: 600
+  },
+  recipeImage: {
+    // display: 'block',
+    maxWidth:400,
+    maxWeight:200,
+    width: 'auto',
+    height: 'auto'
   }
 }));
 
@@ -92,7 +99,7 @@ const RecipeDetail = (props) => {
           </Grid>  
           <Grid item xs={5} md={5} direction="column" className={classes.leftColumn}>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.recipePhotoPaper}`}>
-              <img src={foodImg}></img>
+              <img src={currentRecipe.image_url} className={classes.recipeImage}></img>
               <h4> {currentRecipe.recipe_name} </h4>
               <h7 className={classes.recipeAttributeText}> Cuisine(s): </h7> {(currentRecipe.cuisine).slice(1, currentRecipe.cuisine.length - 1)} 
             </Paper>

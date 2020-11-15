@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import foodImg from "./food.png"; // Placeholder food image
 import { Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -25,6 +24,13 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       color: 'black',
       marginBottom: 20,
+    },
+    cardMedia: {
+      width: 500
+    },
+    cardContent: {
+      width: 500,
+      height: 150
     }
   }));
 
@@ -39,9 +45,10 @@ const RecipeCard = (props) => {
                   component="img"
                   alt="imageUnavailable"
                   height="280"
-                  image= {foodImg}
+                  image= {props.imageUrl}
+                  className={classes.cardMedia}
                 />
-                <CardContent>
+                <CardContent className={classes.cardContent}>
                   <Typography color="textPrimary" gutterBottom variant="h5" component="h3">
                     {props.recipeName} 
                   </Typography>
@@ -49,7 +56,7 @@ const RecipeCard = (props) => {
                     {props.calories} Calories 
                   </Typography>
                 </CardContent>
-              </CardActionArea>  
+              </CardActionArea>
             </Card>
     </div>
   );
