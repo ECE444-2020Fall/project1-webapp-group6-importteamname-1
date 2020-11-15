@@ -53,6 +53,17 @@ class IngredientController():
         return make_response(jsonify(ingredient_map), CONSTANTS['HTTP_STATUS']['200_OK'])
 
 
+    def get_ingredient_names_by_recipe_ids(self, model, recipe_ids):
+        ingredients = model.query.filter(model.recipe_id.in_(recipe_ids)).all()
+
+        ingredient_map = {
+            "ingredients": [ingredient.get_item_name() for ingredient in ingredients]
+        }
+
+        return make_response(jsonify(ingredient_map), CONSTANTS['HTTP_STATUS']['200_OK'])
+         
+
+
     def delete_all_ingredients(self, model):
         num_ingredients = self.db.session.query(model).count()
         self.db.session.query(model).delete()
