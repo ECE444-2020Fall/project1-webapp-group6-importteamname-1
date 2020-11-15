@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(2),
-    marginTop: 100,
-    marginLeft: 50,
+    backgroundColor: '#f7f7f7',
     width: "100%"
   },
   paginator: {

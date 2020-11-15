@@ -35,6 +35,7 @@ const FavouritesButton = ({recipe_id}) => {
   return (
     <Button
       variant="contained"
+      size="small"
       color={ isFavourite ? "secondary" : "action"}
       className={classes.button}
       startIcon={<FavoriteBorderIcon/>}

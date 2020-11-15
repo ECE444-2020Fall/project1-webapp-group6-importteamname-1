@@ -35,6 +35,7 @@ const RecipeCartButton = ({recipe_id}) => {
   return (
     <Button
       variant="contained"
+      size="small"
       color={ isCarted ? "primary" : "action"}
       className={classes.button}
       startIcon={<ShoppingCartIcon/>}
