@@ -58,7 +58,7 @@ const RecipeSearchResults = (props) => {
 
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  if (props.data[recipesToBeDisplayed]) { 
+  if (props.data) { 
     recipeSearchResult =  <div className={classes.root}>
         <Grid
           container
@@ -67,7 +67,7 @@ const RecipeSearchResults = (props) => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          {props.data.recipes
+          {props.data[recipesToBeDisplayed]
           .slice((page - 1) * itemsPerPage, page * itemsPerPage)
           .map(recipe => (
           <Grid item key={props.recipe_id} xs={25}>
@@ -86,6 +86,7 @@ const RecipeSearchResults = (props) => {
                 />
               </Link>
             </Grid>
+
           ))}
         </Grid>
         <br></br>
