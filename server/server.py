@@ -68,6 +68,33 @@ def remove_item_from_shopping_list(item):
 def show_shopping_list():
     return inventory_manager.get_all_user_items(ShoppingList)
 
+@app.route('/api/pantry_list', methods=['POST'])
+def add_item_to_pantry_list():
+    item = request.get_json()["item"]
+    return inventory_manager.add_item(item, PantryList)
+
+
+@app.route('/api/pantry_list/<string:item>', methods=['DELETE'])
+def remove_item_from_pantry_list(item):
+    return inventory_manager.remove_item(item, PantryList)
+
+
+@app.route('/api/pantry_list')
+def show_pantry_list():
+    print("hi")
+    return inventory_manager.get_all_user_items(PantryList)
+
+@app.route('/api/pantry_recipes', methods=['POST'])
+def recommend_recipes():
+    print("Hi")
+    ingredients = inventory_manager.get_all_user_items(PantryList).get_json()["items"] #List of ingredients
+    for ingredient in ingredients:
+        print(ingredient, ':')
+        print(RecipeIngredient.query.filter(
+            RecipeIngredient.ingredient_name == ingredient
+        ).all())
+    return ""
+
 @app.route('/api/recipe_cart/<string:recipe_id>')
 def add_item_to_recipe_cart(recipe_id):
     return inventory_manager.get_item(recipe_id, RecipeCart)

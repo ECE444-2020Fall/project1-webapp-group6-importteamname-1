@@ -75,6 +75,9 @@ const NavBar = () => {
           <Link className="nav-item nav-link active" to="/recipe-cart">
             Recipe Cart
           </Link>
+          <Link className="nav-item nav-link active" to="/pantry">
+            Pantry
+          </Link>
           <Link className="nav-item nav-link active" to="Profile">
             Profile
           </Link>

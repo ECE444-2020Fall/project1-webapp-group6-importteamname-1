@@ -124,6 +124,7 @@ const Login = () => {
       document.getElementById("Login-Form").reset()
       return
     }
+
     const classes = useStyles();
 
     if(!userFound){

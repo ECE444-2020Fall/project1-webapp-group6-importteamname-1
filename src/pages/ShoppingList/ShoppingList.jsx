@@ -44,6 +44,7 @@ const ShoppingList = () => {
       setNewItem={setNewItem}
       shoppingItems={shoppingItems}
       addShoppingListItem={addShoppingListItem}
+      Label="Add Item to Shopping List"
     />
   );
 }
