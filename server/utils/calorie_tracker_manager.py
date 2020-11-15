@@ -75,10 +75,10 @@ class CalorieTrackerManager():
             consumed_recipes_map["consumed_recipes"].append(recipe_info_object)
 
         for consumed_recipe in consumed_recipes:
-            total_calories += consumed_recipe.calories
-            total_carbs += consumed_recipe.carbs
-            total_protein += consumed_recipe.protein
-            total_fat += consumed_recipe.fat 
+            total_calories += consumed_recipe.calories / consumed_recipe.servings
+            total_carbs += consumed_recipe.carbs /consumed_recipe.servings
+            total_protein += consumed_recipe.protein /consumed_recipe.servings
+            total_fat += consumed_recipe.fat /consumed_recipe.servings
         nutrition_facts = {'calories': total_calories, 'carbs': total_carbs, 'protein': total_protein, 'fat': total_fat}
 
         consumed_recipes_map["nutrition_facts"] = nutrition_facts

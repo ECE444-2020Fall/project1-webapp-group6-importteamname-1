@@ -251,7 +251,7 @@ def remove_all_recipes():
 
 @app.route('/api/calorie_tracker/add', methods=['POST'])
 def add_consumed_recipe():
-    recipe_id = request.get_json()["recipe_id"] 
+    recipe_id = request.get_json()["item"] 
     date = date.today()
     return calorie_tracker_manager.add_consumed_recipe(ConsumedRecipes, recipe_id, date)
 
