@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import {addItem, removeItem, getItem} from '../utils/list_utils';
-import CONSTANTS from "../constants";
+import {addItem, removeItem, getItem} from '../../utils/list_utils';
+import CONSTANTS from "../../constants";
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FavouritesButton = ({recipe_id}) => {
   const classes = useStyles();
+
   const [isFavourite, setIsFavourite] = useState(false);
   const [refresh, setRefresh] = useState(true)
 
@@ -49,7 +50,8 @@ const FavouritesButton = ({recipe_id}) => {
 }
 
 FavouritesButton.propTypes = {
-  recipe_id: PropTypes.amy,
+  recipe_id: PropTypes.string
 };
+
 
 export { FavouritesButton };

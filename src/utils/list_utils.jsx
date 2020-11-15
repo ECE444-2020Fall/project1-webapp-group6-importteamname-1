@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeletableListItem } from '../components/DeletableListItem'
+import { DeletableListItem } from '../components/common/DeletableListItem'
 
 function generateList(items, removeItem) {
   return items.map(item =>
@@ -18,7 +18,6 @@ const getItem = (item, endpoint) => {
       return response.text();
     })
     .then(body => JSON.parse(body))
-
 }
 
 const removeItem = (item, endpoint) => {

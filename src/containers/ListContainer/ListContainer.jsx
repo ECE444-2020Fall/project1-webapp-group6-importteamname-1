@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ListWithDeletableItems } from '../../components/ListWithDeletableItems'
-import { AddItemTextField } from '../../components/AddItemTextField'
-import { PageTitle } from '../../components/PageTitle'
+import { ListWithDeletableItems } from '../../components/common/ListWithDeletableItems'
+import { AddItemTextField } from '../../components/common/AddItemTextField'
+import { PageTitle } from '../../components/common/PageTitle'
 import PropTypes from 'prop-types';
 
 
