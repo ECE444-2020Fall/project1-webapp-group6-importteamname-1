@@ -11,6 +11,7 @@ from utils.inventory_manager import InventoryManager
 from utils.recipe_personalization_manager import RecipePersonalizationManager
 from utils.recipe_controller import RecipeController
 from utils.ingredient_controller import IngredientController
+from utils.calorie_tracker_manager import CalorieTrackerManager
 
 from app import db, app 
 from app.models import *
@@ -21,6 +22,7 @@ inventory_manager = InventoryManager(db)
 recipe_personalization_manager = RecipePersonalizationManager(db)
 recipe_controller = RecipeController(db)
 ingredient_controller = IngredientController(db)
+calorie_tracker_manager = CalorieTrackerManager(db)
 
 CORS(app, supports_credentials=True)
 app.secret_key = "TESTKEY"
@@ -249,7 +251,7 @@ def remove_all_recipes():
 
 @app.route('/api/calorie_tracker/add', methods=['POST'])
 def add_consumed_recipe():
-    recipe_id = uuid.uuid4() #change this to favorites/add
+    recipe_id = request.get_json()["recipe_id"] 
     date = date.today()
     return calorie_tracker_manager.add_consumed_recipe(ConsumedRecipes, recipe_id, date)
 
@@ -262,12 +264,7 @@ def delete_consumed_recipe()
 @app.route('/api/calorie_tracker', methds=['GET'])
 def get_consumed_recipes()
     date = date.today()
-    return calorie_tracker_manager.get_consumed_recipes(ConsumedRecipes, Recipe)
-
-@app.route('/api/calorie_tracker/total', methds=['GET'])
-def consumed_recipes_nutrition_total()
-    date = date.today()
-    return calorie_tracker_manager.consumed_recipes_nutrition_total(ConsumedRecipes, Recipe, date)
+    return calorie_tracker_manager.get_consumed_recipes(ConsumedRecipes, Recipe, date)
 
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
