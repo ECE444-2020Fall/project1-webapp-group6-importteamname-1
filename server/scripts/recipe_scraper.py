@@ -1,7 +1,9 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import uuid
-from app import db, app, recipe_controller, ingredient_controller
+from app import db, app
+from utils.recipe_controller import RecipeController
+from utils.ingredient_controller import IngredientController
 from app.models import *
 from constants import CONSTANTS
 import requests
@@ -18,7 +20,7 @@ def get_recipes_from_spoonacular_api(spoonacular_api_key):
     spoonacular_api_recipes_endpoint = CONSTANTS["SPOONACULAR_API"]["BASE_URL"] + CONSTANTS["SPOONACULAR_API"]["RANDOM_RECIPES_ENDPOINT"]
     params_for_recipes_endpoint = {
         'apiKey' : spoonacular_api_key,
-        'number' : 1
+        'number' : 20
     }
     spoonacular_recipes_response = requests.get(spoonacular_api_recipes_endpoint, params=params_for_recipes_endpoint)
     return spoonacular_recipes_response.json()
@@ -80,7 +82,7 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
         instructions_steps = recipe["analyzedInstructions"][0]["steps"]
         instructions = str([instruction["step"] for instruction in instructions_steps])
         
-        recipe_nutrition_json = get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, recipe_id)
+        recipe_nutrition_json = get_recipe_nutrition_from_spoonacular_api(spoonacular_api_key, spoonacular_recipe_id)
         calories = float(recipe_nutrition_json["calories"])  
         carbs = float(recipe_nutrition_json["carbs"][:-1])
         fat = float(recipe_nutrition_json["fat"][:-1])
@@ -157,6 +159,8 @@ def populate_ingredients_database(recipe_id, ingredient_name, amount, unit_of_me
 
 
 with app.app_context():
+    recipe_controller = RecipeController(db)
+    ingredient_controller = IngredientController(db)
     spoonacular_api_key = CONSTANTS["SPOONACULAR_API"]["API_KEY"]
     spoonacular_recipes_json = get_recipes_from_spoonacular_api(spoonacular_api_key)
     populate_db_response = process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json)

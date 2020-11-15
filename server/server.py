@@ -327,64 +327,6 @@ def logout_user():
         return make_response(CONSTANTS['HTTP_STATUS']['200_OK'])
     return make_response(CONSTANTS['HTTP_STATUS']['400_BAD_REQUEST'])
 
-# EXAMPLE OF HOW TO ADD ITEM WITH FOREIGN KEY <PART OF YANISA's DB SETUP>
-@app.route('/api/add_item/<string:item>')
-def add_new_item(item):
-    if session["user_id"]:
-        user = User.query.get(session["user_id"])        
-        new_item = ShoppingList(user.user_id, item)
-        db.session.add(new_item)
-        db.session.commit()
-        return "item added"
-    return "no user id "
-
-
-# EXAMPLE OF HOW TO QUERY ENTRIES IN DB  <PART OF YANISA's DB SETUP>
-@app.route('/api/show_users')
-def print_db():
-    all_users = User.query.all() # get all users
-    users_named_tim = User.query.filter(     # filter by attribute
-        User.username == "tim" and User.password == "fei"
-    )
-    # user_by_primary_key = User.query.get( # get user by primary key
-    #     User.user_id == "PRIMARY_KEY_VALUE" 
-    # )
-    res = {}
-    for user in all_users:
-        res[user.username] = user.password
-    return jsonify(res)
-
-# MasterDetail Page Endpoint  <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['MASTER_DETAIL'])
-def get_master_detail():
-    return jsonify(sample_data['text_assets'])
-
-# List Endpoints   <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['LIST'])
-def get_list():
-    return jsonify(sample_data['list_text_assets']['list_items'])
-
-#  <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['LIST'], methods = ['POST'])
-def add_list_item():
-    data = request.get_json()
-    list_item = {'id':  str(uuid.uuid4()), 'text': data['text']}
-    sample_data['list_text_assets']['list_items'].insert(0, list_item)
-    json_response = jsonify(list_item)
-    return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
-
-#  <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<string:id>', methods=['DELETE'])
-def delete_list_item(id):
-    list_items_to_remove = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['id'] == id]
-    if not list_items_to_remove:
-        json_response = jsonify({'error': 'Could not find an item with the given id'})
-        return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
-    if len(list_items_to_remove) > 1:
-        json_response = jsonify({'error': 'More than one list items found with the same id'})
-        return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-    sample_data['list_text_assets']['list_items'] = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['id'] != id]
-    return jsonify({'id': id, 'text': 'This comment was deleted'})
 
 # Catching all routes
 # This route is used to serve all the routes in the frontend application after deployment.

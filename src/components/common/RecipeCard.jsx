@@ -1,8 +1,11 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
+import { Typography } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,30 +24,40 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       color: 'black',
       marginBottom: 20,
+    },
+    cardMedia: {
+      width: 500
+    },
+    cardContent: {
+      width: 500,
+      height: 150
     }
   }));
 
 const RecipeCard = (props) => {
     const classes = useStyles();
-    const imgStyle = {
-        height: 'auto',
-        maxWidth: '20%'
-    };
 
   return (
     <div className={classes.root}> 
-       <Grid container spacing={7} className={classes.grid} direction="row">         
-          <Grid item xs={8} md={8}  className={classes.leftColumn}>
-            <Paper className={classes.recipePaper}>
-              <img src={props.imageUrl} alt="" style={imgStyle}></img>
-              <p> Recipe ID: {props.recipeId} </p>
-              <p> Recipe Name: {props.recipeName} </p>
-              <p> Time to Cook: {props.timeToCookInMinutes} </p>
-              <p> Calories: {props.calories} </p>
-              <p> Servings: {props.servings} </p>
-            </Paper>
-          </Grid>
-        </Grid>
+           <Card>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  alt="imageUnavailable"
+                  height="280"
+                  image= {props.imageUrl}
+                  className={classes.cardMedia}
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography color="textPrimary" gutterBottom variant="h5" component="h3">
+                    {props.recipeName} 
+                  </Typography>
+                  <Typography color="textPrimary" component="p">
+                    {props.calories} Calories 
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
     </div>
   );
 }
