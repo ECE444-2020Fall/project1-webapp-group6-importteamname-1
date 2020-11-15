@@ -11,6 +11,8 @@ export default function RecipeConsumedToggle() {
   
     const handleChange = (event) => {
       setState({ ...state, [event.target.name]: event.target.checked });
+      //fetch call to addItem function
+      //fetch call to removeItem function
     };
   
     return (
