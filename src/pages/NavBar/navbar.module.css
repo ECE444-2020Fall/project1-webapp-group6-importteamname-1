@@ -2,6 +2,7 @@
   position: absolute;
   left: -100px;
   top: -100px;
+  background: blue;
 }
 
 .skipLink a:focus {
@@ -12,4 +13,12 @@
   padding: 10px;
   color: #ffffff;
   background: #000000;
+}
+
+.navbar-brand {
+  color: '#ffffff';
+}
+
+.navItem {
+  color: '#ffffff';
 }

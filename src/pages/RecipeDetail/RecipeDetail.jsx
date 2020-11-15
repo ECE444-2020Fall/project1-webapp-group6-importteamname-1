@@ -1,36 +1,36 @@
 ﻿import React, { useState, useEffect } from "react";
 import Ingredients from "../../components/RecipeDetail/Ingredients";
 import NutritionFacts from "../../components/RecipeDetail/NutritionFacts";
-import RecipeRating from "../../components/RecipeDetail/RecipeRating";
-import RecipeUserNotes from "../../components/RecipeDetail/RecipeUserNotes";
 import RecipeInstruction from "../../components/RecipeDetail/RecipeInstruction";
 import { useParams } from "react-router-dom";
-import { UserRating } from "../../components/UserRating";
-import { FavouritesButton } from "../../components/FavouritesButton";
-import { RecipeCartButton } from "../../components/RecipeCartButton";
+import { UserRating } from "../../components/RecipeDetail/UserRating";
+import { FavouritesButton } from "../../components/RecipeDetail/FavouritesButton";
+import { RecipeCartButton } from "../../components/RecipeDetail/RecipeCartButton";
+import { UserNotesContainer } from "../../containers/RecipeDetail/UserNotesContainer";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Button } from "@material-ui/core";
 import { connect } from 'react-redux';
 import { getRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
 import CONSTANTS from '../../constants';
+import foodImg from "./food.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: 50
+    backgroundColor: '#f7f7f7'
   },
   grid: {
     width: '100%',
-    margin: '0px'
+    margin: 0,
+    justifyContent: 'center',
   },
   leftColumn: {
-    marginLeft: 50
+    marginLeft: 2
   },
   commonPaperStyleAttributes: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20,
@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
   nutritionFactsPaper: {
     minHeight: 200
   },
+  recipeAttributeText: {
+    fontWeight: 600
+  }
 }));
 
 const RecipeDetail = (props) => {
@@ -73,7 +76,7 @@ const RecipeDetail = (props) => {
 
   return (
     <div className={classes.root}>
-        <Grid container spacing={7} className={classes.grid} direction="row">  
+        <Grid container spacing={3} className={classes.grid} direction="row">  
           <Grid item xs={3} md={3} direction="column">
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.ingredientsPaper}`}>
                <Ingredients servings={currentRecipe.servings} ingredientsList={ingredients} />
@@ -87,18 +90,16 @@ const RecipeDetail = (props) => {
               />
             </Paper>
           </Grid>  
-          <Grid item xs={8} md={8} direction="column" className={classes.leftColumn}>
+          <Grid item xs={5} md={5} direction="column" className={classes.leftColumn}>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.recipePhotoPaper}`}>
-              <p> Recipe ID {recipe_id} </p>
-              <p> Recipe Name: {currentRecipe.recipe_name} </p>
-              <p> Image: {currentRecipe.image_url} </p>
-              <p> Cuisine: {currentRecipe.cuisine} </p>
+              <img src={foodImg}></img>
+              <h4> {currentRecipe.recipe_name} </h4>
+              <h7 className={classes.recipeAttributeText}> Cuisine(s): </h7> {(currentRecipe.cuisine).slice(1, currentRecipe.cuisine.length - 1)} 
             </Paper>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.userActionsPaper}`}>
-              <RecipeRating />
-              <UserRating recipe_id={recipe_id} />
-              <RecipeCartButton recipe_id={recipe_id} />
-              <FavouritesButton recipe_id={recipe_id} />
+              <UserRating recipe_id={recipe_id}/>
+              <RecipeCartButton recipe_id={recipe_id}/>
+              <FavouritesButton recipe_id={recipe_id}/>
             </Paper>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.instructionsPaper}`}>
               <RecipeInstruction 
@@ -107,10 +108,7 @@ const RecipeDetail = (props) => {
               />
             </Paper>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.userAddNotesPaper}`}>
-              <RecipeUserNotes />
-              <Button variant="contained" color="primary">
-                Add Note
-              </Button>
+              <UserNotesContainer/>
             </Paper>
           </Grid>
         </Grid>

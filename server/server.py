@@ -7,15 +7,36 @@ from flask_cors import CORS
 
 from constants import CONSTANTS
 from sample_data import sample_data
+from utils.inventory_manager import InventoryManager
+from utils.recipe_personalization_manager import RecipePersonalizationManager
+from utils.recipe_controller import RecipeController
+from utils.ingredient_controller import IngredientController
 
-from app import db, app, inventory_manager, recipe_personalization_manager, recipe_controller, ingredient_controller
+from app import db, app 
 from app.models import *
 import hashlib
 
-# 06eddc19-0e98-4939-9b23-631705cff730
+inventory_manager = InventoryManager(db)
+recipe_personalization_manager = RecipePersonalizationManager(db)
+recipe_controller = RecipeController(db)
+ingredient_controller = IngredientController(db)
 
 CORS(app, supports_credentials=True)
 app.secret_key = "TESTKEY"
+
+def get_user_id():
+    if 'user_id' not in session:
+        return False
+    else:
+        user_id = session['user_id']
+    return user_id
+
+def user_id_not_found_response():
+    json_response = jsonify({ 
+        'error': 'user_id not in session, log in again'
+    })
+    return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
+
 
 @app.route('/api/drop')     # ONLY FOR DEBUGGING
 def drop_db():
@@ -29,44 +50,82 @@ def drop_db():
 
 @app.route('/api/user_notes', methods=['POST'])
 def add_or_update_user_notes():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
-    return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserNotes)
+    return recipe_personalization_manager.add_or_update_feedback(user_id, recipe_id, feedback, UserNotes)
 
+@app.route('/api/user_notes/<string:recipe_id>')
+def show_user_note(recipe_id):
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_user_feedback(user_id, recipe_id, UserNotes)
 
 @app.route('/api/user_notes')
 def show_user_notes():
-    return recipe_personalization_manager.get_all_user_feedbacks(UserNotes)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_all_user_feedbacks(user_id, UserNotes)
 
 
 @app.route('/api/user_rating', methods=['POST'])
 def add_or_update_user_rating():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["recipe_id"]
     feedback = request.get_json()["feedback"]
-    return recipe_personalization_manager.add_or_update_feedback(recipe_id, feedback, UserRating)
+    return recipe_personalization_manager.add_or_update_feedback(user_id, recipe_id, feedback, UserRating)
 
 @app.route('/api/user_rating/<string:recipe_id>')
 def show_user_rating(recipe_id):
-    return recipe_personalization_manager.get_user_feedback(recipe_id, UserRating)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_user_feedback(user_id, recipe_id, UserRating)
 
 @app.route('/api/user_ratings')
 def show_user_ratings():
-    return recipe_personalization_manager.get_all_user_feedbacks(UserRating)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return recipe_personalization_manager.get_all_user_feedbacks(user_id, UserRating)
 
 @app.route('/api/shopping_list', methods=['POST'])
 def add_item_to_shopping_list():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
     item = request.get_json()["item"]
-    return inventory_manager.add_item(item, ShoppingList)
+    return inventory_manager.add_item(user_id, item, ShoppingList)
 
 
 @app.route('/api/shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
-    return inventory_manager.remove_item(item, ShoppingList)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.remove_item(user_id, item, ShoppingList)
 
 
 @app.route('/api/shopping_list')
 def show_shopping_list():
-    return inventory_manager.get_all_user_items(ShoppingList)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.get_all_user_items(user_id, ShoppingList)
 
 @app.route('/api/pantry_list', methods=['POST'])
 def add_item_to_pantry_list():
@@ -97,38 +156,70 @@ def recommend_recipes():
 
 @app.route('/api/recipe_cart/<string:recipe_id>')
 def add_item_to_recipe_cart(recipe_id):
-    return inventory_manager.get_item(recipe_id, RecipeCart)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.get_item(user_id, recipe_id, RecipeCart)
 
 @app.route('/api/recipe_cart', methods=['POST'])
 def get_recipe_cart_item():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["item"]
-    return inventory_manager.add_item(recipe_id, RecipeCart)
+    return inventory_manager.add_item(user_id, recipe_id, RecipeCart)
 
 @app.route('/api/recipe_cart/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_cart_item(recipe_id):
-    return inventory_manager.remove_item(recipe_id, RecipeCart)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.remove_item(user_id, recipe_id, RecipeCart)
 
 @app.route('/api/recipe_cart')
 def show_recipe_cart():
-    user_carted_recipe_ids = inventory_manager.get_all_user_items(RecipeCart).get_json()["items"]
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    user_carted_recipe_ids = inventory_manager.get_all_user_items(user_id, RecipeCart).get_json()["items"]
     return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 @app.route('/api/favourites_list/<string:recipe_id>')
 def add_recipe_to_favs_list(recipe_id):
-    return inventory_manager.get_item(recipe_id, UserFavourites)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.get_item(user_id, recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list', methods=['POST'])
 def get_recipe_favs_list():
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
     recipe_id = request.get_json()["item"]
-    return inventory_manager.add_item(recipe_id, UserFavourites)
+    return inventory_manager.add_item(user_id, recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list/<string:recipe_id>', methods=['DELETE'])
 def remove_recipe_from_favs_list(recipe_id):
-    return inventory_manager.remove_item(recipe_id, UserFavourites)
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    return inventory_manager.remove_item(user_id, recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list')
 def show_favs_list():
-    user_fav_recipe_ids = inventory_manager.get_all_user_items(UserFavourites).get_json()["items"]
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    user_fav_recipe_ids = inventory_manager.get_all_user_items(user_id, UserFavourites).get_json()["items"]
     return recipe_controller.get_recipes_by_ids(user_fav_recipe_ids, Recipe)
 
 
@@ -243,64 +334,6 @@ def logout_user():
         return make_response(CONSTANTS['HTTP_STATUS']['200_OK'])
     return make_response(CONSTANTS['HTTP_STATUS']['400_BAD_REQUEST'])
 
-# EXAMPLE OF HOW TO ADD ITEM WITH FOREIGN KEY <PART OF YANISA's DB SETUP>
-@app.route('/api/add_item/<string:item>')
-def add_new_item(item):
-    if session["user_id"]:
-        user = User.query.get(session["user_id"])        
-        new_item = ShoppingList(user.user_id, item)
-        db.session.add(new_item)
-        db.session.commit()
-        return "item added"
-    return "no user id "
-
-
-# EXAMPLE OF HOW TO QUERY ENTRIES IN DB  <PART OF YANISA's DB SETUP>
-@app.route('/api/show_users')
-def print_db():
-    all_users = User.query.all() # get all users
-    users_named_tim = User.query.filter(     # filter by attribute
-        User.username == "tim" and User.password == "fei"
-    )
-    # user_by_primary_key = User.query.get( # get user by primary key
-    #     User.user_id == "PRIMARY_KEY_VALUE" 
-    # )
-    res = {}
-    for user in all_users:
-        res[user.username] = user.password
-    return jsonify(res)
-
-# MasterDetail Page Endpoint  <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['MASTER_DETAIL'])
-def get_master_detail():
-    return jsonify(sample_data['text_assets'])
-
-# List Endpoints   <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['LIST'])
-def get_list():
-    return jsonify(sample_data['list_text_assets']['list_items'])
-
-#  <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['LIST'], methods = ['POST'])
-def add_list_item():
-    data = request.get_json()
-    list_item = {'id':  str(uuid.uuid4()), 'text': data['text']}
-    sample_data['list_text_assets']['list_items'].insert(0, list_item)
-    json_response = jsonify(list_item)
-    return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
-
-#  <PART OF SKELETON APP>
-@app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<string:id>', methods=['DELETE'])
-def delete_list_item(id):
-    list_items_to_remove = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['id'] == id]
-    if not list_items_to_remove:
-        json_response = jsonify({'error': 'Could not find an item with the given id'})
-        return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
-    if len(list_items_to_remove) > 1:
-        json_response = jsonify({'error': 'More than one list items found with the same id'})
-        return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-    sample_data['list_text_assets']['list_items'] = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['id'] != id]
-    return jsonify({'id': id, 'text': 'This comment was deleted'})
 
 # Catching all routes
 # This route is used to serve all the routes in the frontend application after deployment.

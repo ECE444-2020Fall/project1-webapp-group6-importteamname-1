@@ -18,7 +18,11 @@ import Welcome from "./pages/Login/Welcome";
 import RouteToLogin from "./pages/Login/RouteToLogin";
 import Profile from "./pages/Login/Profile";
 import Footer from "./pages/Footer";
+<<<<<<< HEAD
 import Pantry from './pages/Pantry/Pantry';
+=======
+import ScrollIntoView from './components/common/ScrollIntoView';
+>>>>>>> master
 
 const App = (props) => {
   useEffect(() => {
@@ -48,19 +52,20 @@ const LoginContainer = () => {
 const defaultContainer = () => {
   return (
   <React.Fragment>
-    <NavBar />
-    <Route path = "/AddIngredients" component = {AddIngredients} />
-    <Route path = "/RecipeSearchResults" component = {RecipeSearchResults} />
-    <Route path = "/welcome" component = {Welcome} />
-    <Route path = "/Profile" component = {Profile} />
-    <Route exact path='/favourite-recipes' component={FavouriteRecipes} />
-    <Route exact path='/shopping-list' component={ShoppingList} />
-    <Route exact path='/calorie-tracker' component={CalorieTracker} />
-    <Route exact path='/recipe-cart' component={RecipeCart} />
-    <Route exact path='/recipe-search-results/:recipe_id' component={RecipeDetail} />
-    <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
-    <Route exact path='/pantry' component={Pantry} />
-    
+    <ScrollIntoView>
+      <NavBar />
+      <Route path = "/AddIngredients" component = {AddIngredients} />
+      <Route path = "/RecipeSearchResults" component = {RecipeSearchResults} />
+      <Route path = "/welcome" component = {Welcome} />
+      <Route path = "/Profile" component = {Profile} />
+      <Route exact path='/favourite-recipes' component={FavouriteRecipes} />
+      <Route exact path='/shopping-list' component={ShoppingList} />
+      <Route exact path='/calorie-tracker' component={CalorieTracker} />
+      <Route exact path='/recipe-cart' component={RecipeCart} />
+      <Route exact path='/recipe-search-results/:recipe_id' component={RecipeDetail} />
+      <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
+      <Route exact path='/pantry' component={Pantry} />
+    </ScrollIntoView>
   </React.Fragment>
   )
 }
