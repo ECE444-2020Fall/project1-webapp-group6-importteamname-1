@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,15 +15,21 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     maxWidth: 752,
   },
-  demo: {
+  listContainer: {
     backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    flexDirection: 'vertical',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     margin: theme.spacing(4, 0, 2),
   },
   grid: {
-    width: '100%'
-  }
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 const Ingredients = (props) => {
@@ -38,9 +42,9 @@ const Ingredients = (props) => {
       <Grid className={classes.grid} container>
         <Grid className={classes.grid} item xs={12} md={6}>
           <Typography fontWeight={500} variant="h7" className={classes.title}>
-          <h6>Servings:</h6>
+          <h5>Servings:</h5>
           </Typography>
-          <div className={classes.demo}>
+          <div className={classes.listContainer}>
             <List dense={true}>              
               <ListItem>
                 <ListItemIcon>
@@ -56,16 +60,15 @@ const Ingredients = (props) => {
       </Grid>
 
     recipeIngredients = 
-      <Grid container>
-        <Grid item xs={12} md={6}>
+      <Grid className={classes.grid} container>
+        <Grid className={classes.grid} item xs={12} md={6}>
           <Typography fontWeight={500} variant="h7" className={classes.title}>
-            <h6>Ingredients:</h6>
+            <h5>Ingredients:</h5>
           </Typography>
-          <div className={classes.demo}>
+          <div className={classes.listContainer}>
             <List dense={true}>              
-        
             {props.ingredientsList.ingredients.map(ingredient => (
-              <ListItem>
+              <ListItem key={ingredient.recipe_id + ingredient.recipe_name}>
                 <ListItemIcon>
                   <EcoIcon />
                 </ListItemIcon>

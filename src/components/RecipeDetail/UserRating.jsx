@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Rating from '@material-ui/lab/Rating';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {setFeedback, getItem} from '../../utils/list_utils';
 import CONSTANTS from "../../constants";

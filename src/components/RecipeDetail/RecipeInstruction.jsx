@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   alignItemsAndJustifyContent: {
     display: 'flex',
     flexDirection: 'vertical',
@@ -25,7 +23,6 @@ const RecipeInstruction = (props) => {
 
   return (
     <div className={classes.alignItemsAndJustifyContent}>
-        
         <List dense={true} >
             <h5>Instruction:</h5>
             <ListItem className={classes.alignItemsAndJustifyContent}>
@@ -39,8 +36,8 @@ const RecipeInstruction = (props) => {
             </ListItem>              
           {parsedInstructions
           .slice(1, parsedInstructions.length-1)
-          .map(instructionStep => (
-            <ListItem>
+          .map((instructionStep, instructionIndex) => (
+            <ListItem key={instructionIndex}>
               <ListItemIcon>
                 <ArrowForwardIcon />
               </ListItemIcon>

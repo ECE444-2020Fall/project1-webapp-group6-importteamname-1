@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Grid from '@material-ui/core/Grid';
@@ -17,11 +15,20 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     maxWidth: 752,
   },
-  demo: {
+  listContainer: {
     backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    flexDirection: 'vertical',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     margin: theme.spacing(4, 0, 2),
+  },
+  grid: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 
@@ -31,20 +38,19 @@ const NutritionFacts = (props) => {
 
   return (
     <div>
-      <Grid container>
-        <Grid item xs={12} md={6}>
+      <Grid className={classes.grid} container>
+        <Grid className={classes.grid} item xs={12} md={6}>
           <Typography variant="h7" className={classes.title}>
-            <h6>Nutrition Facts:</h6>
+            <h5>Nutrition Facts:</h5>
           </Typography>
-          <div className={classes.demo}>
+          <div className={classes.listContainer}>
             <List dense={true}>
                 <ListItem>
                   <ListItemIcon>
                     <BatteryChargingFullIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={props.calories}
-                    secondary='Calories'
+                    primary={props.calories + ' Cal'}
                   />
                 </ListItem>
                 <ListItem>
@@ -52,8 +58,7 @@ const NutritionFacts = (props) => {
                     <BatteryChargingFullIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={props.carbs + ' g'}
-                    secondary='Carbs'
+                    primary={props.carbs + ' g Carbs'}
                   />
                 </ListItem>
                 <ListItem>
@@ -61,8 +66,7 @@ const NutritionFacts = (props) => {
                     <BatteryChargingFullIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={props.protein + ' g'}
-                    secondary='Protein'
+                    primary={props.protein + ' g Protein'}
                   />
                 </ListItem>
                 <ListItem>
@@ -70,8 +74,7 @@ const NutritionFacts = (props) => {
                     <BatteryChargingFullIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={props.fat + ' g'}
-                    secondary='Fat'
+                    primary={props.fat + ' g Fat'}
                   />
                 </ListItem>
             </List>
