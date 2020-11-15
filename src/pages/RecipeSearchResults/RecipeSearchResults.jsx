@@ -3,8 +3,17 @@ import RecipeCard from "../../components/common/RecipeCard";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: '#f7f7f7'
+  }
+}));
 
 const RecipeSearchResults = (props) => {
+  const classes = useStyles();
   let recipeSearchResult = null;
 
   /*
@@ -57,7 +66,7 @@ const RecipeSearchResults = (props) => {
   }
 
   return (
-    <main id="mainContent" className="container">
+    <main id="mainContent" className={classes.root}>
       <div className="row justify-content-center py-5">
         <h3>Recipe Search Results</h3>
       </div>
