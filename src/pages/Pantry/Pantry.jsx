@@ -93,7 +93,7 @@ const Pantry = (props) => {
             variant="contained" 
             color="primary" 
             className= { classes.submit }>
-                Recomend Recipes
+                Recommend Recipes
           </Button>
         </Link>
       </center>
