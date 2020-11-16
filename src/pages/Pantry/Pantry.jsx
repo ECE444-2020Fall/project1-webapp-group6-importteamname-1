@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { generateList, addItem, removeItem } from '../../utils/list_utils'
 import { ListContainer } from '../../containers/ListContainer/ListContainer'
 import CONSTANTS from '../../constants';
@@ -6,7 +6,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { PageTitle } from '../../components/common/PageTitle';
-
+import { connect } from 'react-redux'; 
+import { getRecommendedRecipes } from '../../actions/recipeActions';
+import { getRecipes } from '../../actions/recipeActions';
+import { clearRecipes } from '../../actions/recipeActions';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Pantry = () => {
+const Pantry = (props) => {
   const [newItem, setNewItem] = useState('');
   const [pantryItems, setPantryItems] = useState([]);
   const [refreshList, setRefreshList] = useState(true)
@@ -40,12 +45,20 @@ const Pantry = () => {
     }
   }
 
-  const handleClick = (evt) => {
-    console.log(evt)
-    fetch(CONSTANTS.ENDPOINT.PANTRY_RECIPES, {
-      credentials: 'include',
-      method: 'post'
-    })
+  useEffect(() => {
+    // props.clearRecipes();
+  }, []);
+  
+
+  const handleClick = async () => {
+    // props.clearRecipes();
+    if (pantryItems.length > 0) {
+      await props.clearRecipes();
+      await props.getRecommendedRecipes(); 
+    } else {
+      await props.clearRecipes();
+      await props.getRecipes();
+    }
   }
 
   if (refreshList) {
@@ -68,11 +81,15 @@ const Pantry = () => {
     <div>        
       <PageTitle titleName="What's in your Pantry?" />
       <center>
+      <Typography component="body1" variant="body1" paragraph='true'>
+          We will recomend recipes based on the ingredients you already have!
+          <p></p>
+        </Typography>
         <Typography component="body1" variant="caption">
-          Try typing apples to search for recipes with apples
+          (E.g. type &apos; onion &apos;, press enter, then click &apos;RECOMMEND RECIPES&apos; to search for recipes with onions)
         </Typography>
       </center>
-
+      <br></br>
       <ListContainer
         newItem={newItem}
         setNewItem={setNewItem}
@@ -82,23 +99,27 @@ const Pantry = () => {
       />
       <center>
         
-        <Typography component="body1" variant="body1" paragraph='true'>
-          Help us help you by telling us which ingredients you currently have in your pantry.
-          <p></p>
-          We will use these ingredients to recomend recipes that make use of the ingredients you already have!
-          <p></p>
-        </Typography>
-        <Button
-          onClick={handleClick}
-          type="submit"
-          variant="contained" 
-          color="primary" 
-          href='/recipe-search-results'
-          className= { classes.submit }>
-              Recomend Recipes
-        </Button>
+        <Link to={`/recipe-search-results`}>
+          <Button
+            onClick={handleClick} // This should happen before <Link to={}>
+            type="submit"
+            variant="contained" 
+            color="primary" 
+            className= { classes.submit }>
+                Recommend Recipes
+          </Button>
+        </Link>
       </center>
     </div>
   );
 }
-export default Pantry;
+
+Pantry.propTypes = {
+  getRecommendedRecipes: PropTypes.func,
+  clearRecipes: PropTypes.func,
+  getRecipes: PropTypes.func,
+};
+
+const mapStateToProps = (state) => ({data: state.recipes})
+
+export default connect(mapStateToProps, {getRecommendedRecipes, getRecipes, clearRecipes})(Pantry);
