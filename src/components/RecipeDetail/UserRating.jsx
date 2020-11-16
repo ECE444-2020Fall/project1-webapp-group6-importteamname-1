@@ -7,13 +7,13 @@ import CONSTANTS from "../../constants";
 
 const UserRating = ({recipe_id}) => {
 
-  const [value, setValue] = useState(false);
+  const [ratingValue, setRatingValue] = useState(0);
   const [refresh, setRefresh] = useState(true) 
 
   if (refresh) {
     setRefresh(false)
     getItem(recipe_id, CONSTANTS.ENDPOINT.USER_RATING)
-    .then(res => setValue(res.feedback? res.feedback : 0 ))
+    .then(res => setRatingValue(res.feedback? res.feedback : 0 ))
   }
 
   return (
@@ -21,11 +21,11 @@ const UserRating = ({recipe_id}) => {
       <Box component="fieldset" mb={3} borderColor="transparent">
         <h5>Rating:</h5>
         <Rating
-          name="simple-controlled"
-          value={value}
+          name={recipe_id}
+          value={ratingValue}
           onChange={(event, newValue) => {
+            setRatingValue(newValue);
             setFeedback(CONSTANTS.ENDPOINT.USER_RATING, recipe_id, newValue)
-            setValue(newValue);
           }}
         />
       </Box>

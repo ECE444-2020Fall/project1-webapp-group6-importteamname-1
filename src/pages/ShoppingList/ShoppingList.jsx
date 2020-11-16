@@ -67,6 +67,7 @@ const ShoppingList = () => {
         setNewItem={setNewItem}
         shoppingItems={shoppingItems.concat(smartListSeparator(), smartShoppingItems)}
         addShoppingListItem={addShoppingListItem}
+        Label="Add Item to Shopping List"
       />
     </div>
 

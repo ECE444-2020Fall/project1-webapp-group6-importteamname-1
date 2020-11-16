@@ -69,7 +69,9 @@ const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
   const [ingredients, setIngredients] = useState({});
-  let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id)
+
+  // TODO: if-statement to check existence
+  let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id);
 
   useEffect(() => {
     (async () => {
@@ -81,8 +83,9 @@ const RecipeDetail = (props) => {
     })();
   }, []);
 
+  // TODO: if-statement to check existence
   return (
-    <div className={classes.root}>
+    <div className={classes.root}> 
         <Grid container spacing={3} className={classes.grid} direction="row">  
           <Grid item xs={3} md={3} direction="column">
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.ingredientsPaper}`}>
@@ -100,7 +103,8 @@ const RecipeDetail = (props) => {
           <Grid item xs={5} md={5} direction="column" className={classes.leftColumn}>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.recipePhotoPaper}`}>
               <img src={currentRecipe.image_url} className={classes.recipeImage}></img>
-              <h4> {currentRecipe.recipe_name} </h4>
+              <br/><br/>
+              <h3> {currentRecipe.recipe_name} </h3>
               <h7 className={classes.recipeAttributeText}> Cuisine(s): </h7> {(currentRecipe.cuisine).slice(1, currentRecipe.cuisine.length - 1)} 
             </Paper>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.userActionsPaper}`}>

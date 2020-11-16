@@ -13,24 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {Redirect} from 'react-router-dom';
-import background1 from './background1.png'
-import background2 from './background2.png'
-import background3 from './background3.png'
-
-
-
-function Background() {
-  var rand = Math.floor(Math.random() * Math.floor(3))
-  if(rand == 0){
-    return background1
-  }
-  else if (rand == 1){
-    return background2
-  }
-  else{
-    return background3
-  }
-}
+import {Background} from './background'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -124,6 +107,7 @@ const Login = () => {
       document.getElementById("Login-Form").reset()
       return
     }
+
     const classes = useStyles();
 
     if(!userFound){
@@ -133,6 +117,11 @@ const Login = () => {
               <Grid item xs={false} sm={4} md={7} className={classes.image} />
               <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                   <div className={classes.paper}>
+                      <center>
+                        <Typography component="h1" variant="h3">
+                          Welcome to ChefCoPilot!
+                        </Typography>
+                      </center>
                       <Avatar className={classes.avatar}>
                           <LockOutlinedIcon />
                       </Avatar>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,7 +33,6 @@ const UserNotesContainer = () => {
   }
   return (
     <div >
-      <Card >
         <CardContent>
           <UserNotesButton editMode={editMode}  setEditMode={setEditMode} userNotes={userNotes} />
           <h5>User notes</h5>
@@ -42,7 +40,6 @@ const UserNotesContainer = () => {
             <NotesTextBox userNotes={userNotes} setUserNotes={setUserNotes} /> :
             <UserNotesContent userNotes={userNotes} />}
         </CardContent>
-      </Card>
 
     </div>
   );

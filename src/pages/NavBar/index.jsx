@@ -41,8 +41,6 @@ export function SimpleMenu() {
   );
 }
 
-
-
 //TODO Web Template Studio: Add a new link in the NavBar for your page here.
 // A skip link is included as an accessibility best practice. For more information visit https://www.w3.org/WAI/WCAG21/Techniques/general/G1.
 const NavBar = () => {
@@ -53,16 +51,16 @@ const NavBar = () => {
         <a href="#mainContent">Skip to Main Content</a>
       </div>
       <nav style={{backgroundColor: '#3f51b5'}} className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-        <Link style={{color: '#ffffff'}} className="navbar-brand" to="/" role="heading" aria-level="1">
+        <Link style={{color: '#ffffff'}} className="navbar-brand" role="heading" aria-level="1">
           {CONSTANTS.APP_NAME}
         </Link>
         <div className="navbar-nav">
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/AddIngredients">
-            Add Ingredients
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/pantry">
+            Find Recipes
           </Link>
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-search-results">
+          {/* <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
-          </Link>
+          </Link> */}
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/favourite-recipes">
             Favourite Recipes
           </Link>
@@ -75,10 +73,9 @@ const NavBar = () => {
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-cart">
             Recipe Cart
           </Link>
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="Profile">
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/Profile">
             Profile
           </Link>
-          <SimpleMenu></SimpleMenu>
         </div>
       </nav>
     </React.Fragment>

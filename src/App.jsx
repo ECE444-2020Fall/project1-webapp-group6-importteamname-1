@@ -18,11 +18,12 @@ import Welcome from "./pages/Login/Welcome";
 import RouteToLogin from "./pages/Login/RouteToLogin";
 import Profile from "./pages/Login/Profile";
 import Footer from "./pages/Footer";
+import Pantry from './pages/Pantry/Pantry';
 import ScrollIntoView from './components/common/ScrollIntoView';
 
-const App = (props) => {
+const App = () => {
   useEffect(() => {
-    props.getRecipes()
+    // props.getRecipes();
   }, []);
     return (
       <React.Fragment>
@@ -54,6 +55,7 @@ const defaultContainer = () => {
       <Route path = "/RecipeSearchResults" component = {RecipeSearchResults} />
       <Route path = "/welcome" component = {Welcome} />
       <Route path = "/Profile" component = {Profile} />
+      <Route exact path='/pantry' component={Pantry} />
       <Route exact path='/favourite-recipes' component={FavouriteRecipes} />
       <Route exact path='/shopping-list' component={ShoppingList} />
       <Route exact path='/calorie-tracker' component={CalorieTracker} />

@@ -1,5 +1,4 @@
 ﻿import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
 import { Grid } from "@material-ui/core";
@@ -26,12 +25,39 @@ const RecipeSearchResults = (props) => {
   let recipeSearchResult = null;
   const itemsPerPage = 10;
   const [page, setPage] = React.useState(1);
-  const [noOfPages] = React.useState(
-    Math.ceil(props.data.recipes.length / itemsPerPage)
+
+  const [noOfPages, /*setNoOfPages*/] = React.useState(
+    props.data.recipes && props.data.recipes.length ? 
+      Math.ceil(props.data.recipes.length / itemsPerPage) : null
   );
+  
+
+  // if (refresh) {
+  //   setRefresh(false)
+  //     setNoOfPages({
+  //     noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
+  //   });
+  // }
+
+  console.log("NO. PAGES");
+  console.log(noOfPages);
+  console.log("CURRENT PAGE");
+  console.log(page);
+  console.log(Math.ceil(props.data.recipes.length / itemsPerPage))
 
   useEffect(() => {
-    props.clearRecipeSortFilter();
+    // NEED TO SET NUMBER OF PAGES BASED ON NO. OF RECIPES ON THE PAGE
+    // This makes the numbers disappear in pagination
+    // setNoOfPages({
+    //   noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
+    // });
+    
+    // TRY THIS!!!
+    // get recipes from Redux
+
+    if (props.data.sortedRecipes && props.data.sortedRecipes.length) {
+      props.clearRecipeSortFilter();
+    }
   }, []);
 
   const handleSortToggle = (valueToBeSorted) => {    
@@ -53,7 +79,10 @@ const RecipeSearchResults = (props) => {
 
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  if (props.data) { 
+  // console.log(recipesToBeDisplayed);
+  // console.log(props.data[recipesToBeDisplayed]);
+
+  if (props.data && props.data[recipesToBeDisplayed]) { 
     recipeSearchResult =  <div className={classes.root}>
         <Grid
           container
@@ -66,7 +95,6 @@ const RecipeSearchResults = (props) => {
           .slice((page - 1) * itemsPerPage, page * itemsPerPage)
           .map(recipe => (
           <Grid item key={props.recipe_id} xs={25}>
-              <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
                 <RecipeCard 
                   key={recipe.recipe_id}
                   recipeId={recipe.recipe_id} 
@@ -79,7 +107,6 @@ const RecipeSearchResults = (props) => {
                   carbs={recipe.carbs}
                   fat={recipe.fat} 
                 />
-              </Link>
             </Grid>
           ))}
         </Grid>
@@ -143,6 +170,11 @@ const mapDispatchToProps = (dispatch) => {
     clearRecipeSortFilter: () => {
       dispatch({
         type: "CLEAR_RECIPE_SORT_FILTER",
+      })
+    },
+    renderPagination: () => {
+      dispatch({
+        type: "RENDER_PAGINATION"
       })
     }
   }

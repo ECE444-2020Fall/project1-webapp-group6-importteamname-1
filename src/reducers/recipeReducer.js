@@ -1,7 +1,8 @@
 const initialState = {
     recipes: [],
     sortedRecipes: [],
-    sortOrder: ''
+    sortOrder: '',
+    paginationCounter: 0
 }
 
 export default function(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.payload,
+            }
+        case 'GET_RECOMMENDED_RECIPES':
+            return {
+                ...state,
+                recipes: action.recommendedRecipes
             }
         case 'SORT_BY_CALORIES_ASCENDING':
         case 'SORT_BY_SERVINGS_ASCENDING':
@@ -31,6 +37,17 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 sortedRecipes: [] 
+            }
+        case 'CLEAR_RECIPES':
+            return {
+                ...state,
+                recipes: [],
+                sortedRecipes: []
+            }
+        case 'RENDER_PAGINATION':
+            return {
+                ...state,
+                paginationCounter: initialState.paginationCounter+1
             }
         default: 
             return state
