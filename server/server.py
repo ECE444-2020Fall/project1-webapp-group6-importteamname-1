@@ -256,13 +256,13 @@ def add_consumed_recipe():
     return calorie_tracker_manager.add_consumed_recipe(ConsumedRecipes, recipe_id, date)
 
 @app.route('/api/calorie_tracker/delete', methods=['DELETE'])
-def delete_consumed_recipe()
+def delete_consumed_recipe():
     recipe_id = request.get_json()["recipe_id"]
     date = date.today()
     return calorie_tracker_manager.delete_consumed_recipe(ConsumedRecipes, recipe_id, date)
 
-@app.route('/api/calorie_tracker', methds=['GET'])
-def get_consumed_recipes()
+@app.route('/api/calorie_tracker', methods=['GET'])
+def get_consumed_recipes():
     date = date.today()
     return calorie_tracker_manager.get_consumed_recipes(ConsumedRecipes, Recipe, date)
 

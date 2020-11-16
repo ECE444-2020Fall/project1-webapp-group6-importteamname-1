@@ -24,7 +24,7 @@ class CalorieTrackerManager():
         self.db = db 
 
     # This function adds a recipe to the consumed recipes table
-    def add_consumed_recipe(self, model, recipe_id, date)
+    def add_consumed_recipe(self, model, recipe_id, date):
         user_id = get_user_id()
         consumedRecipe = model(user_id, recipe_id, date)
 
@@ -45,11 +45,6 @@ class CalorieTrackerManager():
 
         self.db.session.query(consumedRecipe).delete()
         self.db.session.commit()
-        
-        json_response = jsonify({
-            'success': 'Deleted recipe': recipe_id
-            'recipe added on': date
-        })
 
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
 
@@ -60,7 +55,10 @@ class CalorieTrackerManager():
         recipes = model2.query.all() 
         consumed_recipes = self.db.session.query(consumed_recipes_list, recipes).join(recipes, recipes.recipe_id == consumed_recipes_list.recipe_id).all()
         consumed_recipes_map = {"consumed_recipes": []}
-        totalCalories = 0, totalCarbs = 0, totalProtein = 0,  totalFat = 0
+        total_calories = 0
+        total_carbs = 0 
+        total_protein = 0  
+        total_fat = 0
 
         for consumed_recipe in consumed_recipes:
             recipe_info_object = {
