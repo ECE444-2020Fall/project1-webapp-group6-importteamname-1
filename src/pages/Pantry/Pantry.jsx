@@ -3,7 +3,6 @@ import { generateList, addItem, removeItem } from '../../utils/list_utils'
 import { ListContainer } from '../../containers/ListContainer/ListContainer'
 import CONSTANTS from '../../constants';
 import { makeStyles } from '@material-ui/core/styles';
-//import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { PageTitle } from '../../components/common/PageTitle';
@@ -11,28 +10,7 @@ import { PageTitle } from '../../components/common/PageTitle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //height: '100vh',
   },
-  /*
-  image: {
-    backgroundImage: `url(${Background()})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-    theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  */
   form: {
     width: '25%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -91,7 +69,6 @@ const Pantry = () => {
       <PageTitle titleName="What's in your Pantry?" />
       <p></p>
       <ListContainer
-        pageTitle='Whats in your Pantry?'
         newItem={newItem}
         setNewItem={setNewItem}
         shoppingItems={pantryItems}
