@@ -12,6 +12,7 @@ import { getRecipes } from '../../actions/recipeActions';
 import { clearRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,7 @@ const Pantry = (props) => {
   const [newItem, setNewItem] = useState('');
   const [pantryItems, setPantryItems] = useState([]);
   const [refreshList, setRefreshList] = useState(true)
+  const [fetchRecipes, setFetchRecipes] = useState(false);
 
   const removePantryListItem = (item) => {
     removeItem(item, CONSTANTS.ENDPOINT.PANTRY_LIST)
@@ -53,12 +55,15 @@ const Pantry = (props) => {
   const handleClick = async () => {
     // props.clearRecipes();
     if (pantryItems.length > 0) {
-      await props.clearRecipes();
-      await props.getRecommendedRecipes(); 
+       await props.clearRecipes();
+       await props.getRecommendedRecipes(); 
+       await setFetchRecipes(true);
     } else {
-      await props.clearRecipes();
-      await props.getRecipes();
+       await props.clearRecipes();
+       await props.getRecipes();
+       await setFetchRecipes(true);
     }
+    
   }
 
   if (refreshList) {
@@ -77,42 +82,46 @@ const Pantry = (props) => {
 
   const classes = useStyles();
 
-  return (
-    <div>        
-      <PageTitle titleName="What's in your Pantry?" />
-      <center>
-      <Typography component="body1" variant="body1" paragraph='true'>
-          We will recomend recipes based on the ingredients you already have!
-          <p></p>
-        </Typography>
-        <Typography component="body1" variant="caption">
-          (E.g. type &apos; onion &apos;, press enter, then click &apos;RECOMMEND RECIPES&apos; to search for recipes with onions)
-        </Typography>
-      </center>
-      <br></br>
-      <ListContainer
-        newItem={newItem}
-        setNewItem={setNewItem}
-        shoppingItems={pantryItems}
-        addShoppingListItem={addPantryListItem}
-        Label="Add Ingredient to Pantry"
-      />
-      <center>
-        
-        <Link to={`/recipe-search-results`}>
-          {/* Remove <Link> here,  call redirect in handleClick(). Refer to Johnathon's code */}
-          <Button
-            onClick={handleClick} // This should happen before <Link to={}>
-            type="submit"
-            variant="contained" 
-            color="primary" 
-            className= { classes.submit }>
-                Recommend Recipes
-          </Button>
-        </Link>
-      </center>
-    </div>
-  );
+  if (!fetchRecipes) {
+    return (
+      <div>        
+        <PageTitle titleName="What's in your Pantry?" />
+        <center>
+        <Typography component="body1" variant="body1" paragraph='true'>
+            We will recomend recipes based on the ingredients you already have!
+            <p></p>
+          </Typography>
+          <Typography component="body1" variant="caption">
+            (E.g. type &apos; onion &apos;, press enter, then click &apos;RECOMMEND RECIPES&apos; to search for recipes with onions)
+          </Typography>
+        </center>
+        <br></br>
+        <ListContainer
+          newItem={newItem}
+          setNewItem={setNewItem}
+          shoppingItems={pantryItems}
+          addShoppingListItem={addPantryListItem}
+          Label="Add Ingredient to Pantry"
+        />
+        <center>
+          
+          {/* <Link to={`/recipe-search-results`}> */}
+            {/* Remove <Link> here,  call redirect in handleClick(). Refer to Johnathon's code */}
+            <Button
+              onClick={handleClick} // This should happen before <Link to={}>
+              type="submit"
+              variant="contained" 
+              color="primary" 
+              className= { classes.submit }>
+                  Recommend Recipes
+            </Button>
+          {/* </Link> */}
+        </center>
+      </div>
+    );
+  } else {
+    return <Redirect to={'/recipe-search-results'}/>
+  }
 }
 
 Pantry.propTypes = {
