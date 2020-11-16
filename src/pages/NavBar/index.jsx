@@ -57,8 +57,8 @@ const NavBar = () => {
           {CONSTANTS.APP_NAME}
         </Link>
         <div className="navbar-nav">
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/AddIngredients">
-            Add Ingredients
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/pantry">
+            Pantry
           </Link>
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
@@ -74,9 +74,6 @@ const NavBar = () => {
           </Link>
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-cart">
             Recipe Cart
-          </Link>
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/pantry">
-            Pantry
           </Link>
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="Profile">
             Profile
