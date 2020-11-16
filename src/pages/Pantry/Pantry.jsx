@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { generateList, addItem, removeItem } from '../../utils/list_utils'
 import { ListContainer } from '../../containers/ListContainer/ListContainer'
 import CONSTANTS from '../../constants';
@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import { PageTitle } from '../../components/common/PageTitle';
 import { connect } from 'react-redux'; 
 import { getRecommendedRecipes } from '../../actions/recipeActions';
+import { getRecipes } from '../../actions/recipeActions';
+import { clearRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -43,9 +45,18 @@ const Pantry = (props) => {
     }
   }
 
+  useEffect(() => {
+    props.clearRecipes();
+  }, []);
+  
+
   const handleClick = (evt) => {
-    console.log(evt)
-    props.getRecommendedRecipes() 
+    props.clearRecipes();
+    if (pantryItems.length > 0) {
+      props.getRecommendedRecipes(); 
+    } else {
+      props.getRecipes();
+    }
   }
 
   if (refreshList) {
@@ -107,4 +118,14 @@ Pantry.propTypes = {
 
 const mapStateToProps = (state) => ({data: state.recipes})
 
-export default connect(mapStateToProps, {getRecommendedRecipes})(Pantry);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearRecipes: () => {
+      dispatch({
+        type: "CLEAR_RECIPLES",
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, {getRecommendedRecipes, getRecipes, clearRecipes})(Pantry);
