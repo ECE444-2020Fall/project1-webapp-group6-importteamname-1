@@ -1,5 +1,4 @@
 ﻿import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
 import { Grid } from "@material-ui/core";
@@ -66,7 +65,6 @@ const RecipeSearchResults = (props) => {
           .slice((page - 1) * itemsPerPage, page * itemsPerPage)
           .map(recipe => (
           <Grid item key={props.recipe_id} xs={25}>
-              <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
                 <RecipeCard 
                   key={recipe.recipe_id}
                   recipeId={recipe.recipe_id} 
@@ -79,7 +77,6 @@ const RecipeSearchResults = (props) => {
                   carbs={recipe.carbs}
                   fat={recipe.fat} 
                 />
-              </Link>
             </Grid>
           ))}
         </Grid>

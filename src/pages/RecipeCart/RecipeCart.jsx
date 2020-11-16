@@ -1,6 +1,5 @@
 ﻿import React, { useState } from 'react';
 import RecipeCard from "../../components/common/RecipeCard";
-import { Link } from 'react-router-dom';
 import CONSTANTS from '../../constants';
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -42,7 +41,6 @@ const RecipeCart = () => {
         >
         {cartedRecipes.map(recipe => (
           <Grid item key={recipe.recipe_id} xs={25}>
-            <Link key={recipe.recipe_id} to={`recipe-search-results/${recipe.recipe_id}`}>
               <RecipeCard key={recipe.recipe_id}
                 recipeId={recipe.recipe_id}
                 recipeName={recipe.recipe_name}
@@ -53,7 +51,6 @@ const RecipeCart = () => {
                 protein={recipe.protein}
                 carbs={recipe.carbs}
                 fat={recipe.fat} />
-            </Link>
           </Grid>
         ))}
       </Grid>
