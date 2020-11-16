@@ -46,18 +46,18 @@ const RecipeSearchResults = (props) => {
 
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  if (props.data) {     
+  if (props.data && props.data[recipesToBeDisplayed]) {     
     recipeSearchResult =  <div className={classes.root}>
-      <div className={classes.topBanner}>
-        <Grid container spacing={3} justify="flex-start">
-          <Grid className={classes.recipeCount} item xs={6}>
-            <GreyTextTypography variant="h7">We found {props.data[recipesToBeDisplayed].length} recipes. Please enjoy.</GreyTextTypography>
+        <div className={classes.topBanner}>
+          <Grid container spacing={3} justify="flex-start">
+            <Grid className={classes.recipeCount} item xs={6}>
+              <GreyTextTypography variant="h7">We found {props.data[recipesToBeDisplayed].length} recipes. Please enjoy.</GreyTextTypography>
+            </Grid>
+            <Grid container xs={6} justify="flex-end">
+              <SortRecipeDropDown />
+            </Grid>
           </Grid>
-          <Grid container xs={6} justify="flex-end">
-            <SortRecipeDropDown />
-          </Grid>
-        </Grid>
-      </div>
+        </div>
         <Grid
           container
           spacing={5}

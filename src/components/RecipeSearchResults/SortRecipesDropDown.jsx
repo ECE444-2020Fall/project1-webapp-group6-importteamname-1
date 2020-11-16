@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { Grid } from "@material-ui/core";
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: '#f7f7f7',
   },
@@ -19,9 +19,10 @@ const useStyles = makeStyles(() => ({
   },
   formControl: {
     marginTop: 10,
-    minWidth: 200,
+    minWidth: 300,
     marginRight: 50
-  },
+  }
+  
 }));
 
 const SortRecipesDropDown = (props) => {
@@ -38,20 +39,20 @@ const SortRecipesDropDown = (props) => {
     let sortedRecipes = null;
     let sortOrder = event.target.value.order;
     let valueToBeSorted = event.target.value.sortValue;
-    let sortDescription = event.target.value.sortDescription;
+    let sortDescriptionToSet = event.target.value.sortDescription;
 
     recipesToBeSorted = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? [...props.data.recipes] : props.data.sortedRecipes;
     
     if (sortOrder === "ascending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
-      console.log(sortDescription);
-      setSortDescription({sortDescription: event.target.value.sortDescription});
-      console.log(sortDescription);
+      console.log(sortDescriptionToSet);
+      setSortDescription(sortDescriptionToSet);
+      console.log(sortDescriptionToSet);
     } else if (sortOrder === "descending"){ 
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
-      setSortDescription(sortDescription);
+      setSortDescription(sortDescriptionToSet);
     } 
   }
 
@@ -65,18 +66,19 @@ const SortRecipesDropDown = (props) => {
 
   return (
     <div className={classes.root}>
-      {/* <Grid container justify="flex-end"> */}
         <FormControl className={classes.formControl}>
-          <InputLabel id="demo-controlled-open-select-label">Sort Recipes by:</InputLabel>
+          <InputLabel id="demo-controlled-open-select-label">Sort Recipes</InputLabel>
           <Select
-            labelId="demo-controlled-open-select-label"
+            // labelId="demo-controlled-open-select-label"
             id="demo-controlled-open-select"
+            defaultValue=""
             open={open}
             onClose={handleClose}
             onOpen={handleOpen}
-            value={sortDescription}
+            // value={sortDescription}
             onChange={handleChange}
           >
+
             <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'ascending', sortDescription: 'Time to cook (ascending)'}}>Time to cook (ascending)</MenuItem>
             <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending', sortDescription: 'Time to cook (descending)'}}>Time to cook (descending)</MenuItem>
             <MenuItem value={{sortValue: 'calories', order: 'ascending', sortDescription: 'Time to cook (descending)'}}>Calories (ascending)</MenuItem>
@@ -91,8 +93,37 @@ const SortRecipesDropDown = (props) => {
             <MenuItem value={{sortValue: 'fat', order: 'descending', sortDescription: 'Fat (descending)'}}>Fat (descending)</MenuItem>
           </Select>
         </FormControl>
-      {/* </Grid>
-      <Grid container justify="flex-end"> */}
+
+     {/* <FormControl className={classes.formControl}> 
+        <InputLabel htmlFor="grouped-select">Sort Recipes</InputLabel>
+        <Select 
+          defaultValue="" 
+          id="grouped-select"
+          // open={open}
+          // onClose={handleClose}
+          // onOpen={handleOpen}
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em></em>
+          </MenuItem>
+
+          <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'ascending', sortDescription: 'Time to cook (ascending)'}}>Time to cook (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending', sortDescription: 'Time to cook (descending)'}}>Time to cook (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'calories', order: 'ascending', sortDescription: 'Time to cook (descending)'}}>Calories (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'calories', order: 'descending', sortDescription: 'Calories (descending)'}}>Calories (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'servings', order: 'ascending', sortDescription: 'Servings (ascending)'}}>Servings (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'servings', order: 'descending', sortDescription: 'Servings (descending)'}}>Servings (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'protein', order: 'ascending', sortDescription: 'Protein (ascending)'}}>Protein (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'protein', order: 'descending', sortDescription: 'Protein (descending)'}}>Protein (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'carbs', order: 'ascending', sortDescription: 'Carbs (ascending)'}}>Carbs (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'carbs', order: 'descending', sortDescription: 'Carbs (descending)'}}>Carbs (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'fat', order: 'ascending', sortDescription: 'Fat (ascending)'}}>Fat (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'fat', order: 'descending', sortDescription: 'Fat (descending)'}}>Fat (descending)</MenuItem>
+        </Select>
+      </FormControl> */}
+
+
         <Button 
           variant="outlined" 
           color="primary"
@@ -101,7 +132,6 @@ const SortRecipesDropDown = (props) => {
         >
           Undo Sort
         </Button>
-      {/* </Grid> */}
     </div>
   );
 }
@@ -112,7 +142,6 @@ SortRecipesDropDown.propTypes = {
   sortRecipesDescending: PropTypes.func,
   clearRecipeSortFilter: PropTypes.func
 };
-
 
 const mapStateToProps = (state) => ({data: state.recipes})
 
