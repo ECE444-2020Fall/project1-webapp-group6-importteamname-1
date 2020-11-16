@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import RecipeCardUserActions from './RecipeCardUserActions';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,6 +43,7 @@ const RecipeCard = (props) => {
     <div className={classes.root}> 
            <Card>
               <CardActionArea>
+              <Link key={props.recipeId} to={`recipe-search-results/${props.recipeId}`}>
                 <CardMedia
                   component="img"
                   alt="imageUnavailable"
@@ -56,7 +59,9 @@ const RecipeCard = (props) => {
                     {props.calories} Calories 
                   </Typography>
                 </CardContent>
+                </Link>
               </CardActionArea>
+              <RecipeCardUserActions recipe_id={props.recipeId} />
             </Card>
     </div>
   );
