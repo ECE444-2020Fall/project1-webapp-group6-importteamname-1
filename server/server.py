@@ -51,6 +51,22 @@ def drop_db():
     db.session.commit()
     return "dropped table"
 
+@app.route('/api/smart_shopping_list')
+def generate_smart_shopping_list_items():
+    user_id = get_user_id()
+    pantry_list_items = inventory_manager.get_all_user_items(user_id, PantryList).get_json()["items"]
+    shopping_list_items = inventory_manager.get_all_user_items(user_id, ShoppingList).get_json()["items"]
+    carted_recipe_ids = inventory_manager.get_all_user_items(user_id, RecipeCart).get_json()["items"]
+    recipe_ingredients = ingredient_controller.get_ingredient_names_by_recipe_ids(RecipeIngredient, carted_recipe_ids).get_json()["ingredients"]
+    smart_ingredients = list(set(recipe_ingredients) - set(pantry_list_items) - set(shopping_list_items))
+    
+    response = {
+        "items": smart_ingredients
+    }
+    return make_response(jsonify(response), CONSTANTS['HTTP_STATUS']['200_OK'])
+
+
+
 @app.route('/api/user_notes', methods=['POST'])
 def add_or_update_user_notes():
     user_id = get_user_id()
