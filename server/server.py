@@ -176,11 +176,9 @@ def recommend_recipes():
         ).all()
         for recipe in recipeIngredients:
             recipes.append(recipe.recipe_id)
-    print(recipes)
-    print("Sorted:")
     recipes = sortListByFreq(recipes)
-    print(recipes)
-    return ""
+    
+    return recipe_controller.get_recipes_by_ids(recipes, Recipe)
 
 @app.route('/api/recipe_cart/<string:recipe_id>')
 def add_item_to_recipe_cart(recipe_id):
