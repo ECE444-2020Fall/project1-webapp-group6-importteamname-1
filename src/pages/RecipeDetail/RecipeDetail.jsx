@@ -69,7 +69,9 @@ const RecipeDetail = (props) => {
   let { recipe_id } =  useParams();
   const classes = useStyles();
   const [ingredients, setIngredients] = useState({});
-  let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id)
+
+  // TODO: if-statement to check existence
+  let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id);
 
   useEffect(() => {
     (async () => {
@@ -81,8 +83,9 @@ const RecipeDetail = (props) => {
     })();
   }, []);
 
+  // TODO: if-statement to check existence
   return (
-    <div className={classes.root}>
+    <div className={classes.root}> 
         <Grid container spacing={3} className={classes.grid} direction="row">  
           <Grid item xs={3} md={3} direction="column">
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.ingredientsPaper}`}>
