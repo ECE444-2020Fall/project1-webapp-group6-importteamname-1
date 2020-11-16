@@ -58,11 +58,11 @@ const NavBar = () => {
         </Link>
         <div className="navbar-nav">
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/pantry">
-            Pantry
+            Find Recipes
           </Link>
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-search-results">
+          {/* <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-search-results">
             Recipe Search Results
-          </Link>
+          </Link> */}
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/favourite-recipes">
             Favourite Recipes
           </Link>

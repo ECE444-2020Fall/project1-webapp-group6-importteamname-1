@@ -1,13 +1,8 @@
 import React from "react";
 import CONSTANTS from "../../constants";
-//import styles from "./styles.module.css";
-//import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-//import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-//import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-//import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {Redirect} from 'react-router-dom';
@@ -15,8 +10,7 @@ import Button from '@material-ui/core/Button';
 import background1 from './background1.png';
 import background2 from './background2.png';
 import background3 from './background3.png';
-
-
+import { Link } from "react-router-dom";
 
 function Background() {
   var rand = Math.floor(Math.random() * Math.floor(3))
@@ -99,11 +93,19 @@ const Welcome = () => {
                           Use the navagation bar on the top of your screen to traverse the app
                       </Typography>
                       <p/>
+                      <Link to="/pantry">
+                        <Button
+                        variant="contained" 
+                        color="primary" 
+                        fullWidth
+                        >
+                          Find Recipes
+                        </Button>
+                      </Link>
                       <form onSubmit={ handleLogout }>
                         <Button
                         type="submit"
-                        varient="contained" 
-                        color="primary" 
+                        variant="contained" 
                         href='/login'
                         fullWidth
                         className= { classes.submit }>

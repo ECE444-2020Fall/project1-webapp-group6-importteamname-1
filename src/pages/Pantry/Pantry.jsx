@@ -69,7 +69,7 @@ const Pantry = (props) => {
       <PageTitle titleName="What's in your Pantry?" />
       <p></p>
       <center>
-        <p>Enter ingredients below and press enter.</p>
+        <p>Type ingredients below and press enter.</p>
       </center>
       <ListContainer
         newItem={newItem}
