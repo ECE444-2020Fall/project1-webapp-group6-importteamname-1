@@ -13,23 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {Redirect} from 'react-router-dom';
-import background1 from './background1.png'
-import background2 from './background2.png'
-import background3 from './background3.png'
-
-function Background() {
-  var rand = Math.floor(Math.random() * Math.floor(3))
-  if(rand == 0){
-    return background1
-  }
-  else if (rand == 1){
-    return background2
-  }
-  else{
-    return background3
-  }
-}
-
+import {Background} from './background'
 
 const useStyles = makeStyles((theme) => ({
   root: {
