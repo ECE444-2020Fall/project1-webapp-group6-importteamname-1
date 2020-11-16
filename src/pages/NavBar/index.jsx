@@ -78,7 +78,6 @@ const NavBar = () => {
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/Profile">
             Profile
           </Link>
-          <SimpleMenu></SimpleMenu>
         </div>
       </nav>
     </React.Fragment>
