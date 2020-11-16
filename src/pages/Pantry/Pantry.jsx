@@ -78,10 +78,16 @@ const Pantry = (props) => {
   return (
     <div>        
       <PageTitle titleName="What's in your Pantry?" />
-      <p></p>
       <center>
-        <p>Type ingredients below and press enter.</p>
+      <Typography component="body1" variant="body1" paragraph='true'>
+          We will recomend recipes based on the ingredients you already have!
+          <p></p>
+        </Typography>
+        <Typography component="body1" variant="caption">
+          (E.g. type 'onion', press enter, then click 'RECOMMEND RECIPES' to search for recipes with apples)
+        </Typography>
       </center>
+      <br></br>
       <ListContainer
         newItem={newItem}
         setNewItem={setNewItem}
@@ -91,12 +97,6 @@ const Pantry = (props) => {
       />
       <center>
         
-        <Typography component="body1" variant="body1" paragraph='true'>
-          Help us help you by telling us which ingredients you currently have in your pantry.
-          <p></p>
-          We will use these ingredients to recomend recipes that make use of the ingredients you already have!
-          <p></p>
-        </Typography>
         <Link to={`/recipe-search-results`}>
           <Button
             onClick={handleClick}
