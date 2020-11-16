@@ -18,6 +18,7 @@ import Welcome from "./pages/Login/Welcome";
 import RouteToLogin from "./pages/Login/RouteToLogin";
 import Profile from "./pages/Login/Profile";
 import Footer from "./pages/Footer";
+import Pantry from './pages/Pantry/Pantry';
 import ScrollIntoView from './components/common/ScrollIntoView';
 
 const App = (props) => {
@@ -60,6 +61,7 @@ const defaultContainer = () => {
       <Route exact path='/recipe-cart' component={RecipeCart} />
       <Route exact path='/recipe-search-results/:recipe_id' component={RecipeDetail} />
       <Route exact path='/recipe-search-results' component={RecipeSearchResults} />
+      <Route exact path='/pantry' component={Pantry} />
     </ScrollIntoView>
   </React.Fragment>
   )

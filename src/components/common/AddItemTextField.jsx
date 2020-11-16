@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 
 
-const AddItemTextField = ({ newItem, setNewItem, addShoppingListItem }) => {
+const AddItemTextField = ({ newItem, setNewItem, addShoppingListItem, Label }) => {
 
   return (
     <TextField
@@ -17,7 +17,7 @@ const AddItemTextField = ({ newItem, setNewItem, addShoppingListItem }) => {
           }
         }
       }
-      label='Add Item to Shopping List'
+      label ={Label}
       variant='outlined' />
   )
 }
@@ -25,7 +25,8 @@ const AddItemTextField = ({ newItem, setNewItem, addShoppingListItem }) => {
 AddItemTextField.propTypes = {
   newItem: PropTypes.any,
   setNewItem: PropTypes.func,
-  addShoppingListItem: PropTypes.func
+  addShoppingListItem: PropTypes.func,
+  Label: PropTypes.string
 };
 
 export { AddItemTextField };

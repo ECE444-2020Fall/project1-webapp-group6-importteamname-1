@@ -20,6 +20,7 @@ const ListContainer = ({
   setNewItem,
   shoppingItems,
   addShoppingListItem,
+  Label
  }) => {
   const classes = useStyles();
   return (
@@ -27,7 +28,8 @@ const ListContainer = ({
         <AddItemTextField
           newItem={newItem}
           setNewItem={setNewItem}
-          addShoppingListItem={addShoppingListItem} />
+          addShoppingListItem={addShoppingListItem}
+          Label = {Label} />
         <ListWithDeletableItems shoppingItems={shoppingItems} />
       </div>
   )
@@ -38,7 +40,8 @@ ListContainer.propTypes = {
   newItem: PropTypes.any,
   setNewItem: PropTypes.func,
   shoppingItems: PropTypes.any,
-  addShoppingListItem: PropTypes.func
+  addShoppingListItem: PropTypes.func,
+  Label: PropTypes.string
 };
 
 export { ListContainer };

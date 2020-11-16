@@ -75,6 +75,9 @@ const NavBar = () => {
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-cart">
             Recipe Cart
           </Link>
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/pantry">
+            Pantry
+          </Link>
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="Profile">
             Profile
           </Link>
