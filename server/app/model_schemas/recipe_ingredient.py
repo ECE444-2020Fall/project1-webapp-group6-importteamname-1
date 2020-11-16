@@ -30,4 +30,7 @@ class RecipeIngredient(db.Model):
         self.amount = amount
         self.unit_of_measurement = unit_of_measurement
 
+    def get_item_name(self):
+        return self.ingredient_name
+
  

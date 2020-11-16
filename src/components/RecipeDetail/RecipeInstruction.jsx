@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const RecipeInstruction = (props) => {
-  let parsedInstructions = props.instructions.split(",");
+  let parsedInstructions = props.instructions.split("',");
   const classes = useStyles()
 
   return (
@@ -42,7 +42,7 @@ const RecipeInstruction = (props) => {
                 <ArrowForwardIcon />
               </ListItemIcon>
               <ListItemText
-                primary={instructionStep}
+                primary={instructionStep.substr(2, instructionStep.length)}
               />
             </ListItem>
           ))}

@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 //import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { PageTitle } from '../../components/common/PageTitle';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,7 +87,9 @@ const Pantry = () => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div>        
+      <PageTitle titleName="What's in your Pantry?" />
+      <p></p>
       <ListContainer
         pageTitle='Whats in your Pantry?'
         newItem={newItem}
