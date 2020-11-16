@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
 import { Divider, Box } from "@material-ui/core";
 import RecipeCard from "../../components/common/RecipeCard";
+import SortRecipeDropDown from "../../components/RecipeSearchResults/SortRecipesDropDown";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,11 +103,11 @@ const RecipeSearchResults = (props) => {
 
   return (
     <div>
-        <p>Sort by:</p>
-        <button onClick={() => handleSortToggle("time_to_cook_in_minutes")}>Time To Cook</button>
+        {/* <p>Sort by:</p> */}
+        {/* <button onClick={() => handleSortToggle("time_to_cook_in_minutes")}>Time To Cook</button>
         <button onClick={() => handleSortToggle("calories")}>Calories</button>
-        <button onClick={() => handleSortToggle("servings")}>Servings</button>
-        <button onClick={() => props.clearRecipeSortFilter()}>Clear Sort Filter</button>
+        <button onClick={() => handleSortToggle("servings")}>Servings</button> */}
+        <SortRecipeDropDown />
       {recipeSearchResult}
     </div>
   );
