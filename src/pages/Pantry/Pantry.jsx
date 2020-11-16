@@ -67,7 +67,12 @@ const Pantry = () => {
   return (
     <div>        
       <PageTitle titleName="What's in your Pantry?" />
-      <p></p>
+      <center>
+        <Typography component="body1" variant="caption">
+          Try typing apples to search for recipes with apples
+        </Typography>
+      </center>
+
       <ListContainer
         newItem={newItem}
         setNewItem={setNewItem}
