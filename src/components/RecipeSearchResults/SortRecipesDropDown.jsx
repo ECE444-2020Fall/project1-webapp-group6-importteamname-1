@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     marginRight: 50
   },
   formControl: {
-    marginTop: 30,
+    marginTop: 10,
     minWidth: 200,
     marginRight: 50
   },
@@ -65,7 +65,7 @@ const SortRecipesDropDown = (props) => {
 
   return (
     <div className={classes.root}>
-      <Grid container justify="flex-end">
+      {/* <Grid container justify="flex-end"> */}
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-controlled-open-select-label">Sort Recipes by:</InputLabel>
           <Select
@@ -91,8 +91,8 @@ const SortRecipesDropDown = (props) => {
             <MenuItem value={{sortValue: 'fat', order: 'descending', sortDescription: 'Fat (descending)'}}>Fat (descending)</MenuItem>
           </Select>
         </FormControl>
-      </Grid>
-      <Grid container justify="flex-end">
+      {/* </Grid>
+      <Grid container justify="flex-end"> */}
         <Button 
           variant="outlined" 
           color="primary"
@@ -101,7 +101,7 @@ const SortRecipesDropDown = (props) => {
         >
           Undo Sort
         </Button>
-      </Grid>
+      {/* </Grid> */}
     </div>
   );
 }

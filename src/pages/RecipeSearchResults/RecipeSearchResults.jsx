@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
 import { Divider, Box } from "@material-ui/core";
 import RecipeCard from "../../components/common/RecipeCard";
 import SortRecipeDropDown from "../../components/RecipeSearchResults/SortRecipesDropDown";
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,8 +20,20 @@ const useStyles = makeStyles((theme) => ({
   paginator: {
     justifyContent: "center",
     padding: "10px"
+  },
+  topBanner: {
+    flexGrow: 1,
+  },
+  recipeCount: {
+    marginTop: 20,
   }
 }));
+
+const GreyTextTypography = withStyles({
+  root: {
+    color: "grey"
+  }
+})(Typography);
 
 const RecipeSearchResults = (props) => {
   const classes = useStyles();
@@ -32,9 +46,18 @@ const RecipeSearchResults = (props) => {
 
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  if (props.data) { 
+  if (props.data) {     
     recipeSearchResult =  <div className={classes.root}>
-      <SortRecipeDropDown />
+      <div className={classes.topBanner}>
+        <Grid container spacing={3} justify="flex-start">
+          <Grid className={classes.recipeCount} item xs={6}>
+            <GreyTextTypography variant="h7">We found {props.data[recipesToBeDisplayed].length} recipes. Please enjoy.</GreyTextTypography>
+          </Grid>
+          <Grid container xs={6} justify="flex-end">
+            <SortRecipeDropDown />
+          </Grid>
+        </Grid>
+      </div>
         <Grid
           container
           spacing={5}
