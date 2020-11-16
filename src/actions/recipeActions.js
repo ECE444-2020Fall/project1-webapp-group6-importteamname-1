@@ -21,6 +21,7 @@ export const getRecipes = () => async dispatch => {
 
 export const getRecommendedRecipes = () => async dispatch => {
     try {
+        console.log("CLICKKK");
         await fetch(CONSTANTS.ENDPOINT.PANTRY_RECIPES, {
             credentials: 'include',
             method: 'post'

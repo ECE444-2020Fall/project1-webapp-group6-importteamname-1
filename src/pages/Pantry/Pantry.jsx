@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import { PageTitle } from '../../components/common/PageTitle';
 import { connect } from 'react-redux'; 
 import { getRecommendedRecipes } from '../../actions/recipeActions';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +45,7 @@ const Pantry = (props) => {
 
   const handleClick = (evt) => {
     console.log(evt)
-    props.getRecommendedRecipes()
+    props.getRecommendedRecipes() // Need this in RecipeSearchResult's useEffect() 
   }
 
   if (refreshList) {
@@ -84,19 +86,25 @@ const Pantry = (props) => {
           We will use these ingredients to recomend recipes that make use of the ingredients you already have!
           <p></p>
         </Typography>
-        <Button
-          onClick={handleClick}
-          type="submit"
-          variant="contained" 
-          color="primary" 
-          href='/recipe-search-results'
-          className= { classes.submit }>
-              Recomend Recipes
-        </Button>
+        <Link to={`recipe-search-results/`}>
+          <Button
+            onClick={handleClick}
+            type="submit"
+            variant="contained" 
+            color="primary" 
+            // href='/recipe-search-results'
+            className= { classes.submit }>
+                Recomend Recipes
+          </Button>
+        </Link>
       </center>
     </div>
   );
 }
+
+Pantry.propTypes = {
+  getRecommendedRecipes: PropTypes.func
+};
 
 const mapStateToProps = (state) => ({data: state.recipes})
 
