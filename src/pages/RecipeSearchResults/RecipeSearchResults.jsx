@@ -40,9 +40,25 @@ const RecipeSearchResults = (props) => {
   let recipeSearchResult = null;
   const itemsPerPage = 10;
   const [page, setPage] = React.useState(1);
-  const [noOfPages] = React.useState(
-    Math.ceil(props.data.recipes.length / itemsPerPage)
+
+  const [noOfPages, /*setNoOfPages*/] = React.useState(
+    props.data.recipes && props.data.recipes.length ? 
+      Math.ceil(props.data.recipes.length / itemsPerPage) : null
   );
+  
+
+  // if (refresh) {
+  //   setRefresh(false)
+  //     setNoOfPages({
+  //     noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
+  //   });
+  // }
+
+  console.log("NO. PAGES");
+  console.log(noOfPages);
+  console.log("CURRENT PAGE");
+  console.log(page);
+  console.log(Math.ceil(props.data.recipes.length / itemsPerPage))
 
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
@@ -120,3 +136,4 @@ RecipeSearchResults.propTypes = {
 const mapStateToProps = (state) => ({data: state.recipes})
 
 export default connect(mapStateToProps)(RecipeSearchResults);
+
