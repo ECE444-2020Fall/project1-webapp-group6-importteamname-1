@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect } from 'react';
 import { connect } from 'react-redux'; 
 import PropTypes from 'prop-types';
 import { Grid } from "@material-ui/core";
@@ -24,22 +24,20 @@ const RecipeSearchResults = (props) => {
   const classes = useStyles();
   let recipeSearchResult = null;
   const itemsPerPage = 10;
-  const [refresh, setRefresh] = useState(true);
   const [page, setPage] = React.useState(1);
 
-  const [noOfPages, setNoOfPages] = React.useState(
+  const [noOfPages, /*setNoOfPages*/] = React.useState(
     props.data.recipes && props.data.recipes.length ? 
       Math.ceil(props.data.recipes.length / itemsPerPage) : null
   );
   
 
-  if (refresh) {
-    setRefresh(false)
-      setNoOfPages({
-      noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
-    });
-    
-  }
+  // if (refresh) {
+  //   setRefresh(false)
+  //     setNoOfPages({
+  //     noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
+  //   });
+  // }
 
   console.log("NO. PAGES");
   console.log(noOfPages);

@@ -46,16 +46,18 @@ const Pantry = (props) => {
   }
 
   useEffect(() => {
-    props.clearRecipes();
+    // props.clearRecipes();
   }, []);
   
 
-  const handleClick = (evt) => {
-    props.clearRecipes();
+  const handleClick = async () => {
+    // props.clearRecipes();
     if (pantryItems.length > 0) {
-      props.getRecommendedRecipes(); 
+      await props.clearRecipes();
+      await props.getRecommendedRecipes(); 
     } else {
-      props.getRecipes();
+      await props.clearRecipes();
+      await props.getRecipes();
     }
   }
 
@@ -84,7 +86,7 @@ const Pantry = (props) => {
           <p></p>
         </Typography>
         <Typography component="body1" variant="caption">
-          (E.g. type 'onion', press enter, then click 'RECOMMEND RECIPES' to search for recipes with onions)
+          (E.g. type &apos; onion &apos;, press enter, then click &apos;RECOMMEND RECIPES&apos; to search for recipes with onions)
         </Typography>
       </center>
       <br></br>
@@ -99,7 +101,7 @@ const Pantry = (props) => {
         
         <Link to={`/recipe-search-results`}>
           <Button
-            onClick={handleClick}
+            onClick={handleClick} // This should happen before <Link to={}>
             type="submit"
             variant="contained" 
             color="primary" 
@@ -113,19 +115,11 @@ const Pantry = (props) => {
 }
 
 Pantry.propTypes = {
-  getRecommendedRecipes: PropTypes.func
+  getRecommendedRecipes: PropTypes.func,
+  clearRecipes: PropTypes.func,
+  getRecipes: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({data: state.recipes})
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearRecipes: () => {
-      dispatch({
-        type: "CLEAR_RECIPLES",
-      })
-    }
-  }
-}
 
 export default connect(mapStateToProps, {getRecommendedRecipes, getRecipes, clearRecipes})(Pantry);

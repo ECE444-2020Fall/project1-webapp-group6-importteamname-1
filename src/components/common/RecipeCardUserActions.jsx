@@ -8,7 +8,7 @@ import { UserRating } from "../RecipeDetail/UserRating";
 import PropTypes from 'prop-types';
 import Card from "@material-ui/core/Card";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   cardAction: {
     width: 500,
     height: 70,
@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
   }
 }));
-
 
 const RecipeCardUserActions = (props) => {
   const classes = useStyles();

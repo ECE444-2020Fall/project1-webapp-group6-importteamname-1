@@ -21,9 +21,9 @@ import Footer from "./pages/Footer";
 import Pantry from './pages/Pantry/Pantry';
 import ScrollIntoView from './components/common/ScrollIntoView';
 
-const App = (props) => {
+const App = () => {
   useEffect(() => {
-    // props.getRecipes()
+    // props.getRecipes();
   }, []);
     return (
       <React.Fragment>
