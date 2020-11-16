@@ -100,7 +100,8 @@ const RecipeDetail = (props) => {
           <Grid item xs={5} md={5} direction="column" className={classes.leftColumn}>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.recipePhotoPaper}`}>
               <img src={currentRecipe.image_url} className={classes.recipeImage}></img>
-              <h4> {currentRecipe.recipe_name} </h4>
+              <br/><br/>
+              <h3> {currentRecipe.recipe_name} </h3>
               <h7 className={classes.recipeAttributeText}> Cuisine(s): </h7> {(currentRecipe.cuisine).slice(1, currentRecipe.cuisine.length - 1)} 
             </Paper>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.userActionsPaper}`}>
