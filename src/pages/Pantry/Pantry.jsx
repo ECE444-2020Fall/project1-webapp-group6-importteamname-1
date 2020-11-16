@@ -45,7 +45,7 @@ const Pantry = (props) => {
 
   const handleClick = (evt) => {
     console.log(evt)
-    props.getRecommendedRecipes() // Need this in RecipeSearchResult's useEffect() 
+    props.getRecommendedRecipes() 
   }
 
   if (refreshList) {
@@ -86,13 +86,12 @@ const Pantry = (props) => {
           We will use these ingredients to recomend recipes that make use of the ingredients you already have!
           <p></p>
         </Typography>
-        <Link to={`recipe-search-results/`}>
+        <Link to={`/recipe-search-results`}>
           <Button
             onClick={handleClick}
             type="submit"
             variant="contained" 
             color="primary" 
-            // href='/recipe-search-results'
             className= { classes.submit }>
                 Recomend Recipes
           </Button>
