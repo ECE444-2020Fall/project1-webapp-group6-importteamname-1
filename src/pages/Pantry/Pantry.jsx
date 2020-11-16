@@ -6,7 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { PageTitle } from '../../components/common/PageTitle';
-
+import { connect } from 'react-redux'; 
+import { getRecommendedRecipes } from '../../actions/recipeActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Pantry = () => {
+const Pantry = (props) => {
   const [newItem, setNewItem] = useState('');
   const [pantryItems, setPantryItems] = useState([]);
   const [refreshList, setRefreshList] = useState(true)
@@ -42,10 +43,7 @@ const Pantry = () => {
 
   const handleClick = (evt) => {
     console.log(evt)
-    fetch(CONSTANTS.ENDPOINT.PANTRY_RECIPES, {
-      credentials: 'include',
-      method: 'post'
-    })
+    props.getRecommendedRecipes()
   }
 
   if (refreshList) {
@@ -68,6 +66,9 @@ const Pantry = () => {
     <div>        
       <PageTitle titleName="What's in your Pantry?" />
       <p></p>
+      <center>
+        <p>Enter ingredients below and press enter.</p>
+      </center>
       <ListContainer
         newItem={newItem}
         setNewItem={setNewItem}
@@ -96,4 +97,7 @@ const Pantry = () => {
     </div>
   );
 }
-export default Pantry;
+
+const mapStateToProps = (state) => ({data: state.recipes})
+
+export default connect(mapStateToProps, {getRecommendedRecipes})(Pantry);

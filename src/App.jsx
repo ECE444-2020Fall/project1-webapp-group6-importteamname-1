@@ -23,7 +23,7 @@ import ScrollIntoView from './components/common/ScrollIntoView';
 
 const App = (props) => {
   useEffect(() => {
-    props.getRecipes()
+    // props.getRecipes()
   }, []);
     return (
       <React.Fragment>

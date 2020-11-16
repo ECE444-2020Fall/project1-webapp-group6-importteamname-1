@@ -11,6 +11,11 @@ export default function(state = initialState, action) {
                 ...state,
                 recipes: action.payload,
             }
+        case 'GET_RECOMMENDED_RECIPES':
+            return {
+                ...state,
+                recipes: action.recommendedRecipes
+            }
         case 'SORT_BY_CALORIES_ASCENDING':
         case 'SORT_BY_SERVINGS_ASCENDING':
         case 'SORT_BY_TIME_TO_COOK_IN_MINUTES_ASCENDING':
