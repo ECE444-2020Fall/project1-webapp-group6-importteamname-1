@@ -84,7 +84,7 @@ const Pantry = (props) => {
           <p></p>
         </Typography>
         <Typography component="body1" variant="caption">
-          (E.g. type 'onion', press enter, then click 'RECOMMEND RECIPES' to search for recipes with apples)
+          (E.g. type 'onion', press enter, then click 'RECOMMEND RECIPES' to search for recipes with onions)
         </Typography>
       </center>
       <br></br>

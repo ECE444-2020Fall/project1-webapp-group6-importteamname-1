@@ -24,6 +24,7 @@ const RecipeSearchResults = (props) => {
   const classes = useStyles();
   let recipeSearchResult = null;
   const itemsPerPage = 10;
+  const [refresh, setRefresh] = useState(true);
   const [page, setPage] = React.useState(1);
 
   const [noOfPages, setNoOfPages] = React.useState(
@@ -31,6 +32,15 @@ const RecipeSearchResults = (props) => {
       Math.ceil(props.data.recipes.length / itemsPerPage) : null
   );
   
+
+  if (refresh) {
+    setRefresh(false)
+      setNoOfPages({
+      noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
+    });
+    
+  }
+
   console.log("NO. PAGES");
   console.log(noOfPages);
   console.log("CURRENT PAGE");

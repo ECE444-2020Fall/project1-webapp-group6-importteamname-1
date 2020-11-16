@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
-      marginTop: 50
+      marginTop: 20
     },
     grid: {
       width: '100%',
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContent: {
       width: 500,
-      height: 150
+      height: 120
     }
   }));
 

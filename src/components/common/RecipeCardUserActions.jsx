@@ -1,18 +1,34 @@
 import React from "react";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import { makeStyles } from '@material-ui/core/styles';
 import { FavouritesButton } from "../RecipeDetail/FavouritesButton";
 import { RecipeCartButton } from "../RecipeDetail/RecipeCartButton";
 import { UserRating } from "../RecipeDetail/UserRating";
 import PropTypes from 'prop-types';
 import Card from "@material-ui/core/Card";
 
+const useStyles = makeStyles((theme) => ({
+  cardAction: {
+    width: 500,
+    height: 70,
+    marginBottom: 30
+  },
+  cardContent: {
+    width: 500,
+    height: 20,
+  }
+}));
+
+
 const RecipeCardUserActions = (props) => {
+  const classes = useStyles();
+
   return (
      <div> 
         <Card>
-          <CardActions>
-            <CardContent>
+          <CardActions className={classes.cardAction}>
+            <CardContent className={classes.cardContent}>
               <UserRating recipe_id={props.recipe_id} />
             </CardContent>
           </CardActions>   
