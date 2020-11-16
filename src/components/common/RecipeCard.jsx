@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const RecipeCard = (props) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
   return (
     <div className={classes.root}> 
