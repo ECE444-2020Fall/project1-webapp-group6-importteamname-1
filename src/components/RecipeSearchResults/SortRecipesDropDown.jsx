@@ -7,8 +7,9 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'; 
 import { Grid } from "@material-ui/core";
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: '#f7f7f7',
   },
@@ -41,13 +42,13 @@ const SortRecipesDropDown = (props) => {
 
     recipesToBeSorted = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? [...props.data.recipes] : props.data.sortedRecipes;
     
-    if (sortOrder === "descending") {
+    if (sortOrder === "ascending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
       console.log(sortDescription);
       setSortDescription({sortDescription: event.target.value.sortDescription});
       console.log(sortDescription);
-    } else { 
+    } else if (sortOrder === "descending"){ 
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
       setSortDescription(sortDescription);
@@ -61,7 +62,6 @@ const SortRecipesDropDown = (props) => {
   const handleOpen = () => {
     setOpen(true);
   };
-
 
   return (
     <div className={classes.root}>
@@ -78,11 +78,17 @@ const SortRecipesDropDown = (props) => {
             onChange={handleChange}
           >
             <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'ascending', sortDescription: 'Time to cook (ascending)'}}>Time to cook (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending', sortDescription: ''}}>Time to cook (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending', sortDescription: 'Time to cook (descending)'}}>Time to cook (descending)</MenuItem>
             <MenuItem value={{sortValue: 'calories', order: 'ascending', sortDescription: 'Time to cook (descending)'}}>Calories (ascending)</MenuItem>
             <MenuItem value={{sortValue: 'calories', order: 'descending', sortDescription: 'Calories (descending)'}}>Calories (descending)</MenuItem>
             <MenuItem value={{sortValue: 'servings', order: 'ascending', sortDescription: 'Servings (ascending)'}}>Servings (ascending)</MenuItem>
             <MenuItem value={{sortValue: 'servings', order: 'descending', sortDescription: 'Servings (descending)'}}>Servings (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'protein', order: 'ascending', sortDescription: 'Protein (ascending)'}}>Protein (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'protein', order: 'descending', sortDescription: 'Protein (descending)'}}>Protein (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'carbs', order: 'ascending', sortDescription: 'Carbs (ascending)'}}>Carbs (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'carbs', order: 'descending', sortDescription: 'Carbs (descending)'}}>Carbs (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'fat', order: 'ascending', sortDescription: 'Fat (ascending)'}}>Fat (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'fat', order: 'descending', sortDescription: 'Fat (descending)'}}>Fat (descending)</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -101,7 +107,10 @@ const SortRecipesDropDown = (props) => {
 }
 
 SortRecipesDropDown.propTypes = {
-
+  data: PropTypes.object,
+  sortRecipesAscending: PropTypes.func,
+  sortRecipesDescending: PropTypes.func,
+  clearRecipeSortFilter: PropTypes.func
 };
 
 
