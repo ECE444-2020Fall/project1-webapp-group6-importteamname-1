@@ -54,9 +54,6 @@ const RecipeSearchResults = (props) => {
     //   noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
     // });
     
-    // TRY THIS:!!!
-    //EXTRACT PAGINATION INTO SEPARATE COMPONENT?
-
     // TRY THIS!!!
     // get recipes from Redux
 
