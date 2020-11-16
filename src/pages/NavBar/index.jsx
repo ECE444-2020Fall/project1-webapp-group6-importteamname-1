@@ -53,7 +53,7 @@ const NavBar = () => {
         <a href="#mainContent">Skip to Main Content</a>
       </div>
       <nav style={{backgroundColor: '#3f51b5'}} className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-        <Link style={{color: '#ffffff'}} className="navbar-brand" to="/" role="heading" aria-level="1">
+        <Link style={{color: '#ffffff'}} className="navbar-brand" role="heading" aria-level="1">
           {CONSTANTS.APP_NAME}
         </Link>
         <div className="navbar-nav">
