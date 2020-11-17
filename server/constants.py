@@ -10,19 +10,9 @@ CONSTANTS = {
         '404_NOT_FOUND': HTTPStatus.NOT_FOUND,
         '500_INTERNAL_SERVER_ERROR': HTTPStatus.INTERNAL_SERVER_ERROR
     },
-    'ENDPOINT': {
-        'MASTER_DETAIL': '/api/masterdetail',
-        'LIST': '/api/list',
-        'REGISTER': '/api/add_user',
-        'LOGIN': '/api/login',
-        'GET_USER': '/api/get_user',
-        'LOGOUT': '/api/logout',
-    },
     'DATABASE_URL': 'mysql+pymysql://admin:ece444iscool@chefcopilotdb.cwgapkme6bda.us-east-2.rds.amazonaws.com/chefcopilot?charset=utf8',
     'CHEF_COPILOT': {
         'LOCAL_HOST_BASE_URL': "http://localhost:3001/api",
-        'ADD_RECIPE': "/recipes/add",
-        'ADD_INGREDIENT': "/ingredients/add"
     },
     'SPOONACULAR_API': {
         'API_KEY': 'e568b1c9b8374dbe9ce768f1f5a94d08',

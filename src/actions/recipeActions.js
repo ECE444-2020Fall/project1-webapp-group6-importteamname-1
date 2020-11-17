@@ -23,7 +23,6 @@ export const getRecommendedRecipes = () => async dispatch => {
     try {
         await fetch(CONSTANTS.ENDPOINT.PANTRY_RECIPES, {
             credentials: 'include',
-            method: 'post'
         })
         .then(response => response.json())
         .then(json =>{                     

@@ -26,11 +26,11 @@ class UserRating(db.Model):
         self.recipe_id = recipe_id
         self.user_rating = user_rating
 
-    def update_feedback(self, feedback):
-        self.user_rating = feedback
+    def update_item(self, value):
+        self.user_rating = value
 
     def get_item(self):
         return self.user_rating
 
-    def get_feedback(self):
-        return self.user_rating
+    def get_item_name(self):
+        return self.recipe_id

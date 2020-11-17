@@ -23,8 +23,5 @@ class RecipeCart(db.Model):
     def get_item_name(self):
         return self.recipe_id
 
-    def get_feedback(self):
-        return True
-
     def get_item(self):
         return True

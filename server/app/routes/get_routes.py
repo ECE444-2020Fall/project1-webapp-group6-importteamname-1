@@ -1,8 +1,34 @@
-from flask import Flask, jsonify, request, make_response, send_from_directory, session
-from app import db, app
+from flask import Flask, jsonify, make_response
+from app import app
 from app.models import *
-from . import inventory_manager, ingredient_controller, recipe_controller, recipe_personalization_manager
+from constants import CONSTANTS
+from . import inventory_manager, ingredient_controller, recipe_controller
 from utils.helper_functions import * 
+
+@app.route('/api/<any(user_notes,user_rating,recipe_cart,favourites_list):model>/<string:recipe_id>')
+def get_item_from_model(model, recipe_id):
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+    model = models_map[model]
+    return inventory_manager.get_item(user_id, recipe_id, model)
+
+@app.route('/api/<any(user_notes,user_rating,shopping_list,pantry_list):model>')
+def get_all_user_items_from_model(model):
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+    model = models_map[model]
+    return inventory_manager.get_all_user_items(user_id, model)
+
+@app.route('/api/<any(recipe_cart, favourites_list):model>')
+def get_all_user_recipes_from_model(model):
+    user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+    model = models_map[model]
+    user_carted_recipe_ids = inventory_manager.get_all_user_items(user_id, model).get_json()["items"]
+    return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 @app.route('/api/smart_shopping_list')
 def generate_smart_shopping_list_items():
@@ -18,41 +44,7 @@ def generate_smart_shopping_list_items():
     response = {"items": smart_ingredients}
     return make_response(jsonify(response), CONSTANTS['HTTP_STATUS']['200_OK'])
 
-models = {
-    "user_rating": UserRating,
-    "user_notes": UserNotes,
-    "recipe_cart": RecipeCart,
-    "favourites_list": UserFavourites,
-    "pantry_list": PantryList,
-    "shopping_list": ShoppingList
-}
-
-@app.route('/api/<any(user_notes,user_rating,recipe_cart,favourites_list):model>/<string:recipe_id>')
-def get_item_from_model(model, recipe_id):
-    model = models[model]
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-    return inventory_manager.get_item(user_id, recipe_id, model)
-
-@app.route('/api/<any(user_notes,user_rating,shopping_list,pantry_list):model>')
-def get_all_user_items_from_model(model):
-    model = models[model]
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-    return inventory_manager.get_all_user_items(user_id, model)
-
-@app.route('/api/<any(recipe_cart, favourites_list):model>')
-def get_all_user_recipes_from_model(model):
-    user_id = get_user_id()
-    model = models[model]
-    if not user_id:
-        return user_id_not_found_response() 
-    user_carted_recipe_ids = inventory_manager.get_all_user_items(user_id, model).get_json()["items"]
-    return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
-
-@app.route('/api/ingredients/<string:recipe_id>', methods=['GET'])
+@app.route('/api/ingredients/<string:recipe_id>')
 def get_ingredient_by_recipe_id(recipe_id):
     return ingredient_controller.get_ingredient_by_recipe_id(RecipeIngredient, recipe_id)
 
@@ -73,3 +65,10 @@ def get_user():
 
     json_response = jsonify({'username': user.username})
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
+
+@app.route('/api/logout')
+def logout_user():
+    if 'user_id' in session:
+        del session['user_id']
+        return make_response(CONSTANTS['HTTP_STATUS']['200_OK'])
+    return make_response(CONSTANTS['HTTP_STATUS']['400_BAD_REQUEST'])

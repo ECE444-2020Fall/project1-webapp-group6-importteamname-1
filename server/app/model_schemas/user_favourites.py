@@ -27,9 +27,5 @@ class UserFavourites(db.Model):
     def get_item(self):
         return True
 
-    def get_feedback(self):
-        return True
-
     def get_item_name(self):
         return self.recipe_id
-        return int.from_bytes(self.recipe_id, byteorder='little')
