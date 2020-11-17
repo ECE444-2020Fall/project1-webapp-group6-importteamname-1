@@ -20,7 +20,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import FastfoodIcon from '@material-ui/icons/Fastfood';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import SearchIcon from '@material-ui/icons/Search';
