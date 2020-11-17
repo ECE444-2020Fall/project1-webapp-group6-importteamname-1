@@ -75,11 +75,14 @@ const Pantry = (props) => {
 
   if (!fetchRecipes) {
     return (
-      <div>        
+      <div> 
+        <br/>       
         <PageTitle titleName="What's in your Pantry?" />
         <center>
         <Typography component="body1" variant="body1" paragraph='true'>
             We will recommend recipes based on the ingredients you already have!
+            <br/>
+            To view all recipes, click &apos;RECOMMEND RECIPES&apos; with no items in your pantry
             <p></p>
           </Typography>
           <Typography component="body1" variant="caption">

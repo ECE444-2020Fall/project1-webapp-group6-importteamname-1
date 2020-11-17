@@ -26,8 +26,8 @@ const UserNotesContainer = () => {
     setRefresh(false);
     getItem(recipe_id, CONSTANTS.ENDPOINT.USER_NOTES)
       .then(res => {
-        if (res.feedback) {
-          setUserNotes(res.feedback);
+        if (res.item) {
+          setUserNotes(res.item);
         }
       });
   }

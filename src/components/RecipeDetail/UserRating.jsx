@@ -13,7 +13,7 @@ const UserRating = ({recipe_id}) => {
   if (refresh) {
     setRefresh(false)
     getItem(recipe_id, CONSTANTS.ENDPOINT.USER_RATING)
-    .then(res => setRatingValue(res.feedback? res.feedback : 0 ))
+    .then(res => setRatingValue(res.item? res.item : 0 ))
   }
 
   return (

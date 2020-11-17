@@ -26,6 +26,7 @@ const useStyles = makeStyles(() => ({
 const SortRecipesDropDown = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [sortLabel, setSortLabel] = React.useState("");
 
   useEffect(() => {
     props.clearRecipeSortFilter();
@@ -36,7 +37,7 @@ const SortRecipesDropDown = (props) => {
     let sortedRecipes = null;
     let sortOrder = event.target.value.order;
     let valueToBeSorted = event.target.value.sortValue;
-
+    setSortLabel(`${valueToBeSorted} (${sortOrder})`);
     recipesToBeSorted = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? [...props.data.recipes] : props.data.sortedRecipes;
     
     if (sortOrder === "ascending") {
@@ -59,10 +60,12 @@ const SortRecipesDropDown = (props) => {
   return (
     <div className={classes.root}>
         <FormControl className={classes.formControl}>
-          <InputLabel id="demo-controlled-open-select-label">Sort Recipes</InputLabel>
+          <InputLabel id="demo-controlled-open-select-label">Sort Recipes </InputLabel>
           <Select
+            LabelId="demo-controlled-open-select-label"
             id="demo-controlled-open-select"
-            defaultValue=""
+            value={sortLabel}
+            renderValue={(value)=> value}
             open={open}
             onClose={handleClose}
             onOpen={handleOpen}
@@ -85,7 +88,10 @@ const SortRecipesDropDown = (props) => {
         <Button 
           variant="outlined" 
           color="primary"
-          onClick={() => props.clearRecipeSortFilter()}
+          onClick={() => {
+            setSortLabel("")
+            props.clearRecipeSortFilter()
+          }}
           className={classes.undoSortButton}
         >
           Undo Sort

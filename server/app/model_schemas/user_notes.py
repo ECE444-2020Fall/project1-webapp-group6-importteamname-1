@@ -26,11 +26,11 @@ class UserNotes(db.Model):
         self.recipe_id = recipe_id
         self.user_notes = user_notes
 
-    def update_feedback(self, feedback):
-        self.user_notes = feedback
+    def update_item(self, value):
+        self.user_notes = value
 
-    def get_feedback(self):
+    def get_item(self):
         return self.user_notes
 
     def get_item_name(self):
-        return int.from_bytes(self.recipe_id, byteorder='little')
+        return self.recipe_id

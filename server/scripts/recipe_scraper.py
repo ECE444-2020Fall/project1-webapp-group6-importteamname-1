@@ -90,7 +90,7 @@ def process_spoonacular_recipes(spoonacular_api_key, spoonacular_recipes_json):
 
         recipe_id = uuid.uuid4()
         populate_recipes_database(recipe_id, recipe_name, image_url, cuisines, time_to_cook_in_minutes,
-                                                        servings, instructions, calories, carbs, fat, protein)
+            servings, instructions, calories, carbs, fat, protein)
         
         process_recipe_ingredients(spoonacular_api_key, spoonacular_recipe_id, recipe_id)
     return 

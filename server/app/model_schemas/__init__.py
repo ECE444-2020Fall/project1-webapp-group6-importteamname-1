@@ -1,4 +1,3 @@
-# from .favourites_list import FavouritesList
 from .pantry_list import PantryList
 from .recipe import Recipe
 from .recipe_cart import RecipeCart

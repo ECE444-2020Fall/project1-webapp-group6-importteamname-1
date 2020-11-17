@@ -60,6 +60,7 @@ const ShoppingList = () => {
 
   return (
     <div>
+      <br/>
       <PageTitle titleName="Shopping List" />
 
       <ListContainer
