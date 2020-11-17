@@ -20,23 +20,23 @@ const UserNotesButton = ({ userNotes, setEditMode, editMode }) => {
 
   return (
     <Button
-    size="small"
-    variant="contained"
-    color={editMode ? "primary" : "default"}
-    onClick={() => {
-      if (editMode) {
-        setFeedback(CONSTANTS.ENDPOINT.USER_NOTES, recipe_id, userNotes);
-      }
-      setEditMode(!editMode);
-    }}
-    className={classes.button}
-  > {editMode ? "Save" : "Edit"} </Button>
-);
+      size="small"
+      variant="contained"
+      color={editMode ? "primary" : "default"}
+      onClick={() => {
+        if (editMode) {
+          setFeedback(CONSTANTS.ENDPOINT.USER_NOTES, recipe_id, userNotes);
+        }
+        setEditMode(!editMode);
+      }}
+      className={classes.button}
+    > {editMode ? "Save" : "Edit"} </Button>
+  );
 };
 
 UserNotesButton.propTypes = {
   userNotes: PropTypes.any,
-  editMode: PropTypes.any, 
+  editMode: PropTypes.any,
   setEditMode: PropTypes.func
 };
 

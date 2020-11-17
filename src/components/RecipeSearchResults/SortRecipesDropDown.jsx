@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
@@ -32,22 +32,22 @@ const SortRecipesDropDown = (props) => {
     props.clearRecipeSortFilter();
   }, []);
 
-  const handleChange = (event) => {    
+  const handleChange = (event) => {
     let recipesToBeSorted = null;
     let sortedRecipes = null;
     let sortOrder = event.target.value.order;
     let valueToBeSorted = event.target.value.sortValue;
     setSortLabel(`${valueToBeSorted} (${sortOrder})`);
     recipesToBeSorted = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? [...props.data.recipes] : props.data.sortedRecipes;
-    
+
     if (sortOrder === "ascending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
-    } else if (sortOrder === "descending"){ 
+    } else if (sortOrder === "descending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
-    } 
-  }
+    }
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -59,46 +59,46 @@ const SortRecipesDropDown = (props) => {
 
   return (
     <div className={classes.root}>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-controlled-open-select-label">Sort Recipes </InputLabel>
-          <Select
-            LabelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
-            value={sortLabel}
-            renderValue={(value)=> value}
-            open={open}
-            onClose={handleClose}
-            onOpen={handleOpen}
-            onChange={handleChange}
-          >
-            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'ascending'}}>Time to cook (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending'}}>Time to cook (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'calories', order: 'ascending'}}>Calories (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'calories', order: 'descending'}}>Calories (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'servings', order: 'ascending'}}>Servings (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'servings', order: 'descending'}}>Servings (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'protein', order: 'ascending'}}>Protein (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'protein', order: 'descending'}}>Protein (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'carbs', order: 'ascending'}}>Carbs (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'carbs', order: 'descending'}}>Carbs (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'fat', order: 'ascending'}}>Fat (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'fat', order: 'descending'}}>Fat (descending)</MenuItem>
-          </Select>
-        </FormControl>
-        <Button 
-          variant="outlined" 
-          color="primary"
-          onClick={() => {
-            setSortLabel("")
-            props.clearRecipeSortFilter()
-          }}
-          className={classes.undoSortButton}
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-controlled-open-select-label">Sort Recipes </InputLabel>
+        <Select
+          LabelId="demo-controlled-open-select-label"
+          id="demo-controlled-open-select"
+          value={sortLabel}
+          renderValue={(value) => value}
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          onChange={handleChange}
         >
-          Undo Sort
+          <MenuItem value={{ sortValue: 'time_to_cook_in_minutes', order: 'ascending' }}>Time to cook (ascending)</MenuItem>
+          <MenuItem value={{ sortValue: 'time_to_cook_in_minutes', order: 'descending' }}>Time to cook (descending)</MenuItem>
+          <MenuItem value={{ sortValue: 'calories', order: 'ascending' }}>Calories (ascending)</MenuItem>
+          <MenuItem value={{ sortValue: 'calories', order: 'descending' }}>Calories (descending)</MenuItem>
+          <MenuItem value={{ sortValue: 'servings', order: 'ascending' }}>Servings (ascending)</MenuItem>
+          <MenuItem value={{ sortValue: 'servings', order: 'descending' }}>Servings (descending)</MenuItem>
+          <MenuItem value={{ sortValue: 'protein', order: 'ascending' }}>Protein (ascending)</MenuItem>
+          <MenuItem value={{ sortValue: 'protein', order: 'descending' }}>Protein (descending)</MenuItem>
+          <MenuItem value={{ sortValue: 'carbs', order: 'ascending' }}>Carbs (ascending)</MenuItem>
+          <MenuItem value={{ sortValue: 'carbs', order: 'descending' }}>Carbs (descending)</MenuItem>
+          <MenuItem value={{ sortValue: 'fat', order: 'ascending' }}>Fat (ascending)</MenuItem>
+          <MenuItem value={{ sortValue: 'fat', order: 'descending' }}>Fat (descending)</MenuItem>
+        </Select>
+      </FormControl>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => {
+          setSortLabel("");
+          props.clearRecipeSortFilter();
+        }}
+        className={classes.undoSortButton}
+      >
+        Undo Sort
         </Button>
     </div>
   );
-}
+};
 
 SortRecipesDropDown.propTypes = {
   data: PropTypes.object,
@@ -107,28 +107,28 @@ SortRecipesDropDown.propTypes = {
   clearRecipeSortFilter: PropTypes.func
 };
 
-const mapStateToProps = (state) => ({data: state.recipes})
+const mapStateToProps = (state) => ({ data: state.recipes });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sortRecipesAscending: (sortedRecipes, valueToBeSorted) => { 
+    sortRecipesAscending: (sortedRecipes, valueToBeSorted) => {
       dispatch({
-        type:`SORT_BY_${valueToBeSorted}_ASCENDING`, 
+        type: `SORT_BY_${valueToBeSorted}_ASCENDING`,
         sortedRecipes: sortedRecipes
-      })
+      });
     },
     sortRecipesDescending: (sortedRecipes, valueToBeSorted) => {
       dispatch({
         type: `SORT_BY_${valueToBeSorted}_DESCENDING`,
         sortedRecipes: sortedRecipes
-      })
+      });
     },
     clearRecipeSortFilter: () => {
       dispatch({
         type: "CLEAR_RECIPE_SORT_FILTER",
-      })
+      });
     }
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortRecipesDropDown);

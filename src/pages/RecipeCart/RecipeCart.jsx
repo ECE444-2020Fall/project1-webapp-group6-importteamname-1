@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
 const RecipeCart = () => {
   const classes = useStyles();
   const [refresh, setRefresh] = useState(true);
-  const [cartedRecipes, setCartedRecipes] = useState([])
+  const [cartedRecipes, setCartedRecipes] = useState([]);
 
   if (refresh) {
-    setRefresh(false)
+    setRefresh(false);
     fetch(CONSTANTS.ENDPOINT.RECIPE_CART, {
-      credentials:'include'
+      credentials: 'include'
     })
       .then(response => response.json())
       .then(response => setCartedRecipes(response.recipes));
@@ -31,25 +31,25 @@ const RecipeCart = () => {
 
   if (cartedRecipes.length != 0) {
     recipeSearchResult = <div className={classes.root}>
-        <Grid
-          container
-          spacing={5}
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
+      <Grid
+        container
+        spacing={5}
+        direction="row"
+        justify="flex-start"
+        alignItems="flex-start"
+      >
         {cartedRecipes.map(recipe => (
           <Grid item key={recipe.recipe_id} xs={25}>
-              <RecipeCard key={recipe.recipe_id}
-                recipeId={recipe.recipe_id}
-                recipeName={recipe.recipe_name}
-                imageUrl={recipe.image_url}
-                timeToCookInMinutes={recipe.time_to_cook_in_minutes}
-                servings={recipe.servings}
-                calories={recipe.calories}
-                protein={recipe.protein}
-                carbs={recipe.carbs}
-                fat={recipe.fat} />
+            <RecipeCard key={recipe.recipe_id}
+              recipeId={recipe.recipe_id}
+              recipeName={recipe.recipe_name}
+              imageUrl={recipe.image_url}
+              timeToCookInMinutes={recipe.time_to_cook_in_minutes}
+              servings={recipe.servings}
+              calories={recipe.calories}
+              protein={recipe.protein}
+              carbs={recipe.carbs}
+              fat={recipe.fat} />
           </Grid>
         ))}
       </Grid>

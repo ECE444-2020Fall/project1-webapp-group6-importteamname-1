@@ -28,7 +28,7 @@ const ListWithDeletableItems = ({ shoppingItems }) => {
       </Grid>
     </Grid>
   );
-}
+};
 
 ListWithDeletableItems.propTypes = {
   shoppingItems: PropTypes.any

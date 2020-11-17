@@ -24,24 +24,24 @@ const RecipeCardUserActions = (props) => {
   const classes = useStyles();
 
   return (
-     <div> 
-        <Card>
-          <CardActions className={classes.cardAction}>
-            <CardContent className={classes.cardContent}>
-              <UserRating recipe_id={props.recipe_id} />
-            </CardContent>
-          </CardActions>   
-          <CardActions>
-            <RecipeCartButton recipe_id={props.recipe_id} />
-            <FavouritesButton recipe_id={props.recipe_id} />
-          </CardActions>
-        </Card>
+    <div>
+      <Card>
+        <CardActions className={classes.cardAction}>
+          <CardContent className={classes.cardContent}>
+            <UserRating recipe_id={props.recipe_id} />
+          </CardContent>
+        </CardActions>
+        <CardActions>
+          <RecipeCartButton recipe_id={props.recipe_id} />
+          <FavouritesButton recipe_id={props.recipe_id} />
+        </CardActions>
+      </Card>
     </div>
   );
-}
+};
 
 RecipeCardUserActions.propTypes = {
-    recipe_id: PropTypes.string
+  recipe_id: PropTypes.string
 };
 
 export default RecipeCardUserActions;

@@ -110,99 +110,99 @@ const NavBar = () => {
 
   return (
     <div className={classes.root}>
-    <CssBaseline />
-    <AppBar
-      position="fixed"
-      className={clsx(classes.appBar, {
-        [classes.appBarShift]: open,
-      })}
-    >
-      <Toolbar>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
           <RestaurantIcon />
           <Typography variant="h6" noWrap className={classes.title}>
             Chef Co-Pilot
           </Typography>
 
-        <div className={classes.findRecipeContainer}>
-          <Link to="/pantry">
-            <SearchIcon className={classes.findRecipeButton}/>
-            <Typography variant="h7" noWrap className={classes.findRecipeButton}>
-              Find Recipes
+          <div className={classes.findRecipeContainer}>
+            <Link to="/pantry">
+              <SearchIcon className={classes.findRecipeButton} />
+              <Typography variant="h7" noWrap className={classes.findRecipeButton}>
+                Find Recipes
             </Typography>
-          </Link>
+            </Link>
+          </div>
+
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="end"
+            onClick={handleDrawerOpen}
+            className={clsx(open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <Drawer
+        className={classes.drawer}
+        variant="temporary"
+        anchor="right"
+        onEscapeKeyDown={handleDrawerClose}
+        onBackdropClick={handleDrawerClose}
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
         </div>
-
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="end"
-          onClick={handleDrawerOpen}
-          className={clsx(open && classes.hide)}
-        >
-          <MenuIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
-
-    <Drawer
-      className={classes.drawer}
-      variant="temporary"
-      anchor="right"
-      onEscapeKeyDown={handleDrawerClose}
-      onBackdropClick={handleDrawerClose}
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton>
-      </div>
-      <Divider />
-      <List>
-        <Link to="/Profile">
-          <ListItem button key={1}>
-            <ListItemIcon><AccountCircleIcon /> </ListItemIcon>
-            <ListItemText primary="Profile" className={classes.listItemText}/>
-          </ListItem>
-        </Link>
-      </List>
-      <Divider />
-      <List>
-        <Link to="/favourite-recipes">
-          <ListItem button key={1}>
-            <ListItemIcon><FavoriteIcon /> </ListItemIcon>
-            <ListItemText primary="Favourite Recipes" className={classes.listItemText}/>
-          </ListItem>
-        </Link>         
-        <Link to="/recipe-cart">
-          <ListItem button key={1}>
-            <ListItemIcon><ShoppingCartIcon /> </ListItemIcon>
-            <ListItemText primary="Recipe Cart" className={classes.listItemText}/>
-          </ListItem>
-        </Link>
-        <Link to="/shopping-list">
-          <ListItem button key={1}>
-            <ListItemIcon><ShoppingBasketIcon /> </ListItemIcon>
-            <ListItemText primary="Ingredient Shopping List" className={classes.listItemText}/>
-          </ListItem>
-        </Link>
-      </List>
-      <List>
-      </List>
-      <Divider />
-      <List>
-        <Link to='/login' style={{ textDecoration: 'none' }}>  
-          <ListItem button key={1}>
-            <ListItemIcon><ExitToAppIcon /> </ListItemIcon>
-            <ListItemText primary="Log Out" className={classes.listItemText}/>
-          </ListItem>
-        </Link>
-      </List>
-    </Drawer>
-  </div>
+        <Divider />
+        <List>
+          <Link to="/Profile">
+            <ListItem button key={1}>
+              <ListItemIcon><AccountCircleIcon /> </ListItemIcon>
+              <ListItemText primary="Profile" className={classes.listItemText} />
+            </ListItem>
+          </Link>
+        </List>
+        <Divider />
+        <List>
+          <Link to="/favourite-recipes">
+            <ListItem button key={1}>
+              <ListItemIcon><FavoriteIcon /> </ListItemIcon>
+              <ListItemText primary="Favourite Recipes" className={classes.listItemText} />
+            </ListItem>
+          </Link>
+          <Link to="/recipe-cart">
+            <ListItem button key={1}>
+              <ListItemIcon><ShoppingCartIcon /> </ListItemIcon>
+              <ListItemText primary="Recipe Cart" className={classes.listItemText} />
+            </ListItem>
+          </Link>
+          <Link to="/shopping-list">
+            <ListItem button key={1}>
+              <ListItemIcon><ShoppingBasketIcon /> </ListItemIcon>
+              <ListItemText primary="Ingredient Shopping List" className={classes.listItemText} />
+            </ListItem>
+          </Link>
+        </List>
+        <List>
+        </List>
+        <Divider />
+        <List>
+          <Link to='/login' style={{ textDecoration: 'none' }}>
+            <ListItem button key={1}>
+              <ListItemIcon><ExitToAppIcon /> </ListItemIcon>
+              <ListItemText primary="Log Out" className={classes.listItemText} />
+            </ListItem>
+          </Link>
+        </List>
+      </Drawer>
+    </div>
   );
-}
+};
 export default NavBar;

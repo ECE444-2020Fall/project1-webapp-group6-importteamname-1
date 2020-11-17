@@ -3,20 +3,20 @@ const initialState = {
     sortedRecipes: [],
     sortOrder: '',
     paginationCounter: 0
-}
+};
 
-export default function(state = initialState, action) {
-    switch(action.type) {
+export default function (state = initialState, action) {
+    switch (action.type) {
         case 'GET_ALL_RECIPES':
             return {
                 ...state,
                 recipes: action.payload,
-            }
+            };
         case 'GET_RECOMMENDED_RECIPES':
             return {
                 ...state,
                 recipes: action.recommendedRecipes
-            }
+            };
         case 'SORT_BY_CALORIES_ASCENDING':
         case 'SORT_BY_SERVINGS_ASCENDING':
         case 'SORT_BY_PROTEIN_ASCENDING':
@@ -27,7 +27,7 @@ export default function(state = initialState, action) {
                 ...state,
                 sortedRecipes: action.sortedRecipes,
                 sortOrder: 'ascending'
-            }
+            };
         case 'SORT_BY_CALORIES_DESCENDING':
         case 'SORT_BY_SERVINGS_DESCENDING':
         case 'SORT_BY_PROTEIN_DESCENDING':
@@ -38,24 +38,24 @@ export default function(state = initialState, action) {
                 ...state,
                 sortedRecipes: action.sortedRecipes,
                 sortOrder: 'descending'
-            }
+            };
         case 'CLEAR_RECIPE_SORT_FILTER':
             return {
                 ...state,
-                sortedRecipes: [] 
-            }
+                sortedRecipes: []
+            };
         case 'CLEAR_RECIPES':
             return {
                 ...state,
                 recipes: [],
                 sortedRecipes: []
-            }
+            };
         case 'RENDER_PAGINATION':
             return {
                 ...state,
-                paginationCounter: initialState.paginationCounter+1
-            }
-        default: 
-            return state
+                paginationCounter: initialState.paginationCounter + 1
+            };
+        default:
+            return state;
     }
 }

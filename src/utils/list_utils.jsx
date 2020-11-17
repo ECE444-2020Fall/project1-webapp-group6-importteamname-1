@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeletableListItem } from '../components/common/DeletableListItem'
+import { DeletableListItem } from '../components/common/DeletableListItem';
 
 function generateList(items, removeItem) {
   return items.map(item =>
@@ -17,8 +17,8 @@ const getItem = (item, endpoint) => {
       }
       return response.text();
     })
-    .then(body => JSON.parse(body))
-}
+    .then(body => JSON.parse(body));
+};
 
 const removeItem = (item, endpoint) => {
   return fetch(`${endpoint}/${item}`, {
@@ -28,9 +28,9 @@ const removeItem = (item, endpoint) => {
     if (!response.ok) {
       throw Error(response.statusText);
     }
-    return
-  })
-}
+    return;
+  });
+};
 
 const addItem = (newItem, endpoint) => {
   return fetch(endpoint, {
@@ -47,9 +47,9 @@ const addItem = (newItem, endpoint) => {
     if (response.status === 500) {
       throw Error(response.statusText);
     }
-    return 
-  })
-}
+    return;
+  });
+};
 
 const setFeedback = (endpoint, item, feedback) => {
 
@@ -71,9 +71,9 @@ const setFeedback = (endpoint, item, feedback) => {
       }
       return response.text();
     })
-    .then(body => JSON.parse(body))
+    .then(body => JSON.parse(body));
 
-}
+};
 
 
 export { setFeedback, generateList, addItem, removeItem, getItem };
