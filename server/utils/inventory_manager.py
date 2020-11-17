@@ -19,9 +19,7 @@ class InventoryManager():
         })
 
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
-
-
-
+    
     def add_item(self, user_id, item, model):
 
         if model.query.get((user_id, item)):      # item already in list

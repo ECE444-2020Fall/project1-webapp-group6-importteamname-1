@@ -1,21 +1,19 @@
-from flask import Flask, jsonify, make_response, send_from_directory, session
+from flask import Flask, jsonify, request, make_response, send_from_directory, session
 import uuid
-from flask import request
 import os
 from os.path import exists, join
 from flask_cors import CORS
-from collections import defaultdict
-
 from constants import CONSTANTS
-from sample_data import sample_data
 from utils.inventory_manager import InventoryManager
 from utils.recipe_personalization_manager import RecipePersonalizationManager
 from utils.recipe_controller import RecipeController
 from utils.ingredient_controller import IngredientController
-
-from app import db, app 
+from utils.helper_functions import * 
+from app import db, app
 from app.models import *
 import hashlib
+from app.routes.get_routes import * 
+from app.routes.post_routes import * 
 
 inventory_manager = InventoryManager(db)
 recipe_personalization_manager = RecipePersonalizationManager(db)
@@ -24,29 +22,6 @@ ingredient_controller = IngredientController(db)
 
 CORS(app, supports_credentials=True)
 app.secret_key = "TESTKEY"
-
-def get_user_id():
-    if 'user_id' not in session:
-        return False
-    else:
-        user_id = session['user_id']
-    return user_id
-
-def user_id_not_found_response():
-    json_response = jsonify({ 
-        'error': 'user_id not in session, log in again'
-    })
-    return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
-
-def sortListByFreq(lis):
-    dic = defaultdict(int)
-    for num in lis:
-        dic[num] += 1
-
-    s_list = sorted(dic, key=dic.__getitem__, reverse=True)
-    return s_list
-
-
 
 @app.route('/api/drop')     # ONLY FOR DEBUGGING
 def drop_db():
@@ -57,20 +32,6 @@ def drop_db():
     Recipe.query.delete()
     db.session.commit()
     return "dropped table"
-
-@app.route('/api/smart_shopping_list')
-def generate_smart_shopping_list_items():
-    user_id = get_user_id()
-    pantry_list_items = inventory_manager.get_all_user_items(user_id, PantryList).get_json()["items"]
-    shopping_list_items = inventory_manager.get_all_user_items(user_id, ShoppingList).get_json()["items"]
-    carted_recipe_ids = inventory_manager.get_all_user_items(user_id, RecipeCart).get_json()["items"]
-    recipe_ingredients = ingredient_controller.get_ingredient_names_by_recipe_ids(RecipeIngredient, carted_recipe_ids).get_json()["ingredients"]
-    smart_ingredients = list(set(recipe_ingredients) - set(pantry_list_items) - set(shopping_list_items))
-    
-    response = {
-        "items": smart_ingredients
-    }
-    return make_response(jsonify(response), CONSTANTS['HTTP_STATUS']['200_OK'])
 
 
 
@@ -84,23 +45,6 @@ def add_or_update_user_notes():
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(user_id, recipe_id, feedback, UserNotes)
 
-@app.route('/api/user_notes/<string:recipe_id>')
-def show_user_note(recipe_id):
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return recipe_personalization_manager.get_user_feedback(user_id, recipe_id, UserNotes)
-
-@app.route('/api/user_notes')
-def show_user_notes():
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return recipe_personalization_manager.get_all_user_feedbacks(user_id, UserNotes)
-
-
 @app.route('/api/user_rating', methods=['POST'])
 def add_or_update_user_rating():
     user_id = get_user_id()
@@ -111,22 +55,6 @@ def add_or_update_user_rating():
     feedback = request.get_json()["feedback"]
     return recipe_personalization_manager.add_or_update_feedback(user_id, recipe_id, feedback, UserRating)
 
-@app.route('/api/user_rating/<string:recipe_id>')
-def show_user_rating(recipe_id):
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return recipe_personalization_manager.get_user_feedback(user_id, recipe_id, UserRating)
-
-@app.route('/api/user_ratings')
-def show_user_ratings():
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return recipe_personalization_manager.get_all_user_feedbacks(user_id, UserRating)
-
 @app.route('/api/shopping_list', methods=['POST'])
 def add_item_to_shopping_list():
     user_id = get_user_id()
@@ -135,7 +63,6 @@ def add_item_to_shopping_list():
     item = request.get_json()["item"]
     return inventory_manager.add_item(user_id, item, ShoppingList)
 
-
 @app.route('/api/shopping_list/<string:item>', methods=['DELETE'])
 def remove_item_from_shopping_list(item):
     user_id = get_user_id()
@@ -143,15 +70,6 @@ def remove_item_from_shopping_list(item):
         return user_id_not_found_response() 
 
     return inventory_manager.remove_item(user_id, item, ShoppingList)
-
-
-@app.route('/api/shopping_list')
-def show_shopping_list():
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return inventory_manager.get_all_user_items(user_id, ShoppingList)
 
 @app.route('/api/pantry_list', methods=['POST'])
 def add_item_to_pantry_list():
@@ -170,13 +88,6 @@ def remove_item_from_pantry_list(item):
 
     return inventory_manager.remove_item(user_id, item, PantryList)
 
-@app.route('/api/pantry_list')
-def show_pantry_list():
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return inventory_manager.get_all_user_items(user_id, PantryList)
 
 @app.route('/api/pantry_recipes', methods=['POST'])
 def recommend_recipes():
@@ -196,16 +107,9 @@ def recommend_recipes():
     
     return recipe_controller.get_recipes_by_ids(recipes, Recipe)
 
-@app.route('/api/recipe_cart/<string:recipe_id>')
-def add_item_to_recipe_cart(recipe_id):
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return inventory_manager.get_item(user_id, recipe_id, RecipeCart)
 
 @app.route('/api/recipe_cart', methods=['POST'])
-def get_recipe_cart_item():
+def add_recipe_cart_item():
     user_id = get_user_id()
     if not user_id:
         return user_id_not_found_response() 
@@ -221,22 +125,6 @@ def remove_recipe_cart_item(recipe_id):
 
     return inventory_manager.remove_item(user_id, recipe_id, RecipeCart)
 
-@app.route('/api/recipe_cart')
-def show_recipe_cart():
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    user_carted_recipe_ids = inventory_manager.get_all_user_items(user_id, RecipeCart).get_json()["items"]
-    return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
-
-@app.route('/api/favourites_list/<string:recipe_id>')
-def add_recipe_to_favs_list(recipe_id):
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    return inventory_manager.get_item(user_id, recipe_id, UserFavourites)
 
 @app.route('/api/favourites_list', methods=['POST'])
 def get_recipe_favs_list():
@@ -255,16 +143,6 @@ def remove_recipe_from_favs_list(recipe_id):
 
     return inventory_manager.remove_item(user_id, recipe_id, UserFavourites)
 
-@app.route('/api/favourites_list')
-def show_favs_list():
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    user_fav_recipe_ids = inventory_manager.get_all_user_items(user_id, UserFavourites).get_json()["items"]
-    return recipe_controller.get_recipes_by_ids(user_fav_recipe_ids, Recipe)
-
-
 @app.route('/api/ingredients/add', methods=['POST']) 
 def add_ingredient():
     recipe_id = request.get_json()["recipe_id"]
@@ -273,15 +151,6 @@ def add_ingredient():
     unit_of_measurement = request.get_json()["unit_of_measurement"]
     return ingredient_controller.add_ingredient(RecipeIngredient, recipe_id, ingredient_name, amount, unit_of_measurement)
 
-
-@app.route('/api/ingredients', methods=['GET'])
-def get_all_ingredients():
-    return ingredient_controller.get_all_ingredients(RecipeIngredient)
-
-
-@app.route('/api/ingredients/<string:recipe_id>', methods=['GET'])
-def get_ingredient_by_recipe_id(recipe_id):
-    return ingredient_controller.get_ingredient_by_recipe_id(RecipeIngredient, recipe_id)
 
 
 @app.route('/api/ingredients', methods=['DELETE'])
@@ -306,9 +175,6 @@ def add_recipe():
                                                    time_to_cook_in_minutes, servings, calories, protein, carbs, fat)
 
 
-@app.route('/api/recipes', methods=['GET'])
-def get_all_recipes():
-    return recipe_controller.get_all_recipes(Recipe)
 
 
 @app.route('/api/recipes', methods=['DELETE'])
@@ -316,7 +182,6 @@ def remove_all_recipes():
     return recipe_controller.delete_all_recipes(Recipe)
 
 
-# EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>
 #@app.route('/api/add_user/<string:name>/<string:password>', methods=['POST'])
 @app.route(CONSTANTS['ENDPOINT']['REGISTER'], methods=['POST'])
 def add_new_user():
@@ -339,19 +204,6 @@ def add_new_user():
     session["user_id"] = new_user.user_id
     return make_response(jsonify(ret), CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
-
-@app.route(CONSTANTS['ENDPOINT']['GET_USER'], methods=['GET'])
-def get_user():
-    if 'user_id' not in session:
-        return jsonify({'error': 'user_id not found'})
-    user = User.query.filter(
-        User.user_id == session.get('user_id')
-    ).first()
-    res = {'username': user.username}
-    
-    if user:
-        return jsonify(res)
-    return jsonify({'error': 'sessions user not in database'})
 
 @app.route(CONSTANTS['ENDPOINT']['LOGIN'], methods=['POST'])
 def login_user():
@@ -392,7 +244,5 @@ def page_not_found(error):
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
 
 if __name__ == '__main__':
-    # session["user_id"] = "ebbe4421-c37b-4bd1-ac39-2337b1535206"
     app.run(port=CONSTANTS['PORT'])
     db.create_all()
-    print("creating all db")

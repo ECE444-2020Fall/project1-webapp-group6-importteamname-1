@@ -29,5 +29,8 @@ class UserRating(db.Model):
     def update_feedback(self, feedback):
         self.user_rating = feedback
 
+    def get_item(self):
+        return self.user_rating
+
     def get_feedback(self):
         return self.user_rating

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     marginLeft: 50,
     width: "100%"
-  }
+  },
 }));
 
 const FavouriteRecipes = () => {
@@ -61,7 +61,7 @@ const FavouriteRecipes = () => {
   return (
     <main id="mainContent" className="container">
       <div className="row justify-content-center py-5">
-        <h3>Favourite Recipes</h3>
+        <h3 >Favourite Recipes</h3>
       </div>
       {recipeSearchResult}
     </main>

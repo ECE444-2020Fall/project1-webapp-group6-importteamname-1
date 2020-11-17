@@ -32,5 +32,8 @@ class UserNotes(db.Model):
     def get_feedback(self):
         return self.user_notes
 
+    def get_item(self):
+        return self.user_notes
+
     def get_item_name(self):
         return int.from_bytes(self.recipe_id, byteorder='little')
