@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles(() => ({
   root: {
     '& > *': {
-      width: '25ch',
+      width: '30ch',
       margin: 'auto',
       display: 'flex',
     },
