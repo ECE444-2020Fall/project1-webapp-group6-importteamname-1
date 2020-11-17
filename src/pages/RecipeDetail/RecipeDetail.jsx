@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { UserRating } from "../../components/RecipeDetail/UserRating";
 import { FavouritesButton } from "../../components/RecipeDetail/FavouritesButton";
 import { RecipeCartButton } from "../../components/RecipeDetail/RecipeCartButton";
+import { RecipeConsumedToggle } from "../../components/NutritionTracker/RecipeConsumedToggle"
 import { UserNotesContainer } from "../../containers/RecipeDetail/UserNotesContainer";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -111,6 +112,7 @@ const RecipeDetail = (props) => {
               <UserRating recipe_id={recipe_id}/>
               <RecipeCartButton recipe_id={recipe_id}/>
               <FavouritesButton recipe_id={recipe_id}/>
+              <RecipeConsumedToggle recipe_id={recipe_id} />
             </Paper>
             <Paper className={`${classes.commonPaperStyleAttributes} ${classes.instructionsPaper}`}>
               <RecipeInstruction 

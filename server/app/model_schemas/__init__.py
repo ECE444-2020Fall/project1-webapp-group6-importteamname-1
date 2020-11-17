@@ -7,4 +7,6 @@ from .shopping_list import ShoppingList
 from .user import User
 from .user_notes import UserNotes
 from .user_rating import UserRating
+from .consumed_recipes import ConsumedRecipes
 from .user_favourites import UserFavourites
+
