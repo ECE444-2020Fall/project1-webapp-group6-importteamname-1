@@ -6,10 +6,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'; 
-import { Grid } from "@material-ui/core";
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: '#f7f7f7',
   },
@@ -22,12 +21,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 300,
     marginRight: 50
   }
-  
 }));
 
 const SortRecipesDropDown = (props) => {
   const classes = useStyles();
-  const [sortDescription, setSortDescription] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
@@ -39,20 +36,15 @@ const SortRecipesDropDown = (props) => {
     let sortedRecipes = null;
     let sortOrder = event.target.value.order;
     let valueToBeSorted = event.target.value.sortValue;
-    let sortDescriptionToSet = event.target.value.sortDescription;
 
     recipesToBeSorted = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? [...props.data.recipes] : props.data.sortedRecipes;
     
     if (sortOrder === "ascending") {
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeA[valueToBeSorted] - recipeB[valueToBeSorted]);
       props.sortRecipesAscending(sortedRecipes, valueToBeSorted.toUpperCase());
-      console.log(sortDescriptionToSet);
-      setSortDescription(sortDescriptionToSet);
-      console.log(sortDescriptionToSet);
     } else if (sortOrder === "descending"){ 
       sortedRecipes = recipesToBeSorted.sort((recipeA, recipeB) => recipeB[valueToBeSorted] - recipeA[valueToBeSorted]);
       props.sortRecipesDescending(sortedRecipes, valueToBeSorted.toUpperCase());
-      setSortDescription(sortDescriptionToSet);
     } 
   }
 
@@ -69,61 +61,27 @@ const SortRecipesDropDown = (props) => {
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-controlled-open-select-label">Sort Recipes</InputLabel>
           <Select
-            // labelId="demo-controlled-open-select-label"
             id="demo-controlled-open-select"
             defaultValue=""
             open={open}
             onClose={handleClose}
             onOpen={handleOpen}
-            // value={sortDescription}
             onChange={handleChange}
           >
-
-            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'ascending', sortDescription: 'Time to cook (ascending)'}}>Time to cook (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending', sortDescription: 'Time to cook (descending)'}}>Time to cook (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'calories', order: 'ascending', sortDescription: 'Time to cook (descending)'}}>Calories (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'calories', order: 'descending', sortDescription: 'Calories (descending)'}}>Calories (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'servings', order: 'ascending', sortDescription: 'Servings (ascending)'}}>Servings (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'servings', order: 'descending', sortDescription: 'Servings (descending)'}}>Servings (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'protein', order: 'ascending', sortDescription: 'Protein (ascending)'}}>Protein (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'protein', order: 'descending', sortDescription: 'Protein (descending)'}}>Protein (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'carbs', order: 'ascending', sortDescription: 'Carbs (ascending)'}}>Carbs (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'carbs', order: 'descending', sortDescription: 'Carbs (descending)'}}>Carbs (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'fat', order: 'ascending', sortDescription: 'Fat (ascending)'}}>Fat (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'fat', order: 'descending', sortDescription: 'Fat (descending)'}}>Fat (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'ascending'}}>Time to cook (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending'}}>Time to cook (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'calories', order: 'ascending'}}>Calories (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'calories', order: 'descending'}}>Calories (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'servings', order: 'ascending'}}>Servings (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'servings', order: 'descending'}}>Servings (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'protein', order: 'ascending'}}>Protein (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'protein', order: 'descending'}}>Protein (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'carbs', order: 'ascending'}}>Carbs (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'carbs', order: 'descending'}}>Carbs (descending)</MenuItem>
+            <MenuItem value={{sortValue: 'fat', order: 'ascending'}}>Fat (ascending)</MenuItem>
+            <MenuItem value={{sortValue: 'fat', order: 'descending'}}>Fat (descending)</MenuItem>
           </Select>
         </FormControl>
-
-     {/* <FormControl className={classes.formControl}> 
-        <InputLabel htmlFor="grouped-select">Sort Recipes</InputLabel>
-        <Select 
-          defaultValue="" 
-          id="grouped-select"
-          // open={open}
-          // onClose={handleClose}
-          // onOpen={handleOpen}
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em></em>
-          </MenuItem>
-
-          <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'ascending', sortDescription: 'Time to cook (ascending)'}}>Time to cook (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'time_to_cook_in_minutes', order: 'descending', sortDescription: 'Time to cook (descending)'}}>Time to cook (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'calories', order: 'ascending', sortDescription: 'Time to cook (descending)'}}>Calories (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'calories', order: 'descending', sortDescription: 'Calories (descending)'}}>Calories (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'servings', order: 'ascending', sortDescription: 'Servings (ascending)'}}>Servings (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'servings', order: 'descending', sortDescription: 'Servings (descending)'}}>Servings (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'protein', order: 'ascending', sortDescription: 'Protein (ascending)'}}>Protein (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'protein', order: 'descending', sortDescription: 'Protein (descending)'}}>Protein (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'carbs', order: 'ascending', sortDescription: 'Carbs (ascending)'}}>Carbs (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'carbs', order: 'descending', sortDescription: 'Carbs (descending)'}}>Carbs (descending)</MenuItem>
-            <MenuItem value={{sortValue: 'fat', order: 'ascending', sortDescription: 'Fat (ascending)'}}>Fat (ascending)</MenuItem>
-            <MenuItem value={{sortValue: 'fat', order: 'descending', sortDescription: 'Fat (descending)'}}>Fat (descending)</MenuItem>
-        </Select>
-      </FormControl> */}
-
-
         <Button 
           variant="outlined" 
           color="primary"

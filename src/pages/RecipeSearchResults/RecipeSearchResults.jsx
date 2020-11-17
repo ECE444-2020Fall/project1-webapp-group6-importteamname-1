@@ -38,28 +38,13 @@ const GreyTextTypography = withStyles({
 const RecipeSearchResults = (props) => {
   const classes = useStyles();
   let recipeSearchResult = null;
-  const itemsPerPage = 10;
+  const itemsPerPage = 16;
   const [page, setPage] = React.useState(1);
-
-  const [noOfPages, /*setNoOfPages*/] = React.useState(
+  const [noOfPages] = React.useState(
     props.data.recipes && props.data.recipes.length ? 
       Math.ceil(props.data.recipes.length / itemsPerPage) : null
   );
   
-
-  // if (refresh) {
-  //   setRefresh(false)
-  //     setNoOfPages({
-  //     noOfPages:  Math.ceil(props.data.recipes.length / itemsPerPage)
-  //   });
-  // }
-
-  console.log("NO. PAGES");
-  console.log(noOfPages);
-  console.log("CURRENT PAGE");
-  console.log(page);
-  console.log(Math.ceil(props.data.recipes.length / itemsPerPage))
-
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
   if (props.data && props.data[recipesToBeDisplayed]) {     

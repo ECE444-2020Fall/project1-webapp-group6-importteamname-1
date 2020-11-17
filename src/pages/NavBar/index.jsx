@@ -58,20 +58,17 @@ const NavBar = () => {
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/pantry">
             Find Recipes
           </Link>
-          {/* <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-search-results">
-            Recipe Search Results
-          </Link> */}
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/favourite-recipes">
             Favourite Recipes
           </Link>
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/calorie-tracker">
-            Nutrition Tracker
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-cart">
+            Recipe Cart
           </Link>
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/shopping-list">
             Shopping List
           </Link>
-          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/recipe-cart">
-            Recipe Cart
+          <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/calorie-tracker">
+            Nutrition Tracker
           </Link>
           <Link style={{color: '#ffffff'}} className="nav-item nav-link active" to="/Profile">
             Profile

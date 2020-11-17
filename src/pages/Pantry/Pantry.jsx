@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState } from 'react';
 import { generateList, addItem, removeItem } from '../../utils/list_utils'
 import { ListContainer } from '../../containers/ListContainer/ListContainer'
 import CONSTANTS from '../../constants';
@@ -11,7 +11,6 @@ import { getRecommendedRecipes } from '../../actions/recipeActions';
 import { getRecipes } from '../../actions/recipeActions';
 import { clearRecipes } from '../../actions/recipeActions';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,23 +46,15 @@ const Pantry = (props) => {
     }
   }
 
-  useEffect(() => {
-    // props.clearRecipes();
-  }, []);
-  
-
   const handleClick = async () => {
-    // props.clearRecipes();
+    await props.clearRecipes();
     if (pantryItems.length > 0) {
-       await props.clearRecipes();
        await props.getRecommendedRecipes(); 
        await setFetchRecipes(true);
     } else {
-       await props.clearRecipes();
        await props.getRecipes();
        await setFetchRecipes(true);
     }
-    
   }
 
   if (refreshList) {
@@ -104,18 +95,14 @@ const Pantry = (props) => {
           Label="Add Ingredient to Pantry"
         />
         <center>
-          
-          {/* <Link to={`/recipe-search-results`}> */}
-            {/* Remove <Link> here,  call redirect in handleClick(). Refer to Johnathon's code */}
             <Button
-              onClick={handleClick} // This should happen before <Link to={}>
+              onClick={handleClick} 
               type="submit"
               variant="contained" 
               color="primary" 
               className= { classes.submit }>
                   Recommend Recipes
             </Button>
-          {/* </Link> */}
         </center>
       </div>
     );
