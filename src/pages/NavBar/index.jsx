@@ -195,10 +195,6 @@ const NavBar = () => {
         </Link>
       </List>
       <List>
-          <ListItem button key={1}>
-            <ListItemIcon><FastfoodIcon /> </ListItemIcon>
-            <ListItemText primary="Nutrition Tracker" className={classes.listItemText}/>
-          </ListItem>
       </List>
       <Divider />
       <List>
