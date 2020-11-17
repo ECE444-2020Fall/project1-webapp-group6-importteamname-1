@@ -79,7 +79,7 @@ const Pantry = (props) => {
         <PageTitle titleName="What's in your Pantry?" />
         <center>
         <Typography component="body1" variant="body1" paragraph='true'>
-            We will recomend recipes based on the ingredients you already have!
+            We will recommend recipes based on the ingredients you already have!
             <p></p>
           </Typography>
           <Typography component="body1" variant="caption">
