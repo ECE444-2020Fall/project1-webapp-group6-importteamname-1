@@ -321,19 +321,19 @@ def remove_all_recipes():
 @app.route('/api/calorie_tracker/add', methods=['POST'])
 def add_consumed_recipe():
     recipe_id = request.get_json()["item"] 
-    date = date.today()
-    return calorie_tracker_manager.add_consumed_recipe(ConsumedRecipes, recipe_id, date)
+    date1 = date.today()
+    return calorie_tracker_manager.add_consumed_recipe(ConsumedRecipes, recipe_id, date1)
 
 @app.route('/api/calorie_tracker/delete', methods=['DELETE'])
 def delete_consumed_recipe():
     recipe_id = request.get_json()["recipe_id"]
-    date = date.today()
-    return calorie_tracker_manager.delete_consumed_recipe(ConsumedRecipes, recipe_id, date)
+    date1 = date.today()
+    return calorie_tracker_manager.delete_consumed_recipe(ConsumedRecipes, recipe_id, date1)
 
 @app.route('/api/calorie_tracker', methods=['GET'])
 def get_consumed_recipes():
-    date = date.today()
-    return calorie_tracker_manager.get_consumed_recipes(ConsumedRecipes, Recipe, date)
+    date1 = date.today()
+    return calorie_tracker_manager.get_consumed_recipes(ConsumedRecipes, Recipe, date1)
 
 
 # EXAMPLE OF HOW TO ADD ENTRIES TO DB  <PART OF YANISA's DB SETUP>

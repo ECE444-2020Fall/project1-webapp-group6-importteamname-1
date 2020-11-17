@@ -7,18 +7,18 @@ import { addItem, removeItem } from '../../utils/list_utils';
 import PropTypes from 'prop-types';
 
 
-export default function RecipeConsumedToggle({recipe_id}) {
+export default function RecipeConsumedToggle(props) {
     const [state, setState] = React.useState({
       ateThis: false,
     });
   
     const handleChange = (event) => {
       setState({ ...state, [event.target.name]: event.target.checked });
-      if (state.ateThis == true) {
-        addItem (recipe_id, CONSTANTS.ENDPOINT.ADD_CONSUMED_RECIPE)
+      if (state.ateThis == false) {
+        addItem (props.recipe_id, CONSTANTS.ENDPOINT.ADD_CONSUMED_RECIPE)
       }
-      else if (state.ateThis == false){
-        removeItem (recipe_id, CONSTANTS.ENDPOINT.REMOVE_CONSUMED_RECIPE)
+      else if (state.ateThis == true){
+        removeItem (props.recipe_id, CONSTANTS.ENDPOINT.REMOVE_CONSUMED_RECIPE)
       }
     };
 
@@ -34,4 +34,5 @@ export default function RecipeConsumedToggle({recipe_id}) {
         />
       </FormGroup>
     );
-  }
+}
+  export { RecipeConsumedToggle };

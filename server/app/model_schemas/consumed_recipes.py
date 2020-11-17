@@ -21,8 +21,8 @@ class ConsumedRecipes(db.Model):
         nullable=False
     )
 
-    def __init__(self, user_id, item_name):
+    def __init__(self, user_id, recipe_id, date):
         self.user_id = user_id
         self.recipe_id = recipe_id
-        self.consumption_date = 2020-1-1
+        self.consumption_date = date
 

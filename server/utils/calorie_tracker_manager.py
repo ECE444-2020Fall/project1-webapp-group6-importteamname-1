@@ -26,7 +26,8 @@ class CalorieTrackerManager():
     # This function adds a recipe to the consumed recipes table
     def add_consumed_recipe(self, model, recipe_id, date):
         user_id = get_user_id()
-        consumedRecipe = model(user_id, recipe_id, date)
+        formattedDate = date.strftime("%d/%m/%y")
+        consumedRecipe = model(user_id, recipe_id, formattedDate)
 
         self.db.session.add(consumedRecipe)
         self.db.session.commit()
