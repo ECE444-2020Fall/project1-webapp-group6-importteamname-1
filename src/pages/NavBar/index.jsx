@@ -184,9 +184,6 @@ const NavBar = () => {
             <ListItemText primary="Recipe Cart" className={classes.listItemText}/>
           </ListItem>
         </Link>
-      </List>
-      <Divider />
-      <List>
         <Link to="/shopping-list">
           <ListItem button key={1}>
             <ListItemIcon><ShoppingBasketIcon /> </ListItemIcon>
