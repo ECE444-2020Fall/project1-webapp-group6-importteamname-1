@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, make_response
+from flask_cors import CORS, cross_origin
 from app import app
 from app.models import *
 from constants import CONSTANTS
@@ -7,6 +8,8 @@ from utils.helper_functions import *
 
 
 @app.route('/api/<any(user_notes,user_rating,recipe_cart,favourites_list):model>/<string:recipe_id>')
+@cross_origin()
+# @cross_origin()
 def get_item_from_model(model, recipe_id):
     user_id = get_user_id()
     if not user_id:
@@ -16,6 +19,7 @@ def get_item_from_model(model, recipe_id):
 
 
 @app.route('/api/<any(user_notes,user_rating,shopping_list,pantry_list):model>')
+@cross_origin()
 def get_all_user_items_from_model(model):
     user_id = get_user_id()
     if not user_id:
@@ -25,6 +29,7 @@ def get_all_user_items_from_model(model):
 
 
 @app.route('/api/<any(recipe_cart, favourites_list):model>')
+@cross_origin()
 def get_all_user_recipes_from_model(model):
     user_id = get_user_id()
     if not user_id:
@@ -35,6 +40,7 @@ def get_all_user_recipes_from_model(model):
 
 
 @app.route('/api/smart_shopping_list')
+@cross_origin()
 def generate_smart_shopping_list_items():
     user_id = get_user_id()
     if not user_id:
@@ -50,16 +56,19 @@ def generate_smart_shopping_list_items():
 
 
 @app.route('/api/ingredients/<string:recipe_id>')
+@cross_origin()
 def get_ingredient_by_recipe_id(recipe_id):
     return ingredient_controller.get_ingredient_by_recipe_id(RecipeIngredient, recipe_id)
 
 
 @app.route('/api/recipes')
+@cross_origin()
 def get_all_recipes():
     return recipe_controller.get_all_recipes(Recipe)
 
 
 @app.route('/api/logout')
+@cross_origin()
 def logout_user():
     if 'user_id' not in session:
         return user_id_not_found_response() 

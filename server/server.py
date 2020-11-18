@@ -8,6 +8,7 @@ from app.routes.delete_routes import *
 from app.routes.post_routes import * 
 
 CORS(app, supports_credentials=True)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.secret_key = "TESTKEY"
 
 # Catching all routes
