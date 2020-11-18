@@ -31,3 +31,9 @@ def test_showing_user_notes(client):
     set_client_user_id(client)
     response = client.get('/api/user_notes')
     assert(response.status_code == 200)
+
+def test_get_all_user_notes_user_not_in_session(client):
+    """ Test that getting user notes returns 500 status code if user is not in session """
+
+    response = client.get('/api/user_notes')
+    assert(response.status_code == 500)
