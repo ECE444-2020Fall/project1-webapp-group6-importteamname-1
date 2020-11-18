@@ -60,7 +60,10 @@ const Pantry = (props) => {
   if (refreshList) {
     setRefreshList(false);
     fetch(CONSTANTS.ENDPOINT.PANTRY_LIST, {
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then(response => {
         if (!response.ok) {
