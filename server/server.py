@@ -7,7 +7,7 @@ from app.routes.get_routes import *
 from app.routes.delete_routes import * 
 from app.routes.post_routes import * 
 
-CORS(app)
+CORS(app, supports_credentials=True)
 app.secret_key = "TESTKEY"
 
 # Catching all routes
