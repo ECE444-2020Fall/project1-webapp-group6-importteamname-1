@@ -2,7 +2,7 @@
  * FileName: PageTitle.jsx
  *
  * Description: Displays title on a page.
-.*
+ *
  * Author(s): WebTemplateStudio
  * Date: November 17, 2020 
  */

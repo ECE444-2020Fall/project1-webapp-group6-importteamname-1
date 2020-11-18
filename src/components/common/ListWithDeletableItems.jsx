@@ -2,7 +2,7 @@
  * FileName: ListWithDeletableItems.jsx
  *
  * Description: Renders a list that contains removable items.
-.*
+ *
  * Author(s): Yanisa Kham
  * Date: November 17, 2020 
  */

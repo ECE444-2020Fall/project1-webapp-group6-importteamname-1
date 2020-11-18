@@ -2,7 +2,7 @@
  * FileName: AddItemToTextField.jsx
  *
  * Description: A textfield that can be used to insert items that will be rendered on the page.
-.*
+ *
  * Author(s): Yanisa Kham
  * Date: November 17, 2020 
  */
