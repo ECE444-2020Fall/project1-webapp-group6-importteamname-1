@@ -32,8 +32,16 @@ def test_showing_user_notes(client):
     response = client.get('/api/user_notes')
     assert(response.status_code == 200)
 
-def test_get_all_user_notes_user_not_in_session(client):
-    """ Test that getting user notes returns 500 status code if user is not in session """
+def test_showing_user_notes_unauthorized_user(client):
+    """ Test that user notes returns 500 status code if user is not logged in """
 
     response = client.get('/api/user_notes')
     assert(response.status_code == 500)
+
+def test_user_notes_empty(client):
+    """ Test that the user notes list is empty before user adds any notes to recipes """
+
+    set_client_user_id(client)
+    response = client.get('/api/user_notes')
+    assert (len(response.json["items"]) == 0) 
+

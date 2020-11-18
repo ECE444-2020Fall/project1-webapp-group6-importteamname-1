@@ -26,6 +26,14 @@ def test_invalid_user_shopping_list(client):
     rv = client.get('/api/shopping_list')
     assert(rv.status_code == 500)
 
+
+def test_shopping_list_empty(client):
+    """ Test that shopping list is empty before user adds any items to the list """
+
+    set_client_user_id(client)
+    response = client.get('/api/shopping_list')
+    assert (len(response.json["items"]) == 0) 
+
 def test_remove_from_shopping_list_item_does_not_exist(client):
     """ Test that removing non-existent item from shopping list returns 400 """
 
@@ -39,3 +47,4 @@ def test_get_all_items_from_shopping_list_user_not_in_session(client):
 
     response = client.get('/api/shopping_list')
     assert(response.status_code == 500)
+
