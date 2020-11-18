@@ -1,119 +1,124 @@
-﻿import React, { useState } from "react";
-import ListItem from "./ListItem";
-import Form from "./Form";
-import WarningMessage from "../WarningMessage";
-import CONSTANTS from "../../constants";
+﻿import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import Pagination from "@material-ui/lab/Pagination";
+import { Divider, Box } from "@material-ui/core";
+import RecipeCard from "../../components/common/RecipeCard";
+import SortRecipeDropDown from "../../components/RecipeSearchResults/SortRecipesDropDown";
+import Typography from '@material-ui/core/Typography';
 
-const RecipeSearchResults = () => {
-  const [items, setItems] = useState([]);
-  const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
-
-  const getItems = () => {
-    let promiseList = fetch(CONSTANTS.ENDPOINT.LIST)
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-    return promiseList;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing(2),
+    backgroundColor: '#f7f7f7',
+    width: "100%"
+  },
+  paginator: {
+    justifyContent: "center",
+    padding: "10px"
+  },
+  topBanner: {
+    flexGrow: 1,
+  },
+  recipeCount: {
+    marginTop: 20,
   }
+}));
 
-  const deleteItem = (item) => {
-    fetch(`${CONSTANTS.ENDPOINT.LIST}/${item.id}`, { method: "DELETE" })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(result => {
-        setItems(items.filter(item => item.id !== result.id));
-      })
-      .catch(error => {
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
-        });
-      });
+const GreyTextTypography = withStyles({
+  root: {
+    color: "grey"
   }
+})(Typography);
 
-  const addItem = (textField) => {
-    // Warning Pop Up if the user submits an empty message
-    if (!textField) {
-      setWarningMessage({
-        warningMessageOpen: true,
-        warningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
-      });
-      return;
-    }
+const RecipeSearchResults = (props) => {
+  const classes = useStyles();
+  let recipeSearchResult = null;
+  const itemsPerPage = 16;
+  const [page, setPage] = React.useState(1);
+  const [noOfPages] = React.useState(
+    props.data.recipes && props.data.recipes.length ?
+      Math.ceil(props.data.recipes.length / itemsPerPage) : null
+  );
 
-    fetch(CONSTANTS.ENDPOINT.LIST, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: textField
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(itemAdded =>{
-        setItems([itemAdded, ...items]);
-      })
-      .catch(error =>
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
-        })
-      );
-  };
+  let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  const closeWarningMessage = () => {
-    setWarningMessage({
-      warningMessageOpen: false,
-      warningMessageText: ""
-    });
-  };
-
-  React.useEffect(() => {
-    getItems()
-      .then(list => {setItems(list)})
-      .catch(error =>
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
-        })
-      );
-  }, []);
+  if (props.data && props.data[recipesToBeDisplayed]) {
+    recipeSearchResult = <div className={classes.root}>
+      <div className={classes.topBanner}>
+        <Grid container spacing={3} justify="flex-start">
+          <Grid className={classes.recipeCount} item xs={6}>
+            <GreyTextTypography variant="h7">We found {props.data[recipesToBeDisplayed].length} recipes. Please enjoy.</GreyTextTypography>
+          </Grid>
+          <Grid container xs={6} justify="flex-end">
+            <SortRecipeDropDown />
+          </Grid>
+        </Grid>
+      </div>
+      <Grid
+        container
+        spacing={5}
+        direction="row"
+        justify="flex-start"
+        alignItems="flex-start"
+      >
+        {props.data[recipesToBeDisplayed]
+          .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          .map(recipe => (
+            <Grid item key={props.recipe_id} xs={25}>
+              <RecipeCard
+                key={recipe.recipe_id}
+                recipeId={recipe.recipe_id}
+                recipeName={recipe.recipe_name}
+                imageUrl={recipe.image_url}
+                timeToCookInMinutes={recipe.time_to_cook_in_minutes}
+                servings={recipe.servings}
+                calories={recipe.calories}
+                protein={recipe.protein}
+                carbs={recipe.carbs}
+                fat={recipe.fat}
+              />
+            </Grid>
+          ))}
+      </Grid>
+      <br></br>
+      <Divider />
+      <Box component="span">
+        <Pagination
+          count={noOfPages}
+          page={page}
+          onChange={(event, value) => setPage(value)}
+          defaultPage={1}
+          color="primary"
+          size="large"
+          showFirstButton
+          showLastButton
+          classes={{ ul: classes.paginator }}
+        />
+      </Box>
+    </div>;
+  } else {
+    recipeSearchResult = <p>No recipes available.</p>;
+  }
 
   return (
-    <main id="mainContent" className="container">
-      <div className="row justify-content-center py-5">
-        <h3>Recipe_Search_Results</h3>
-      </div>
-      <div className="row">
-        <div className="col-12 p-0">
-          <Form addItem={addItem}/>
-        </div>
-        {items.map(listItem => (
-          <ListItem
-            key={listItem.id}
-            item={listItem}
-            deleteItem={deleteItem}
-          />
-        ))}
-        <WarningMessage
-          open={warningMessage.warningMessageOpen}
-          text={warningMessage.warningMessageText}
-          onWarningClose={closeWarningMessage}
-        />
-      </div>
-    </main>
+    <div>
+      {recipeSearchResult}
+    </div>
   );
-}
+};
 
-export default RecipeSearchResults;
+RecipeSearchResults.propTypes = {
+  data: PropTypes.object,
+  recipe_id: PropTypes.string,
+  getRecipes: PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({ data: state.recipes });
+
+export default connect(mapStateToProps)(RecipeSearchResults);
+

@@ -1,15 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ListWithDeletableItems } from '../../components/ListWithDeletableItems'
-import { AddItemTextField } from '../../components/AddItemTextField'
-import { PageTitle } from '../../components/PageTitle'
+import { ListWithDeletableItems } from '../../components/common/ListWithDeletableItems';
+import { AddItemTextField } from '../../components/common/AddItemTextField';
 import PropTypes from 'prop-types';
 
 
 const useStyles = makeStyles(() => ({
   root: {
     '& > *': {
-      width: '25ch',
+      width: '30ch',
       margin: 'auto',
       display: 'flex',
     },
@@ -17,32 +16,32 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ListContainer = ({
-  pageTitle,
   newItem,
   setNewItem,
   shoppingItems,
-  addShoppingListItem }) => {
+  addShoppingListItem,
+  Label
+}) => {
   const classes = useStyles();
   return (
-    <main id='mainContent'>
-      <PageTitle titleName={pageTitle} />
-      <div className={classes.root} >
-        <AddItemTextField
-          newItem={newItem}
-          setNewItem={setNewItem}
-          addShoppingListItem={addShoppingListItem} />
-        <ListWithDeletableItems shoppingItems={shoppingItems} />
-      </div>
-    </main>
-  )
-}
+    <div className={classes.root} >
+      <AddItemTextField
+        newItem={newItem}
+        setNewItem={setNewItem}
+        addShoppingListItem={addShoppingListItem}
+        Label={Label} />
+      <ListWithDeletableItems shoppingItems={shoppingItems} />
+    </div>
+  );
+};
 
 ListContainer.propTypes = {
   pageTitle: PropTypes.any,
   newItem: PropTypes.any,
   setNewItem: PropTypes.func,
   shoppingItems: PropTypes.any,
-  addShoppingListItem: PropTypes.func
+  addShoppingListItem: PropTypes.func,
+  Label: PropTypes.string
 };
 
 export { ListContainer };

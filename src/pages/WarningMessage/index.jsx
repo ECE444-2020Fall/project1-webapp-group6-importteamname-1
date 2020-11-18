@@ -29,12 +29,12 @@ const WarningMessage = ({ open, text, onWarningClose }) => {
       )}
     </React.Fragment>
   );
-}
+};
 
 WarningMessage.propTypes = {
   open: PropTypes.bool,
   text: PropTypes.string,
-  onWarningClose:PropTypes.func
-}
+  onWarningClose: PropTypes.func
+};
 
 export default WarningMessage;
