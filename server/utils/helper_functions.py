@@ -2,7 +2,7 @@
  #
  # Description: This file contains helper functions used for getting user_ud, displaying error when
  # a user_is is not found, and sorting a list by frequency of elements.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

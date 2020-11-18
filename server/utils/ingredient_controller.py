@@ -2,7 +2,7 @@
  #
  # Description: This file contains code used to add ingredients to, retrieve all ingredients
  # and get ingredients by id from the RecipeIngredient table.
-.#
+ #
  # Author(s): Tim Fei
  # Date: November 17, 2020 
 

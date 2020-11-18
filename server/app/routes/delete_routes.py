@@ -1,7 +1,7 @@
  # FileName: delete_routes.py
  #
  # Description: This file contains a route that DELETES data from the database.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

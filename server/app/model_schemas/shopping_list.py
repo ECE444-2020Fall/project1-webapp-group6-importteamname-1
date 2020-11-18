@@ -1,7 +1,7 @@
  # FileName: shopping_list.py
  #
  # Description: Model class for shopping list.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

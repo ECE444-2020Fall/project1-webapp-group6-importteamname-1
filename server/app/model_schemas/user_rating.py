@@ -1,7 +1,7 @@
  # FileName: user_rating.py
  #
  # Description: Model class for user rating.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

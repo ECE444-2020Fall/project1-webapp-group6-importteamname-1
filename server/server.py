@@ -1,7 +1,7 @@
  # FileName: server.py
  #
  # Description: This is the main entry point to the server.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

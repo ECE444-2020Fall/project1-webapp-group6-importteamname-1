@@ -1,7 +1,7 @@
  # FileName: pantry_list.py
  #
  # Description: Model class for pantry list.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

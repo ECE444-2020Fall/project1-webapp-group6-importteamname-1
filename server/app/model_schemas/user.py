@@ -1,7 +1,7 @@
  # FileName: user.py
  #
  # Description: Model class for user.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

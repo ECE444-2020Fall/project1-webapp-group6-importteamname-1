@@ -1,7 +1,7 @@
  # FileName: debug_routese.py
  #
  # Description: This file contains routes that are used for developers to debug the app.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

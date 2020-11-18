@@ -2,7 +2,7 @@
  #
  # Description: This file contains functions that scrape recipes and ingredients from Spoonacular API,
  # Parse them and inserting them into the Recipe table and the RecipeIngredient table.
-.#
+ #
  # Author(s): Tim Fei
  # Date: November 17, 2020 
 

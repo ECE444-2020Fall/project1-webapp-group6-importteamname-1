@@ -9,6 +9,12 @@
  */
 
 const initialState = {
+    /* 
+    When the user sorts recipes for the 1st time, we create a copy of 'recipes' and store it
+    inside 'sortedRecipes'. If the user clicks 'Sort recipes' again, we sort the 'sortedRecipes'
+    array again. This way, the original 'reecipes' array is unmodified and the user can 
+    view it by clicking the 'Undo sort' button.
+    */
     recipes: [],
     sortedRecipes: [],
     sortOrder: '',

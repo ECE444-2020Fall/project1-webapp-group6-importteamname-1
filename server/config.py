@@ -1,7 +1,7 @@
  # FileName: config.py
  #
  # Description: This contains configurations for SQLAlchemy.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

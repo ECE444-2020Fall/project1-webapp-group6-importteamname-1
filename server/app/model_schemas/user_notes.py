@@ -1,7 +1,7 @@
  # FileName: user_notes.py
  #
  # Description: Model class for user notes.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 

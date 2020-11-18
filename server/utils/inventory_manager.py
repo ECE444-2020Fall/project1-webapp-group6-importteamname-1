@@ -2,7 +2,7 @@
  #
  # Description: This file contains functions used to add, remove and retrieve user items from the
  # RecipeCart, FavouritesList or UserNotes table.
-.#
+ #
  # Author(s): Yanisa Kham
  # Date: November 17, 2020 
 
