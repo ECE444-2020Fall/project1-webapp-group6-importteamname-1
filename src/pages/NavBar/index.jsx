@@ -155,6 +155,7 @@ const NavBar = () => {
         </Toolbar>
       </AppBar>
 
+      {/* onEscapeKeyDown and onBackDropClick allow the user to close the drawer when they click outside of the drawer*/}
       <Drawer
         className={classes.drawer}
         variant="temporary"

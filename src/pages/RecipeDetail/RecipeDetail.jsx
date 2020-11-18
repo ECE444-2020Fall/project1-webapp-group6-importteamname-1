@@ -90,8 +90,10 @@ const RecipeDetail = (props) => {
   const classes = useStyles();
   const [ingredients, setIngredients] = useState({});
 
+  // Check the Redux store to figure out which recipe the user is currently looking at
   let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id);
 
+  // Retrieve all the ingredients that correspond to a specific recipe.
   useEffect(() => {
     (async () => {
       await fetch(`${CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID}/${recipe_id}`)

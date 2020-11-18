@@ -73,6 +73,9 @@ const RecipeCard = (props) => {
             </CardContent>
           </Link>
         </CardActionArea>
+        {/* We don't want to redirect the user to RecipeDetail page when they rate the recipe,
+        add the recipe to cart, or add the recipe to favourites list. So we put RecipeCardUserActions  
+        outside of the <Link to{}> attributes. */}
         <RecipeCardUserActions recipe_id={props.recipeId} />
       </Card>
     </div>
