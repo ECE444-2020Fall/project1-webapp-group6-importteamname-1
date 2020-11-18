@@ -31,29 +31,7 @@ def test_get_all_recipes(client):
     assert("carbs" in response.json["recipes"][0])
     assert("fat" in response.json["recipes"][0])
 
-def test_add_recipe(client):
-    """Test that adding a single recipe works"""
 
-    request_header = {"Content-Type": "application/json"}
-    request_body = {
-        "recipe_id": "00000000-0000-0000-0000-000000000000",
-        "recipe_name": "test_data_recipe",
-        "image_url": "image_url",
-        "cuisines": "cuisine1, cuisine2, cuisine3",
-        "instructions": "steps",
-        "time_to_cook_in_minutes": 2,
-        "servings": 2,
-        "calories": 50,
-        "protein": 2,
-        "carbs": 2,
-        "fat": 2
-    }
-
-
-    response = client.post("/api/recipes/add", data=json.dumps(request_body), headers=request_header)
-
-    assert(response.status_code == 201)
-    assert(response.content_type == "application/json")
     
 
 
