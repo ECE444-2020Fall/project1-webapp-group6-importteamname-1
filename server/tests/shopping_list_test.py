@@ -25,3 +25,10 @@ def test_invalid_user_shopping_list(client):
     """ make sure that shopping list returns 500 status code if user is not logged in """
     rv = client.get('/api/shopping_list')
     assert(rv.status_code == 500)
+
+def test_shopping_list_empty(client):
+    """ Test that shopping list is empty before user adds any items to the list """
+
+    set_client_user_id(client)
+    response = client.get('/api/shopping_list')
+    assert (len(response.json["items"]) == 0) 
