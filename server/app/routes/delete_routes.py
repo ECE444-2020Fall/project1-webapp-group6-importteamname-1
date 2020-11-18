@@ -6,7 +6,8 @@ from . import inventory_manager
 from utils.helper_functions import * 
 
 @app.route('/api/<any(shopping_list,pantry_list,recipe_cart,favourites_list):model>/<string:item>', methods=['DELETE'])
-@cross_origin(origins="*" , supports_credentials=True)
+@cross_origin()
+# @cross_origin(origins="*" , supports_credentials=True)
 def remove_item_from_model(model, item):
     user_id = get_user_id()
     model = models_map[model]
