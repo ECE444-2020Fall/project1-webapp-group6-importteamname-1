@@ -31,14 +31,3 @@ def test_showing_user_notes(client):
     set_client_user_id(client)
     response = client.get('/api/user_notes')
     assert(response.status_code == 200)
-
-def test_add_user_notes(client):
-    request_header = {"Content-Type": "application/json"}
-    request_body = {
-        "recipe_id": "02e55097-a9ed-4225-9a38-82f3aea0347c",
-        "feedback": "test_feedback",
-    }
-
-    set_client_user_id(client)
-    response = client.post('/api/user_notes', data=json.dumps(request_body), headers=request_header)
-    assert(response.status_code == 201)
