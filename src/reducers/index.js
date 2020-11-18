@@ -3,4 +3,4 @@ import recipeReducer from './recipeReducer';
 
 export default combineReducers({
     recipes: recipeReducer,
-})
+});

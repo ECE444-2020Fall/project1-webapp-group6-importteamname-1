@@ -12,7 +12,7 @@ const Footer = () => {
               Your personal cooking assistant.
             </p>
             <p className={styles.description}>
-              Yanisa Kham, Tim Fei, Johnathon Martin, Mohamed Abdelhamid 
+              Yanisa Kham, Tim Fei, Johnathon Martin, Mohamed Abdelhamid
             </p>
           </div>
           <div className="col-2">
@@ -25,5 +25,5 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 export default Footer;

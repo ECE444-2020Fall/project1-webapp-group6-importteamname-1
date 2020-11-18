@@ -13,14 +13,14 @@ const AddItemTextField = ({ newItem, setNewItem, addShoppingListItem, Label }) =
       onKeyPress={
         (ev) => {
           if (ev.key === 'Enter') {
-            addShoppingListItem()
+            addShoppingListItem();
           }
         }
       }
-      label ={Label}
+      label={Label}
       variant='outlined' />
-  )
-}
+  );
+};
 
 AddItemTextField.propTypes = {
   newItem: PropTypes.any,

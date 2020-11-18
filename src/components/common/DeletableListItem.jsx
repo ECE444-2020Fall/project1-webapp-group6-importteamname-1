@@ -12,13 +12,13 @@ const DeletableListItem = ({ item, removeItem }) => {
     <ListItem >
       <ListItemText primary={item} />
       <ListItemSecondaryAction>
-        <IconButton edge='end' aria-label='delete' onClick={() => { removeItem(item) }}>
+        <IconButton edge='end' aria-label='delete' onClick={() => { removeItem(item); }}>
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
-  )
-}
+  );
+};
 
 DeletableListItem.propTypes = {
   item: PropTypes.string,

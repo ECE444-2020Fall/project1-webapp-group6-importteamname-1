@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { getItem } from '../../utils/list_utils';
 import CONSTANTS from '../../constants';
-import {UserNotesContent} from '../../components/RecipeDetail/UserNotesContent'
-import {UserNotesButton} from '../../components/RecipeDetail/UserNotesButton'
+import { UserNotesContent } from '../../components/RecipeDetail/UserNotesContent';
+import { UserNotesButton } from '../../components/RecipeDetail/UserNotesButton';
 
 const useStyles = makeStyles(() => ({
   notes_editor: {
@@ -33,13 +33,13 @@ const UserNotesContainer = () => {
   }
   return (
     <div >
-        <CardContent>
-          <UserNotesButton editMode={editMode}  setEditMode={setEditMode} userNotes={userNotes} />
-          <h5>User notes</h5>
-          {editMode ?
-            <NotesTextBox userNotes={userNotes} setUserNotes={setUserNotes} /> :
-            <UserNotesContent userNotes={userNotes} />}
-        </CardContent>
+      <CardContent>
+        <UserNotesButton editMode={editMode} setEditMode={setEditMode} userNotes={userNotes} />
+        <h5>User notes</h5>
+        {editMode ?
+          <NotesTextBox userNotes={userNotes} setUserNotes={setUserNotes} /> :
+          <UserNotesContent userNotes={userNotes} />}
+      </CardContent>
 
     </div>
   );

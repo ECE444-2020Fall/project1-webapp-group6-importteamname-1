@@ -5,7 +5,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import BatteryChargingFullIcon from '@material-ui/icons/BatteryChargingFull';
@@ -45,46 +44,46 @@ const NutritionFacts = (props) => {
           </Typography>
           <div className={classes.listContainer}>
             <List dense={true}>
-                <ListItem>
-                  <ListItemIcon>
-                    <BatteryChargingFullIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={props.calories + ' Cal'}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <BatteryChargingFullIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={props.carbs + ' g Carbs'}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <BatteryChargingFullIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={props.protein + ' g Protein'}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <BatteryChargingFullIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={props.fat + ' g Fat'}
-                  />
-                </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <BatteryChargingFullIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`${props.calories} Cal`}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <BatteryChargingFullIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`${props.carbs}g Carbs`}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <BatteryChargingFullIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`${props.protein}g Protein`}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <BatteryChargingFullIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={`${props.fat}g Fat`}
+                />
+              </ListItem>
             </List>
           </div>
         </Grid>
       </Grid>
     </div>
   );
-}
-  
+};
+
 NutritionFacts.propTypes = {
   calories: PropTypes.number,
   protein: PropTypes.number,

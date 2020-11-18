@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -41,68 +41,68 @@ const RecipeSearchResults = (props) => {
   const itemsPerPage = 16;
   const [page, setPage] = React.useState(1);
   const [noOfPages] = React.useState(
-    props.data.recipes && props.data.recipes.length ? 
+    props.data.recipes && props.data.recipes.length ?
       Math.ceil(props.data.recipes.length / itemsPerPage) : null
   );
-  
+
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
-  if (props.data && props.data[recipesToBeDisplayed]) {     
-    recipeSearchResult =  <div className={classes.root}>
-        <div className={classes.topBanner}>
-          <Grid container spacing={3} justify="flex-start">
-            <Grid className={classes.recipeCount} item xs={6}>
-              <GreyTextTypography variant="h7">We found {props.data[recipesToBeDisplayed].length} recipes. Please enjoy.</GreyTextTypography>
-            </Grid>
-            <Grid container xs={6} justify="flex-end">
-              <SortRecipeDropDown />
-            </Grid>
+  if (props.data && props.data[recipesToBeDisplayed]) {
+    recipeSearchResult = <div className={classes.root}>
+      <div className={classes.topBanner}>
+        <Grid container spacing={3} justify="flex-start">
+          <Grid className={classes.recipeCount} item xs={6}>
+            <GreyTextTypography variant="h7">We found {props.data[recipesToBeDisplayed].length} recipes. Please enjoy.</GreyTextTypography>
           </Grid>
-        </div>
-        <Grid
-          container
-          spacing={5}
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          {props.data[recipesToBeDisplayed]
+          <Grid container xs={6} justify="flex-end">
+            <SortRecipeDropDown />
+          </Grid>
+        </Grid>
+      </div>
+      <Grid
+        container
+        spacing={5}
+        direction="row"
+        justify="flex-start"
+        alignItems="flex-start"
+      >
+        {props.data[recipesToBeDisplayed]
           .slice((page - 1) * itemsPerPage, page * itemsPerPage)
           .map(recipe => (
-          <Grid item key={props.recipe_id} xs={25}>
-                <RecipeCard 
-                  key={recipe.recipe_id}
-                  recipeId={recipe.recipe_id} 
-                  recipeName={recipe.recipe_name}
-                  imageUrl={recipe.image_url}
-                  timeToCookInMinutes={recipe.time_to_cook_in_minutes}
-                  servings={recipe.servings}
-                  calories={recipe.calories}
-                  protein={recipe.protein}
-                  carbs={recipe.carbs}
-                  fat={recipe.fat} 
-                />
+            <Grid item key={props.recipe_id} xs={25}>
+              <RecipeCard
+                key={recipe.recipe_id}
+                recipeId={recipe.recipe_id}
+                recipeName={recipe.recipe_name}
+                imageUrl={recipe.image_url}
+                timeToCookInMinutes={recipe.time_to_cook_in_minutes}
+                servings={recipe.servings}
+                calories={recipe.calories}
+                protein={recipe.protein}
+                carbs={recipe.carbs}
+                fat={recipe.fat}
+              />
             </Grid>
           ))}
-        </Grid>
-        <br></br>
-        <Divider />
-        <Box component="span">
-          <Pagination
-            count={noOfPages}
-            page={page}
-            onChange={(event, value) => setPage(value)}
-            defaultPage={1}
-            color="primary"
-            size="large"
-            showFirstButton
-            showLastButton
-            classes={{ ul: classes.paginator }}
-          />
-        </Box>
-      </div>
+      </Grid>
+      <br></br>
+      <Divider />
+      <Box component="span">
+        <Pagination
+          count={noOfPages}
+          page={page}
+          onChange={(event, value) => setPage(value)}
+          defaultPage={1}
+          color="primary"
+          size="large"
+          showFirstButton
+          showLastButton
+          classes={{ ul: classes.paginator }}
+        />
+      </Box>
+    </div>;
   } else {
-    recipeSearchResult = <p>No recipes available.</p>
+    recipeSearchResult = <p>No recipes available.</p>;
   }
 
   return (
@@ -110,7 +110,7 @@ const RecipeSearchResults = (props) => {
       {recipeSearchResult}
     </div>
   );
-}
+};
 
 RecipeSearchResults.propTypes = {
   data: PropTypes.object,
@@ -118,7 +118,7 @@ RecipeSearchResults.propTypes = {
   getRecipes: PropTypes.object,
 };
 
-const mapStateToProps = (state) => ({data: state.recipes})
+const mapStateToProps = (state) => ({ data: state.recipes });
 
 export default connect(mapStateToProps)(RecipeSearchResults);
 

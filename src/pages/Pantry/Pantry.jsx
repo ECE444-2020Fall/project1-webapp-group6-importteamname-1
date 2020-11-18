@@ -1,12 +1,12 @@
 ﻿import React, { useState } from 'react';
-import { generateList, addItem, removeItem } from '../../utils/list_utils'
-import { ListContainer } from '../../containers/ListContainer/ListContainer'
+import { generateList, addItem, removeItem } from '../../utils/list_utils';
+import { ListContainer } from '../../containers/ListContainer/ListContainer';
 import CONSTANTS from '../../constants';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { PageTitle } from '../../components/common/PageTitle';
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 import { getRecommendedRecipes } from '../../actions/recipeActions';
 import { getRecipes } from '../../actions/recipeActions';
 import { clearRecipes } from '../../actions/recipeActions';
@@ -28,37 +28,37 @@ const useStyles = makeStyles((theme) => ({
 const Pantry = (props) => {
   const [newItem, setNewItem] = useState('');
   const [pantryItems, setPantryItems] = useState([]);
-  const [refreshList, setRefreshList] = useState(true)
+  const [refreshList, setRefreshList] = useState(true);
   const [fetchRecipes, setFetchRecipes] = useState(false);
 
   const removePantryListItem = (item) => {
     removeItem(item, CONSTANTS.ENDPOINT.PANTRY_LIST)
-      .then(() => setRefreshList(true))
-  }
+      .then(() => setRefreshList(true));
+  };
 
   const addPantryListItem = () => {
     if (newItem) {
       addItem(newItem, CONSTANTS.ENDPOINT.PANTRY_LIST)
         .then(() => {
-          setRefreshList(true)
-          setNewItem('')
-        })
+          setRefreshList(true);
+          setNewItem('');
+        });
     }
-  }
+  };
 
   const handleClick = async () => {
     await props.clearRecipes();
     if (pantryItems.length > 0) {
-       await props.getRecommendedRecipes(); 
-       await setFetchRecipes(true);
+      await props.getRecommendedRecipes();
+      await setFetchRecipes(true);
     } else {
-       await props.getRecipes();
-       await setFetchRecipes(true);
+      await props.getRecipes();
+      await setFetchRecipes(true);
     }
-  }
+  };
 
   if (refreshList) {
-    setRefreshList(false)
+    setRefreshList(false);
     fetch(CONSTANTS.ENDPOINT.PANTRY_LIST, {
       credentials: 'include'
     })
@@ -75,13 +75,13 @@ const Pantry = (props) => {
 
   if (!fetchRecipes) {
     return (
-      <div> 
-        <br/>       
+      <div>
+        <br />
         <PageTitle titleName="What's in your Pantry?" />
         <center>
-        <Typography component="body1" variant="body1" paragraph='true'>
+          <Typography component="body1" variant="body1" paragraph='true'>
             We will recommend recipes based on the ingredients you already have!
-            <br/>
+            <br />
             To view all recipes, click &apos;RECOMMEND RECIPES&apos; with no items in your pantry
             <p></p>
           </Typography>
@@ -98,21 +98,21 @@ const Pantry = (props) => {
           Label="Add Ingredient to Pantry"
         />
         <center>
-            <Button
-              onClick={handleClick} 
-              type="submit"
-              variant="contained" 
-              color="primary" 
-              className= { classes.submit }>
-                  Recommend Recipes
+          <Button
+            onClick={handleClick}
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.submit}>
+            Recommend Recipes
             </Button>
         </center>
       </div>
     );
   } else {
-    return <Redirect to={'/recipe-search-results'}/>
+    return <Redirect to={'/recipe-search-results'} />;
   }
-}
+};
 
 Pantry.propTypes = {
   getRecommendedRecipes: PropTypes.func,
@@ -120,6 +120,6 @@ Pantry.propTypes = {
   getRecipes: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({data: state.recipes})
+const mapStateToProps = (state) => ({ data: state.recipes });
 
-export default connect(mapStateToProps, {getRecommendedRecipes, getRecipes, clearRecipes})(Pantry);
+export default connect(mapStateToProps, { getRecommendedRecipes, getRecipes, clearRecipes })(Pantry);

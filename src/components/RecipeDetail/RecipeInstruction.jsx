@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   alignItemsAndJustifyContent: {
@@ -15,27 +15,27 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-}))
+}));
 
 const RecipeInstruction = (props) => {
   let parsedInstructions = props.instructions.split("',");
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.alignItemsAndJustifyContent}>
-        <List dense={true} >
-            <h5>Instruction:</h5>
-            <ListItem className={classes.alignItemsAndJustifyContent}>
-              <ListItemIcon>
-                <AccessTimeIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={'Time to cook: ' + props.timeToCookInMinutes + ' minutes'}
-                variant="h3"
-              />
-            </ListItem>              
-          {parsedInstructions
-          .slice(1, parsedInstructions.length-1)
+      <List dense={true} >
+        <h5>Instruction:</h5>
+        <ListItem className={classes.alignItemsAndJustifyContent}>
+          <ListItemIcon>
+            <AccessTimeIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={`Time to cook: ${props.timeToCookInMinutes} minutes`}
+            variant="h3"
+          />
+        </ListItem>
+        {parsedInstructions
+          .slice(1, parsedInstructions.length - 1)
           .map((instructionStep, instructionIndex) => (
             <ListItem key={instructionIndex}>
               <ListItemIcon>
@@ -46,10 +46,10 @@ const RecipeInstruction = (props) => {
               />
             </ListItem>
           ))}
-        </List>
+      </List>
     </div>
   );
-}
+};
 
 RecipeInstruction.propTypes = {
   timeToCookInMinutes: PropTypes.number,

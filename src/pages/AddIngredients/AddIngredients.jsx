@@ -8,9 +8,9 @@ const AddIngredients = () => {
         <h3>Add Ingredients</h3>
       </div>
       <Button variant="contained" color="primary">
-          Sample Button
+        Sample Button
       </Button>
     </div>
   </main>;
-}
+};
 export default AddIngredients;

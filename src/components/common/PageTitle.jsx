@@ -20,10 +20,10 @@ const PageTitle = ({ titleName }) => {
 			</div>
 		</div>
 	);
-}
+};
 
 PageTitle.propTypes = {
-  titleName: PropTypes.string
+	titleName: PropTypes.string
 };
 
 export { PageTitle };
