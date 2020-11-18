@@ -72,7 +72,8 @@ const Login = () => {
           'name': user,
           'password': pass
         }),
-        credentials: 'include'
+        credentials: 'same-origin',
+        withCredentials: true
       })
         .then(response => {
           return response.json();
