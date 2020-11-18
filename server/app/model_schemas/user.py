@@ -1,3 +1,10 @@
+ # FileName: user.py
+ #
+ # Description: Model class for user.
+.#
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
 from app import db
 import uuid
 from constants import CONSTANTS

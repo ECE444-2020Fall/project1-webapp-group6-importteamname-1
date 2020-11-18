@@ -1,3 +1,11 @@
+ # FileName: constants.py
+ #
+ # Description: This file contains constants used in the back-end code.
+.#
+ # Author(s): Yanisa Kham, Tim Fei, Johnathon Martin
+ # Date: November 17, 2020 
+
+
 import os
 from http import HTTPStatus
 

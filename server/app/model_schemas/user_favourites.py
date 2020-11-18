@@ -1,3 +1,10 @@
+ # FileName: user_favourites.py
+ #
+ # Description: Model class for user favourites.
+.#
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
 from app import db
 from constants import CONSTANTS
 from sqlalchemy_utils import UUIDType

@@ -1,3 +1,12 @@
+ # FileName: ingredient_controller.py
+ #
+ # Description: This file contains code used to add ingredients to, retrieve all ingredients
+ # and get ingredients by id from the RecipeIngredient table.
+.#
+ # Author(s): Tim Fei
+ # Date: November 17, 2020 
+
+
 from flask import jsonify, make_response, session
 from constants import CONSTANTS
 from collections import defaultdict
