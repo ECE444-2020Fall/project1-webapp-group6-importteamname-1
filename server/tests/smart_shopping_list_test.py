@@ -20,6 +20,7 @@ def test_show_pantry_list(client):
     response = client.get('/api/smart_shopping_list')
     assert(response.status_code == 200)
 
+
 def test_show_pantry_list_unauthorized_user(client):
     """ Test that pantry list returns 500 status code if user is not logged in """
 
@@ -32,6 +33,7 @@ def test_smart_shopping_list_empty(client):
     set_client_user_id(client)
     response = client.get('/api/smart_shopping_list')
     assert (len(response.json["items"]) == 0) 
+
 
 
 

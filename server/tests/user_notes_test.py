@@ -44,3 +44,4 @@ def test_user_notes_empty(client):
     set_client_user_id(client)
     response = client.get('/api/user_notes')
     assert (len(response.json["items"]) == 0) 
+
