@@ -7,33 +7,32 @@ from . import inventory_manager, ingredient_controller, recipe_controller
 from utils.helper_functions import * 
 
 
-@app.route('/api/<any(user_notes,user_rating,recipe_cart,favourites_list):model>/<string:recipe_id>')
-# @cross_origin(origins="*" , supports_credentials=True)
+@app.route('/api/<any(user_notes,user_rating,recipe_cart,favourites_list):model>/<string:recipe_id>/<string:user_id>')
 @cross_origin()
-def get_item_from_model(model, recipe_id):
-    user_id = get_user_id()
+def get_item_from_model(model, recipe_id, user_id):
+    # user_id = get_user_id()
     if not user_id:
         return user_id_not_found_response() 
     model = models_map[model]
     return inventory_manager.get_item(user_id, recipe_id, model)
 
 
-@app.route('/api/<any(user_notes,user_rating,shopping_list,pantry_list):model>')
-@cross_origin()
-# @cross_origin(origins="*" , supports_credentials=True)
-def get_all_user_items_from_model(model):
-    user_id = get_user_id()
+@app.route('/api/<any(user_notes,user_rating,shopping_list,pantry_list):model>/<string:user_id>')
+# @cross_origin(support_credentials=True)
+def get_all_user_items_from_model(model, user_id):
+    print("HII")
+    # user_id = get_user_id()
     if not user_id:
         return user_id_not_found_response() 
     model = models_map[model]
     return inventory_manager.get_all_user_items(user_id, model)
 
 
-@app.route('/api/<any(recipe_cart, favourites_list):model>')
+@app.route('/api/<any(recipe_cart, favourites_list):model>/<string:user_id>')
 @cross_origin()
 # @cross_origin(origins="*" , supports_credentials=True)
-def get_all_user_recipes_from_model(model):
-    user_id = get_user_id()
+def get_all_user_recipes_from_model(model, user_id):
+    # user_id = get_user_id()
     if not user_id:
         return user_id_not_found_response() 
     model = models_map[model]
@@ -41,11 +40,11 @@ def get_all_user_recipes_from_model(model):
     return recipe_controller.get_recipes_by_ids(user_carted_recipe_ids, Recipe)
 
 
-@app.route('/api/smart_shopping_list')
+@app.route('/api/smart_shopping_list/<string:user_id>')
 @cross_origin()
 # @cross_origin(origins="*" , supports_credentials=True)
-def generate_smart_shopping_list_items():
-    user_id = get_user_id()
+def generate_smart_shopping_list_items(user_id):
+    # user_id = get_user_id()
     if not user_id:
         return user_id_not_found_response() 
     pantry_list_items = inventory_manager.get_all_user_items(user_id, PantryList).get_json()["items"]
@@ -70,6 +69,21 @@ def get_ingredient_by_recipe_id(recipe_id):
 # @cross_origin(origins="*" , supports_credentials=True)
 def get_all_recipes():
     return recipe_controller.get_all_recipes(Recipe)
+
+
+@app.route('/api/pantry_recipes/<string:user_id>')
+@cross_origin()
+# @cross_origin(origins="*" , supports_credentials=True)
+def recommend_recipes(user_id):
+    # user_id = get_user_id()
+    if not user_id:
+        return user_id_not_found_response() 
+
+    ingredients = inventory_manager.get_all_user_items(user_id, PantryList).get_json()["items"] #List of ingredients
+    recipes = RecipeIngredient.query.filter(RecipeIngredient.ingredient_name.in_(ingredients)).all()
+    recipe_ids = sortListByFreq([recipe.recipe_id for recipe in recipes])
+
+    return recipe_controller.get_recipes_by_ids(recipe_ids, Recipe)
 
 
 @app.route('/api/logout')

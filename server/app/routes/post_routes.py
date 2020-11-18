@@ -11,7 +11,7 @@ from utils.helper_functions import *
 @cross_origin()
 # @cross_origin(origins="*" , supports_credentials=True)
 def add_or_update_model_item(model):
-    user_id = get_user_id()
+    user_id = request.get_json()["user_id"]
     if not user_id:
         return user_id_not_found_response() 
     model = models_map[model]
@@ -23,26 +23,13 @@ def add_or_update_model_item(model):
 @cross_origin()
 # @cross_origin(origins="*" , supports_credentials=True)
 def add_item_to_model(model):
-    user_id = get_user_id()
+    user_id = request.get_json()["user_id"]
     if not user_id:
         return user_id_not_found_response() 
     model = models_map[model]
     item = request.get_json()["item"]
     return inventory_manager.add_item(user_id, item, model)
 
-@app.route('/api/pantry_recipes')
-@cross_origin()
-# @cross_origin(origins="*" , supports_credentials=True)
-def recommend_recipes():
-    user_id = get_user_id()
-    if not user_id:
-        return user_id_not_found_response() 
-
-    ingredients = inventory_manager.get_all_user_items(user_id, PantryList).get_json()["items"] #List of ingredients
-    recipes = RecipeIngredient.query.filter(RecipeIngredient.ingredient_name.in_(ingredients)).all()
-    recipe_ids = sortListByFreq([recipe.recipe_id for recipe in recipes])
-
-    return recipe_controller.get_recipes_by_ids(recipe_ids, Recipe)
 
 @app.route('/api/add_user', methods=['POST'])
 @cross_origin()
@@ -62,7 +49,10 @@ def add_new_user():
     db.session.commit()
     session["user_id"] = new_user.user_id
 
-    json_response = jsonify({"userFree": True})
+    json_response = jsonify({
+        "userFree": True,
+        "user_id": new_user.user_id
+    })
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
 @app.route('/api/login', methods=['POST'])
@@ -76,7 +66,10 @@ def login_user():
 
     if user:
         session["user_id"] = user.user_id
-        json_response = jsonify({"found": True})
+        json_response = jsonify({
+            "found": True,
+            "user_id": user.user_id
+        })
         return make_response(json_response, CONSTANTS['HTTP_STATUS']['200_OK'])
         
     json_response = jsonify({"found": False})
