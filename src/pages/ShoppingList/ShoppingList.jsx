@@ -36,8 +36,6 @@ const ShoppingList = () => {
           throw Error(response.statusText);
         }
         return response.text();
-<<<<<<< HEAD
-=======
       }).then(body => {
         console.log(JSON.parse(body));
         return JSON.parse(body).items;
@@ -53,7 +51,6 @@ const ShoppingList = () => {
           throw Error(response.statusText);
         }
         return response.text();
->>>>>>> master
       }).then(body => JSON.parse(body).items)
       .then(res => setShoppingItems(generateList(res, removeShoppingListItem)));
   }
