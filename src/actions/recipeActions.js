@@ -21,8 +21,8 @@ export const getRecipes = () => async dispatch => {
 
 export const getRecommendedRecipes = () => async dispatch => {
     try {
-        await fetch(CONSTANTS.ENDPOINT.PANTRY_RECIPES, {
-            credentials: 'include',
+        await fetch(`${CONSTANTS.ENDPOINT.PANTRY_RECIPES}/${localStorage.getItem('user_id')}`, {
+            // credentials: 'include',
         })
         .then(response => response.json())
         .then(json =>{                     

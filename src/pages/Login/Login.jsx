@@ -72,7 +72,7 @@ const Login = () => {
           'name': user,
           'password': pass
         }),
-        credentials: 'same-origin',
+        // credentials: 'same-origin',
         withCredentials: true
       })
         .then(response => {
@@ -90,6 +90,8 @@ const Login = () => {
           else {
             setUserFound(true);
             setPassInvalid("");
+            localStorage.setItem('user_id', body.user_id);
+            console.log("AAAA" + localStorage.getItem('user_id'));
           }
         });
     }

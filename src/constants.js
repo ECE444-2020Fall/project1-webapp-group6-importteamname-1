@@ -5,7 +5,8 @@ CONSTANTS.APP_NAME = 'ChefCoPilot';
 // Used for deployment
 // CONSTANTS.BACKEND_URL = 'https://chefcopilotbackend.herokuapp.com';
 
-CONSTANTS.BACKEND_URL = 'http://chefcopilotbackend.herokuapp.com';
+CONSTANTS.BACKEND_URL =  'https://chefcopilotbackend.herokuapp.com';
+// CONSTANTS.BACKEND_URL =  'http://localhost:3001' ;//'http://chefcopilotbackend.herokuapp.com';
 
 CONSTANTS.ENDPOINT = {};
 CONSTANTS.ENDPOINT.REGISTER = `${CONSTANTS.BACKEND_URL}/api/add_user`;

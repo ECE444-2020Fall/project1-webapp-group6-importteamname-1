@@ -8,8 +8,8 @@ function generateList(items, removeItem) {
 }
 
 const getItem = (item, endpoint) => {
-  return fetch(`${endpoint}/${item}`, {
-    credentials: 'include'
+  return fetch(`${endpoint}/${item}/${localStorage.getItem('user_id')}`, {
+    // credentials: 'include'
   })
     .then((response) => {
       if (!response.ok) {
@@ -21,9 +21,9 @@ const getItem = (item, endpoint) => {
 };
 
 const removeItem = (item, endpoint) => {
-  return fetch(`${endpoint}/${item}`, {
+  return fetch(`${endpoint}/${item}/${localStorage.getItem('user_id')}`, {
     method: 'delete',
-    credentials: 'include'
+    // credentials: 'include'
   }).then((response) => {
     if (!response.ok) {
       throw Error(response.statusText);
@@ -40,9 +40,10 @@ const addItem = (newItem, endpoint) => {
     },
     method: 'post',
     body: JSON.stringify({
-      'item': newItem
+      'item': newItem,
+      'user_id': localStorage.getItem('user_id')
     }),
-    credentials: 'include'
+    // credentials: 'include'
   }).then((response) => {
     if (response.status === 500) {
       throw Error(response.statusText);
@@ -61,9 +62,10 @@ const setFeedback = (endpoint, item, feedback) => {
     method: 'post',
     body: JSON.stringify({
       "recipe_id": item,
-      "feedback": feedback
+      "feedback": feedback,
+      "user_id": localStorage.getItem('user_id')
     }),
-    credentials: 'include'
+    // credentials: 'include'
   })
     .then((response) => {
       if (!response.ok) {
