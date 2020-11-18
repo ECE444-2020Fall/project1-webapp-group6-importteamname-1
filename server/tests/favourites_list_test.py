@@ -33,7 +33,7 @@ def test_favourites_list_empty(client):
     response = client.get('/api/favourites_list')
     assert (len(response.json["recipes"]) == 0) 
 
- def test_remove_from_favourites_list_item_does_not_exist(client):
+def test_remove_from_favourites_list_item_does_not_exist(client):
     """ Test that removing non-existent item from favourites list returns 400 """
 
     set_client_user_id(client)
