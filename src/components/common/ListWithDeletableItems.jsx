@@ -1,3 +1,13 @@
+/**
+ * FileName: ListWithDeletableItems.jsx
+ *
+ * Description: Renders a list that contains removable items.
+.*
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';

@@ -1,4 +1,13 @@
-﻿import React from "react";
+﻿/**
+ * FileName: index.jsx
+ *
+ * Description: This component is used to display a warning message.
+ * 
+ * Author(s): WebTemplateStudio
+ * Date: November 17, 2020 
+ */
+
+import React from "react";
 import classnames from "classnames";
 import styles from "./warningmessage.module.css";
 import PropTypes from "prop-types";

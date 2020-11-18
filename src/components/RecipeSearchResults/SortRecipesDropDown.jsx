@@ -1,3 +1,12 @@
+/**
+ * FileName: SortRecipesDropDown.jsx
+ *
+ * Description: This feature is used to sort recipes that are being displayed on the RecipeSearchResult page.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';

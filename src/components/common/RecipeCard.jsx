@@ -1,3 +1,15 @@
+/**
+ * FileName: RecipeCard.jsx
+ *
+ * Description: When a list of recipes is fetched on the RecipeSearchResults page, RecipeCart page and 
+ * FavouriteRecipes page, they will be rendered and displayed using this component.
+ * The user can use this panel to view a recipe's photo and calorie count
+.*
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';

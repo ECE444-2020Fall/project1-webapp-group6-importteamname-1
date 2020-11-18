@@ -1,3 +1,12 @@
+/**
+ * FileName: ListContainer.jsx
+ *
+ * Description: This component contains child components used to display a list of items on the page.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ListWithDeletableItems } from '../../components/common/ListWithDeletableItems';

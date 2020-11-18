@@ -1,3 +1,12 @@
+/**
+ * FileName: Register.jsx
+ *
+ * Description: This page allows the user to register for an account.
+ * 
+ * Author(s): Johnathon Martin
+ * Date: November 17, 2020 
+ */
+
 import React from "react";
 import CONSTANTS from "../../constants";
 import Avatar from '@material-ui/core/Avatar';

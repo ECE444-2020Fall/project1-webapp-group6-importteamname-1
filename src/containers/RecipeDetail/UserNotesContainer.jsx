@@ -1,3 +1,12 @@
+/**
+ * FileName: UserNotesContainer.jsx
+ *
+ * Description: This component contains child components used to render user notes on a recipe detail page.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
 import React, { useState } from "react";
 import CardContent from '@material-ui/core/CardContent';
 import { useParams } from "react-router-dom";

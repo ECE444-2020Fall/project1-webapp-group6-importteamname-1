@@ -1,3 +1,13 @@
+/**
+ * FileName: DeletableListItem.jsx
+ *
+ * Description: Renders an item that can be removed from a list.
+.*
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+
 import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';

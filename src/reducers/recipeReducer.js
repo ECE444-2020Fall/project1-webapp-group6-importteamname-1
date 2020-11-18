@@ -1,3 +1,13 @@
+/**
+ * FileName: recipeReducer.js
+ *
+ * Description: This file contains the reducer used for receiving actions and updating the app's 
+ * recipe state.
+ *
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
 const initialState = {
     recipes: [],
     sortedRecipes: [],

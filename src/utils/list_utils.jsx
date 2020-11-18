@@ -1,4 +1,13 @@
-import React from 'react';
+/**
+ * FileName: list_utils.jsx
+ *
+ * Description: Helper functions for adding, getting and removing items by calling a back-end endpoint.
+ *
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+ import React from 'react';
 import { DeletableListItem } from '../components/common/DeletableListItem';
 
 function generateList(items, removeItem) {

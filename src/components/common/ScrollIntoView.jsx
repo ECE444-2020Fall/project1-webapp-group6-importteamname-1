@@ -1,3 +1,14 @@
+/**
+ * FileName: ScrollIntoView.jsx
+ *
+ * Description: This component scrolls the recipe details page to the top after a user navigates from 
+ * the recipe search results page to recipe details page.
+ * 
+ * Author(s): Online sources.
+ * Date: November 17, 2020 
+ */
+
+
 import { PureComponent } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from 'prop-types';

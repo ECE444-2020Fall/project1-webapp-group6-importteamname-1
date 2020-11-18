@@ -1,3 +1,12 @@
+/**
+ * FileName: RecipeInstruction.jsx
+ *
+ * Description: This panel displays a recipe's instruction.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
 import React from "react";
 import PropTypes from 'prop-types';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';

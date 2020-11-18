@@ -1,4 +1,15 @@
-﻿import React from 'react';
+﻿/**
+ * FileName: RecipeSearchResults.jsx
+ *
+ * Description: After a user clicks 'Recommend Recipes' on the Pantry page, they will be routed to this 
+ * page. The user can sort the recipes on this page based on preparation time, servings, calories, carbs,
+ * fat, and protein. This page also contains a pagination that separates recipes into different pages.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from "@material-ui/core";

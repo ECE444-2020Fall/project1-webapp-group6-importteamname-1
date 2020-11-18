@@ -1,4 +1,15 @@
-﻿import React from "react";
+﻿/**
+ * FileName: index.jsx
+ *
+ * Description: The navigation bar contains the app's name, logo, a button that leads to the pantry page, and
+ * a sliding drawer menu that routes the user to other pages on the app (Profile, Favourite Recipes, 
+ * Recipe Cart, Ingredient Shopping List, Log Out).
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+import React from "react";
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
