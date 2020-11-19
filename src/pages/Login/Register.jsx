@@ -117,6 +117,7 @@ const Register = () => {
                     else {
                         setUserCreated(true);
                         setPassInvalid("");
+                        localStorage.setItem('user_id', body.user_id)
                     }
                 }
                 );

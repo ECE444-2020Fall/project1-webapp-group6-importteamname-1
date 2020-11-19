@@ -59,10 +59,9 @@ const Profile = () => {
 
   const handleLogout = (evt) => {
     evt.preventDefault();
-    fetch(CONSTANTS.ENDPOINT.LOGOUT, {
-      credentials: 'include'
-    });
+    fetch(CONSTANTS.ENDPOINT.LOGOUT);
     setLoggedOut(true);
+    localStorage.removeItem('user_id');
   };
 
 

@@ -30,9 +30,7 @@ const FavouriteRecipes = () => {
 
   if (refresh) {
     setRefresh(false);
-    fetch(CONSTANTS.ENDPOINT.FAVOURITES_LIST, {
-      credentials: 'include'
-    })
+    fetch(`${CONSTANTS.ENDPOINT.FAVOURITES_LIST}/${localStorage.getItem('user_id')}`)
       .then(response => response.json())
       .then(response => setFavouriteRecipes(response.recipes));
   }

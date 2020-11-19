@@ -70,8 +70,10 @@ const Pantry = (props) => {
 
   if (refreshList) {
     setRefreshList(false);
-    fetch(CONSTANTS.ENDPOINT.PANTRY_LIST, {
-      credentials: 'include'
+    fetch(`${CONSTANTS.ENDPOINT.PANTRY_LIST}/${localStorage.getItem('user_id')}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then(response => {
         if (!response.ok) {

@@ -81,7 +81,7 @@ const Login = () => {
           'name': user,
           'password': pass
         }),
-        credentials: 'include'
+        withCredentials: true
       })
         .then(response => {
           return response.json();
@@ -98,6 +98,8 @@ const Login = () => {
           else {
             setUserFound(true);
             setPassInvalid("");
+            localStorage.setItem('user_id', body.user_id);
+            console.log("AAAA" + localStorage.getItem('user_id'));
           }
         });
     }
