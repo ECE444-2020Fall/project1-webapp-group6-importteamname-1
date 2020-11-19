@@ -3,6 +3,12 @@
 This web application asks a user to enter ingredients, and then recommend recipes based on the ingredients. The user can
 add recipes to favourites list, rate recipes, and add recipes to a cart to generate a ingredients shopping list. The ingredients shopping list contains a list of additional ingredients that the user need to purchase in order to prepare the carted recipes.
 
+## Developers
+- Yanisa Kham
+- Tim Fei
+- Johnathon Martin
+- Mohamed Abdelhamid
+
 ## How to run the code locally
 
 In the root directory of the project
