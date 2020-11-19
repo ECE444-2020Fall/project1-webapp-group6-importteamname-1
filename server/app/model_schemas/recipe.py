@@ -1,3 +1,10 @@
+ # FileName: recipe.py
+ #
+ # Description: Model class for recipe.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
 from app import db
 import uuid
 from constants import CONSTANTS

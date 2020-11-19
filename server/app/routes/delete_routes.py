@@ -1,3 +1,10 @@
+ # FileName: delete_routes.py
+ #
+ # Description: This file contains a route that DELETES data from the database.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
 from flask import Flask
 from app import app
 from app.models import models_map

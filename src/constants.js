@@ -1,4 +1,13 @@
-﻿const CONSTANTS = {};
+﻿/**
+ * FileName: constants.js
+ *
+ * Description: This file contains constants used throughout the app.
+ *
+ * Author(s): Yanisa Kham, Tim Fei, Johnathon Martin, Mohamed Abdelhamid
+ * Date: November 17, 2020 
+ */
+
+const CONSTANTS = {};
 
 CONSTANTS.APP_NAME = 'ChefCoPilot';
 

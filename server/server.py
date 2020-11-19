@@ -1,3 +1,12 @@
+ # FileName: server.py
+ #
+ # Description: This is the main entry point to the server.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
+
+
 from flask import Flask, jsonify, make_response, send_from_directory
 from os.path import exists, join
 from flask_cors import CORS

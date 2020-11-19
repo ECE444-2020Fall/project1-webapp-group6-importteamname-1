@@ -1,3 +1,12 @@
+/**
+ * FileName: RecipeInstruction.jsx
+ *
+ * Description: This panel displays a recipe's instruction.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
 import React from "react";
 import PropTypes from 'prop-types';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -18,6 +27,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 const RecipeInstruction = (props) => {
+  /*
+   The back-end returns Recipe Instruction in the following format (this format comes from Spoonacular API):
+
+   "['step 1', 'step 2', 'step 3']"
+
+   We use .split("',") to separate the instruction steps into arrays.
+   We then use .slice(1, parsedInstructions.length - 1) in line 57 to remove the first and the last apostrophe.
+
+  */ 
   let parsedInstructions = props.instructions.split("',");
   const classes = useStyles();
 

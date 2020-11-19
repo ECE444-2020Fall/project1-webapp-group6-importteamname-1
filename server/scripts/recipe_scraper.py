@@ -1,3 +1,11 @@
+ # FileName: recipe_scraper.py
+ #
+ # Description: This file contains functions that scrape recipes and ingredients from Spoonacular API,
+ # Parse them and inserting them into the Recipe table and the RecipeIngredient table.
+ #
+ # Author(s): Tim Fei
+ # Date: November 17, 2020 
+
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import uuid

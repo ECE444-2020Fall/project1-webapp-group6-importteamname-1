@@ -1,3 +1,13 @@
+/**
+ * FileName: PageTitle.jsx
+ *
+ * Description: Displays title on a page.
+ *
+ * Author(s): WebTemplateStudio
+ * Date: November 17, 2020 
+ */
+
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';

@@ -1,3 +1,13 @@
+/**
+ * FileName: UserNotesButton.jsx
+ *
+ * Description: The user can use this button to write and edit notes on a recipe details page.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';

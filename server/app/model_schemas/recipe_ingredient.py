@@ -1,3 +1,10 @@
+ # FileName: recipe_ingredient.py
+ #
+ # Description: Model class for recipe_ingredient.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
 from app import db
 from constants import CONSTANTS
 from sqlalchemy_utils import UUIDType

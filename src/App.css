@@ -1,4 +1,13 @@
-﻿html {
+﻿/**
+ * FileName: App.css
+ *
+ * Description: This file contains code for styling App.jsx.
+ *
+ * Author(s): WebTemplateStudio
+ * Date: November 17, 2020 
+ */
+
+html {
   position: relative;
   min-height: 100%;
 }

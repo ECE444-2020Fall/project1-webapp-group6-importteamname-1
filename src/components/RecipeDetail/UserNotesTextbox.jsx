@@ -1,3 +1,13 @@
+/**
+ * FileName: UserNotesTextBox.jsx
+ *
+ * Description: This component is used by the user to edit and submit user notes on a recipe detail page.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';

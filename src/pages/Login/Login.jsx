@@ -1,3 +1,12 @@
+/**
+ * FileName: Login.jsx
+ *
+ * Description: This page is used to log a user into the app.
+ * 
+ * Author(s): Johnathon Martin
+ * Date: November 17, 2020 
+ */
+
 import React from "react";
 import CONSTANTS from "../../constants";
 import Avatar from '@material-ui/core/Avatar';

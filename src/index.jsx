@@ -1,4 +1,13 @@
-﻿import React from "react";
+﻿/**
+ * FileName: index.jsx
+ *
+ * Description: This is the entry point of the front-end code.
+ *
+ * Author: Tim Fei
+ * Date: November 17, 2020 
+ */
+
+import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";

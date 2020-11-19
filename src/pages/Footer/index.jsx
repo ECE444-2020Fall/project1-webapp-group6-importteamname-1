@@ -1,4 +1,14 @@
-﻿import React from "react";
+﻿/**
+ * FileName: index.jsx
+ *
+ * Description: The footer contains the app's name, as well as the 4 contributors - Yanisa,
+ * Tim, Johnathon, Mohamed.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+import React from "react";
 import styles from "./footer.module.css";
 
 const Footer = () => {

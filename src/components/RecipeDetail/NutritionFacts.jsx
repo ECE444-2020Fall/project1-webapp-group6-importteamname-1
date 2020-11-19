@@ -1,3 +1,12 @@
+/**
+ * FileName: Nutritions.jsx
+ *
+ * Description: This panel displays a list of nutrition facts for a recipe.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
 import React from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';

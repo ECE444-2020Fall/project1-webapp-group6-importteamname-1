@@ -1,4 +1,26 @@
-﻿import React, { useState, useEffect } from "react";
+﻿/**
+ * FileName: RecipeDetail.jsx
+ *
+ * Description: 
+ * 
+ * This page displays the following information pertaining to a specific recipe:
+ * - Recipe Name
+ * - Recipe photo
+ * - Recipe cuisine(s)
+ * - Servings
+ * - Ingredients
+ * - Recipe instruction
+ * - Nutrition facts (calories, carbs, protein, fat)
+ * - A button that allows the user to add this recipe to RecipeCart
+ * - A button that allows the user to add this recipe to FavouriteRecipes list
+ * - A rating system that allows the user to rate this recipe
+ * - A form that allows the user to add notes on this recipe (e.g. "This recipe is easy to prepare")
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+import React, { useState, useEffect } from "react";
 import Ingredients from "../../components/RecipeDetail/Ingredients";
 import NutritionFacts from "../../components/RecipeDetail/NutritionFacts";
 import RecipeInstruction from "../../components/RecipeDetail/RecipeInstruction";
@@ -68,8 +90,10 @@ const RecipeDetail = (props) => {
   const classes = useStyles();
   const [ingredients, setIngredients] = useState({});
 
+  // Check the Redux store to figure out which recipe the user is currently looking at
   let currentRecipe = props.data.recipes.find(recipe => recipe.recipe_id == recipe_id);
 
+  // Retrieve all the ingredients that correspond to a specific recipe.
   useEffect(() => {
     (async () => {
       await fetch(`${CONSTANTS.ENDPOINT.GET_ALL_INGREDIENTS_BY_RECIPE_ID}/${recipe_id}`)

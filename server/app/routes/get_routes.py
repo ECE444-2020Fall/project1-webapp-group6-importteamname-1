@@ -1,3 +1,11 @@
+ # FileName: get_routes.py
+ #
+ # Description: This file contains routes that GET data from the database.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
+
 from flask import Flask, jsonify, make_response
 from app import app
 from app.models import *
