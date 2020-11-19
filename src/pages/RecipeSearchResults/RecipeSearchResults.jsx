@@ -1,4 +1,15 @@
-﻿import React from 'react';
+﻿/**
+ * FileName: RecipeSearchResults.jsx
+ *
+ * Description: After a user clicks 'Recommend Recipes' on the Pantry page, they will be routed to this 
+ * page. The user can sort the recipes on this page based on preparation time, servings, calories, carbs,
+ * fat, and protein. This page also contains a pagination that separates recipes into different pages.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from "@material-ui/core";
@@ -39,12 +50,14 @@ const RecipeSearchResults = (props) => {
   const classes = useStyles();
   let recipeSearchResult = null;
   const itemsPerPage = 16;
+  // The two useStates below are used for the pagination.
   const [page, setPage] = React.useState(1);
   const [noOfPages] = React.useState(
-    props.data.recipes && props.data.recipes.length ?
+    props.data.recipes && props.data.recipes.length ? // Check if there are recipes in the Redux store
       Math.ceil(props.data.recipes.length / itemsPerPage) : null
   );
 
+  // Check whether the user has sorted the recipes or unsorted the recipes.
   let recipesToBeDisplayed = props.data.sortedRecipes && props.data.sortedRecipes.length == 0 ? "recipes" : "sortedRecipes";
 
   if (props.data && props.data[recipesToBeDisplayed]) {
@@ -67,7 +80,7 @@ const RecipeSearchResults = (props) => {
         alignItems="flex-start"
       >
         {props.data[recipesToBeDisplayed]
-          .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          .slice((page - 1) * itemsPerPage, page * itemsPerPage) // divide recipes onto different pages based on pagination
           .map(recipe => (
             <Grid item key={props.recipe_id} xs={25}>
               <RecipeCard

@@ -1,3 +1,13 @@
+/**
+ * FileName: background.jsx
+ *
+ * Description: This code is used to generate random background images for the log-in/sign-up page and the profile
+ * page.
+ * 
+ * Author(s): Johnathon Martin
+ * Date: November 17, 2020 
+ */
+
 import background1 from './background1.png';
 import background2 from './background2.png';
 import background3 from './background3.png';

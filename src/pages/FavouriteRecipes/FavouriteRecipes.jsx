@@ -1,4 +1,14 @@
-﻿import React, { useState } from 'react';
+﻿/**
+ * FileName: FavouriteRecipes.jsx
+ *
+ * Description: This page displays a user's favourite recipes.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+
+import React, { useState } from 'react';
 import RecipeCard from "../../components/common/RecipeCard";
 import CONSTANTS from '../../constants';
 import { Grid } from "@material-ui/core";

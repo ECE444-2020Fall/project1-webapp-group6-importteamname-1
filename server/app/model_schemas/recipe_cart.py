@@ -1,3 +1,10 @@
+ # FileName: recipe_cart.py
+ #
+ # Description: Model class for recipe cart.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
 from app import db
 from sqlalchemy_utils import UUIDType
 

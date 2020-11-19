@@ -1,4 +1,18 @@
-﻿import React, { useState } from 'react';
+﻿/**
+ * FileName: ShoppingList.jsx
+ *
+ * Description: This component is used to generate an ingredients shopping list. 
+ * After a user enters ingredients in the Pantry and searches for Recipes, they can add Recipes 
+ * to a RecipeCart to express their intention in preparing these recipes. A smart shopping list
+ * will be generated to notify the user whether they need to purchase any additional ingredients to prepare
+ * the recipes inside RecipeCart.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+
+import React, { useState } from 'react';
 import { generateList, addItem, removeItem } from '../../utils/list_utils';
 import { ListContainer } from '../../containers/ListContainer/ListContainer';
 import CONSTANTS from '../../constants';

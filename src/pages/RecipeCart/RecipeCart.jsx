@@ -1,4 +1,14 @@
-﻿import React, { useState } from 'react';
+﻿/**
+ * FileName: RecipeCart.jsx
+ *
+ * Description: If a user is interested in a recipe, they can add the recipe to RecipeCart. A smart shopping list 
+ * will then be generated to indicate whether the user needs to purchase any ingredients.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+import React, { useState } from 'react';
 import RecipeCard from "../../components/common/RecipeCard";
 import CONSTANTS from '../../constants';
 import { Grid } from "@material-ui/core";

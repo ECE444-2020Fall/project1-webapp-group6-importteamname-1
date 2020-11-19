@@ -1,3 +1,12 @@
+/**
+ * FileName: recipeActions.js
+ *
+ * Description: This file contains Redux actions dispatchers for retrieving recipes from the back-end
+ *
+ * Author: Tim Fei
+ * Date: November 17, 2020 
+ */
+
 import CONSTANTS from '../constants';
 
 export const getRecipes = () => async dispatch => {

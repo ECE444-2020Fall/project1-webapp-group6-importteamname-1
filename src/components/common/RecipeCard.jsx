@@ -1,3 +1,15 @@
+/**
+ * FileName: RecipeCard.jsx
+ *
+ * Description: When a list of recipes is fetched on the RecipeSearchResults page, RecipeCart page and 
+ * FavouriteRecipes page, they will be rendered and displayed using this component.
+ * The user can use this panel to view a recipe's photo and calorie count
+ *
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -61,6 +73,9 @@ const RecipeCard = (props) => {
             </CardContent>
           </Link>
         </CardActionArea>
+        {/* We don't want to redirect the user to RecipeDetail page when they rate the recipe,
+        add the recipe to cart, or add the recipe to favourites list. So we put RecipeCardUserActions  
+        outside of the <Link to{}> attributes. */}
         <RecipeCardUserActions recipe_id={props.recipeId} />
       </Card>
     </div>

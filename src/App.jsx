@@ -1,8 +1,16 @@
-﻿import React, { useEffect } from 'react';
+﻿/**
+ * FileName: App.jsx
+ *
+ * Description: This file defines the app's routes.
+ *
+ * Author(s): Yanisa Kham, Tim Fei, Johnathon Martin
+ * Date: November 17, 2020 
+ */
+
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './pages/NavBar';
-import AddIngredients from './pages/AddIngredients/AddIngredients';
 import RecipeSearchResults from './pages/RecipeSearchResults/RecipeSearchResults';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import FavouriteRecipes from './pages/FavouriteRecipes/FavouriteRecipes';
@@ -49,7 +57,6 @@ const defaultContainer = () => {
     <React.Fragment>
       <ScrollIntoView>
         <NavBar />
-        <Route path="/AddIngredients" component={AddIngredients} />
         <Route path="/RecipeSearchResults" component={RecipeSearchResults} />
         <Route path="/welcome" component={Welcome} />
         <Route path="/Profile" component={Profile} />

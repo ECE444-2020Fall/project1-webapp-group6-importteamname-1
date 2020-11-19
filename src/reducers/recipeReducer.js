@@ -1,4 +1,20 @@
+/**
+ * FileName: recipeReducer.js
+ *
+ * Description: This file contains the reducer used for receiving actions and updating the app's 
+ * recipe state.
+ *
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
 const initialState = {
+    /* 
+    When the user sorts recipes for the 1st time, we create a copy of 'recipes' and store it
+    inside 'sortedRecipes'. If the user clicks 'Sort recipes' again, we sort the 'sortedRecipes'
+    array again. This way, the original 'reecipes' array is unmodified and the user can 
+    view it by clicking the 'Undo sort' button.
+    */
     recipes: [],
     sortedRecipes: [],
     sortOrder: '',

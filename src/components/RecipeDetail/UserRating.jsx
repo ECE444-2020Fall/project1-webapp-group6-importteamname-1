@@ -1,3 +1,13 @@
+/**
+ * FileName: UserRating.jsx
+ *
+ * Description: This component allows the user to rate a recipe out of 5 stars.
+ * 
+ * Author(s): Yanisa Kham
+ * Date: November 17, 2020 
+ */
+
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Rating from '@material-ui/lab/Rating';

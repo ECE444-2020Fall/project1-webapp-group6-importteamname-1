@@ -1,3 +1,12 @@
+/**
+ * FileName: Profile.jsx
+ *
+ * Description: On this page, the user can either go to the Pantry page or log out.
+ * 
+ * Author(s): Johnathon Martin
+ * Date: November 17, 2020 
+ */
+
 import React from "react";
 import CONSTANTS from "../../constants";
 import CssBaseline from '@material-ui/core/CssBaseline';
