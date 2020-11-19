@@ -1,49 +1,16 @@
-﻿## How to run the code locally
+# Chef Co-Pilot 
+
+This web application asks a user to enter ingredients, and then recommend recipes based on the ingredients. The user can
+add recipes to favourites list, rate recipes, and add recipes to a cart to generate a ingredients shopping list. The ingredients shopping list contains a list of additional ingredients that the user need to purchase in order to prepare the carted recipes.
+
+## How to run the code locally
 
 In the root directory of the project
 
-1. Install node modules `yarn install` or `npm install`.
-2. Install Python dependencies `yarn install-requirements` or `npm install requirements`
-2. Start development server `yarn start` or `npm start`.
-
-## Next Steps
-
-### Adding a New Page
-
-1. Create a folder in `/src/components` with your react components.
-2. Add a route for your page to `/src/App.jsx`.
-3. Add a button to the navigation bar in `/src/components/NavBar/index.jsx`.
-
-### Deployment
-
-If you selected Azure App Service when creating your project, follow these steps:
-
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Web Template Studio: Deploy App` to start deploying your app.
-2. After your project is built, click "Deploy" on the window pop up.
-3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
-
-If you did not select Azure App Service and want to create a new Azure App Service web app, follow these steps:
-
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Azure App Service: Create New Web App...` to create a new web app.
-   - Select your subscription
-   - Enter your web app name
-   - Select Linux as your OS
-   - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application or .Net Core Latest runtime for ASP .NET application.
-2. Once the creation is done, click "Deploy" in the notification window on the lower right corner.
-   - Click "Browse" on the top middle section of your screen and select the "server" folder (or "publish" folder if ASP.NET backend is selected) within your project
-   - Click "Yes" in the notification window on the lower right corner (build prompt)
-   - Click "Deploy" on the window pop up
-   - Click "Yes" in the notification window on the lower right corner again
-3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
-
-Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
-
-Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
-
-### Sample Data
-
-Replace the sample data stored in /server/sample_data.py.
-Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
+1. Install node modules `npm install`.
+2. Install Python dependencies `pip install -r requirements.txt`.
+3. Start front-end `npm start`.
+4. Start back-end `python server/server.py`.
 
 ## File Structure
 
@@ -53,15 +20,26 @@ The back-end is based on [Flask](https://github.com/pallets/flask). It is served
 
 ```
 .
-├── server/ - Flask server that provides API routes and serves front-end
-│ ├── constants.py - Defines the constants for the endpoints and port
-│ ├── sample_data.py - Contains all sample text data for generate pages
-│ └── server.py - Configures Port and HTTP Server and provides API routes
+├── server - Flask back-end
+│ ├── app - Defines the constants for the endpoints and port
+│ │  ├── model_schemas - database models for the app
+│ │  └── routes - routes and controller classes for the app
+│ ├── migrations - MySQL database migrations
+│ ├── scripts - Contains code used for scraping recipes and ingredients from Spoonaular API
+│ ├── tests - Unit tests
+│ ├── util - Helper functions
+│ └── constants.py - Defines the constants for the endpoints and port
 ├── src - React front-end
+| ├── actions - Redux action dispatchers
 │ ├── components - React sub components for containers
-| ├── pages - App web pages
 | ├── containers - React components with sub-components for each page 
-│ ├── App.jsx - React routing
+| ├── pages - App web pages
+| ├── reducers - Redux reducers
+| ├── utils - Helper functions 
+│ ├── App.jsx - React routes
+│ ├── index.jsx - React root component
+| ├── store.js - React components with sub-components for each page 
+| ├── localStorage.js - React components with sub-components for each page 
 │ └── index.jsx - React root component
 └── README.md
 ```
@@ -69,6 +47,8 @@ The back-end is based on [Flask](https://github.com/pallets/flask). It is served
 ## Additional Documentation
 
 - React - https://reactjs.org/
+- Redux - https://redux.js.org/
+- Material UI - https://material-ui.com/
 - React Router - https://reacttraining.com/react-router/
 - Bootstrap CSS - https://getbootstrap.com/
 - Flask - http://flask.pocoo.org/
