@@ -59,4 +59,4 @@ The back-end is based on [Flask](https://github.com/pallets/flask). It is served
 - Bootstrap CSS - https://getbootstrap.com/
 - Flask - http://flask.pocoo.org/
 
-  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
+This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
