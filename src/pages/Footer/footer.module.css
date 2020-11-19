@@ -1,0 +1,28 @@
+﻿/**
+ * FileName: footer.module.css
+ *
+ * Description: This code is used to style the app's footer.
+ *
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+.footer {
+  background-color: black;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  min-height: 8rem;
+}
+
+.title {
+  color: #fff;
+}
+
+.description {
+  color: #fff;
+}
+
+.footerlink,
+.footerlink:hover {
+  color: #fff;
+}

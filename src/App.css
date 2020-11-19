@@ -1,0 +1,32 @@
+﻿/**
+ * FileName: App.css
+ *
+ * Description: This file contains code for styling App.jsx.
+ *
+ * Author(s): WebTemplateStudio
+ * Date: November 17, 2020 
+ */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 160px !important; /* Height of the footer */
+  padding: 0;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 160px; /* Set the fixed height of the footer here */
+}
+
+/* Override Bootstrap Styling */
+
+.btn-primary {
+  background-color: #025fce !important;
+}
+
