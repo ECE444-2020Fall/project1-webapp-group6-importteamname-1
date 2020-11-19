@@ -1,3 +1,12 @@
+/**
+ * FileName: Welcome.jsx
+ *
+ * Description: This is the landing page after the user logs in.
+ * 
+ * Author(s): Johnathon Martin
+ * Date: November 17, 2020 
+ */
+
 import React from "react";
 import CONSTANTS from "../../constants";
 import CssBaseline from '@material-ui/core/CssBaseline';

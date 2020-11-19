@@ -1,4 +1,15 @@
-﻿import React, { useState } from 'react';
+﻿/**
+ * FileName: Pantry.jsx
+ *
+ * Description: This page enables the user to add ingredients that they already have. The app will use
+ * these ingredients to recommend recipes. If no ingredient is provided on this page, the app will
+ * retrieve all the recipes in the database.
+ * 
+ * Author(s): Johnathon Martin
+ * Date: November 17, 2020 
+ */
+
+import React, { useState } from 'react';
 import { generateList, addItem, removeItem } from '../../utils/list_utils';
 import { ListContainer } from '../../containers/ListContainer/ListContainer';
 import CONSTANTS from '../../constants';

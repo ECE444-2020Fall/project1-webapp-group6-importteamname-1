@@ -1,3 +1,11 @@
+ # FileName: post_routes.py
+ #
+ # Description: This file contains routes that POST data into the database.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
+
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS, cross_origin
 import hashlib

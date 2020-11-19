@@ -1,4 +1,12 @@
-from flask import Flask, jsonify, make_response
+ # FileName: helper_functions.py
+ #
+ # Description: This file contains helper functions used for getting user_ud, displaying error when
+ # a user_is is not found, and sorting a list by frequency of elements.
+ #
+ # Author(s): Yanisa Kham
+ # Date: November 17, 2020 
+
+from flask import Flask, jsonify, make_response, session
 from collections import Counter
 from constants import CONSTANTS
 

@@ -1,3 +1,14 @@
+/**
+ * FileName: RecipeCardUserActions.jsx
+ *
+ * Description: The user can use this panel to interact with a recipe (rate, add to favourites, add to cart) 
+ * on the RecipeSearchResults page, RecipeCart page and FavouriteRecipes page.
+ * 
+ * Author(s): Tim Fei
+ * Date: November 17, 2020 
+ */
+
+
 import React from "react";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
