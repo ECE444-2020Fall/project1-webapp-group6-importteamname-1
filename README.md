@@ -44,9 +44,8 @@ The back-end is based on [Flask](https://github.com/pallets/flask). It is served
 | ├── utils - Helper functions 
 │ ├── App.jsx - React routes
 │ ├── index.jsx - React root component
-| ├── store.js - React components with sub-components for each page 
-| ├── localStorage.js - React components with sub-components for each page 
-│ └── index.jsx - React root component
+| ├── store.js - Redux store for storing app's states
+| └── localStorage.js - Code for accessing data from and storing data to local storage
 └── README.md
 ```
 
