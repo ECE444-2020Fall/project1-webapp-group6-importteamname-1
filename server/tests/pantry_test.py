@@ -17,20 +17,14 @@ def test_show_pantry_list(client):
     """ Test that pantry list returns 200 status code if user is logged in """
 
     set_client_user_id(client)
-    response = client.get('/api/pantry_list')
+    response = client.get('/api/pantry_list/fc984203-a5a9-4cb6-9735-357e0cf2370b')
     assert(response.status_code == 200)
-
-def test_show_pantry_list_unauthorized_user(client):
-    """ Test that pantry list returns 500 status code if user is not logged in """
-
-    response = client.get('/api/pantry_list')
-    assert(response.status_code == 500)
 
 def test_pantry_list_empty(client):
     """ Test that pantry list is empty before user adds any items to the pantry """
 
     set_client_user_id(client)
-    response = client.get('/api/pantry_list')
+    response = client.get('/api/pantry_list/fc984203-a5a9-4cb6-9735-357e0cf2370b')
     assert (len(response.json["items"]) == 0) 
     
 def test_remove_from_pantry_item_does_not_exist(client):

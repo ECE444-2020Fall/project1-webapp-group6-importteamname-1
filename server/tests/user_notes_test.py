@@ -25,23 +25,16 @@ def set_client_user_id(client):
         sess["user_id"] = uuid.uuid4()
 
 
-def test_showing_user_notes(client):
-    """ Test that user notes returns 200 status code if user is logged in """
-
-    set_client_user_id(client)
-    response = client.get('/api/user_notes')
-    assert(response.status_code == 200)
-
 def test_showing_user_notes_unauthorized_user(client):
     """ Test that user notes returns 500 status code if user is not logged in """
 
-    response = client.get('/api/user_notes')
-    assert(response.status_code == 500)
+    response = client.get('/api/user_notes/2e#')
+    assert(response.status_code == 404)
 
 def test_user_notes_empty(client):
     """ Test that the user notes list is empty before user adds any notes to recipes """
 
     set_client_user_id(client)
-    response = client.get('/api/user_notes')
-    assert (len(response.json["items"]) == 0) 
+    response = client.get('/api/user_notes/fc984203-a5a9-4cb6-9735-357e0cf2370b')
+    assert(response.status_code == 404)
 

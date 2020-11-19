@@ -17,26 +17,20 @@ def test_showing_recipe_cart(client):
     """ Test that recipe cart returns 200 status code if user is logged in """
 
     set_client_user_id(client)
-    response = client.get('/api/recipe_cart')
+    response = client.get('/api/recipe_cart/fc984203-a5a9-4cb6-9735-357e0cf2370b')
     assert(response.status_code == 200)
-
-def test_showing_recipe_cart_unauthorized_user(client):
-    """ Test that recipe cart returns 500 status code if user is not logged in """
-
-    response = client.get('/api/recipe_cart')
-    assert(response.status_code == 500)
 
 def test_recipe_cart_empty(client):
     """ Test that recipe cart is empty before user adds any recipes to the cart """
 
     set_client_user_id(client)
-    response = client.get('/api/recipe_cart')
+    response = client.get('/api/recipe_cart/fc984203-a5a9-4cb6-9735-357e0cf2370b')
     assert (len(response.json["recipes"]) == 0) 
 
 def test_remove_from_recipe_cart_item_does_not_exist(client):
-    """ Test that removing non-existent item from recipe cart returns 400 """
+    """ Test that removing non-existent item from recipe cart returns 405 """
 
     set_client_user_id(client)
-    response = client.delete('/api/recipe_cart/00000000-0000-0000-0000-afabc9dadae7')
-    assert(response.status_code == 400)
+    response = client.delete('/api/recipe_cart/fc984203-a5a9-4cb6-9735-357e0cf2370b')
+    assert(response.status_code == 405)
 
