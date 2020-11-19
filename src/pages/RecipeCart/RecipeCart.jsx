@@ -20,9 +20,7 @@ const RecipeCart = () => {
 
   if (refresh) {
     setRefresh(false);
-    fetch(`${CONSTANTS.ENDPOINT.RECIPE_CART}/${localStorage.getItem('user_id')}`, {
-      // credentials: 'include'
-    })
+    fetch(`${CONSTANTS.ENDPOINT.RECIPE_CART}/${localStorage.getItem('user_id')}`)
       .then(response => response.json())
       .then(response => setCartedRecipes(response.recipes));
   }

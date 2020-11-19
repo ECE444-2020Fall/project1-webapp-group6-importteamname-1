@@ -72,7 +72,6 @@ const Login = () => {
           'name': user,
           'password': pass
         }),
-        // credentials: 'same-origin',
         withCredentials: true
       })
         .then(response => {

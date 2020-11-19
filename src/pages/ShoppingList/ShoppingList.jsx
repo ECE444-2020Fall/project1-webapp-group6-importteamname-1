@@ -28,9 +28,7 @@ const ShoppingList = () => {
 
   if (refreshList) {
     setRefreshList(false);
-    fetch(`${CONSTANTS.ENDPOINT.SMART_SHOPPING_LIST}/${localStorage.getItem('user_id')}`, {
-      // credentials: 'include'
-    })
+    fetch(`${CONSTANTS.ENDPOINT.SMART_SHOPPING_LIST}/${localStorage.getItem('user_id')}`)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -43,9 +41,7 @@ const ShoppingList = () => {
       .then(res => setSmartShoppingItems(
         res.map(item => <SimpleListItem key={item} item={item} />)));
 
-    fetch(`${CONSTANTS.ENDPOINT.SHOPPING_LIST}/${localStorage.getItem('user_id')}`, {
-      // credentials: 'include'
-    })
+    fetch(`${CONSTANTS.ENDPOINT.SHOPPING_LIST}/${localStorage.getItem('user_id')}`)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
